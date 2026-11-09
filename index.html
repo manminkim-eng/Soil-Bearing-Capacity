@@ -1,0 +1,2354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>N값 지내력 환산 시스템 · MANMIN Ver-1.0</title>
+<!-- 링크 미리보기(네이버 · 카카오 · SNS) — 2026-11-09 -->
+<link rel="canonical" href="https://manminkim-eng.github.io/Soil-Bearing-Capacity/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MANMIN ENGINEERING">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="N값 지내력 환산 시스템 · MANMIN Ver-1.0">
+<meta property="og:description" content="지반조사 보고서 표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00(2022) · KDS 11 50 05(2025. 12. 24.) — CIVIL ENGINEER KIM MANMIN">
+<meta property="og:url" content="https://manminkim-eng.github.io/Soil-Bearing-Capacity/">
+<meta property="og:image" content="https://manminkim-eng.github.io/Soil-Bearing-Capacity/og-card.jpg">
+<meta property="og:image:secure_url" content="https://manminkim-eng.github.io/Soil-Bearing-Capacity/og-card.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="N값 지내력 환산 시스템 · MANMIN Ver-1.0">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="N값 지내력 환산 시스템 · MANMIN Ver-1.0">
+<meta name="twitter:description" content="지반조사 보고서 표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00(2022) · KDS 11 50 05(2025. 12. 24.) — CIVIL ENGINEER KIM MANMIN">
+<meta name="twitter:image" content="https://manminkim-eng.github.io/Soil-Bearing-Capacity/og-card.jpg">
+<meta name="description" content="지반조사 보고서 표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00(2022) · KDS 11 50 05(2025. 12. 24.) — CIVIL ENGINEER KIM MANMIN"/>
+<meta name="theme-color" content="#0f766e"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="지내력"/>
+<link rel="manifest" href="./manifest.json"/>
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png"/>
+<link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192x192.png"/>
+<link rel="icon" type="image/x-icon" href="./favicon.ico"/>
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png"/>
+<meta name="msapplication-TileColor" content="#0f766e"/>
+<meta name="msapplication-TileImage" content="icons/icon-144x144.png"/>
+<link rel="stylesheet" href="./assets/fonts/manmin-fonts.css"/><!-- v5.0 로컬 폴백 폰트 — CDN 차단·오프라인 대비. CDN link 보다 먼저 로드되어야 한다 -->
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+/* v5.0 — 유니버설 셀렉터에서 font-family 를 뺐다.
+   *{font-family:…!important} 는 .mono·JetBrains Mono·Orbitron 선언을 전부 무효화한다(§3-7). */
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body,button,input,select,textarea,table,th,td,div,span,p,h1,h2,h3,h4,h5,h6,li,label,strong,em,small
+  {font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR Local','Malgun Gothic',sans-serif;}
+html,body{min-height:100vh;background:#f0f5fb;color:#0d1f3c;}
+:root{--d:#2dd4bf;--d-deep:#0f766e;--d-lt:#99f6e4;--d-tint:#ccfbf1;--d-rgb:45,212,191;--fs-badge:11px;--fs-cap:11.5px;--fs-sm:12.5px;--fs-desc:13px;--fs-body:14px;--fs-sec:16px;--fs-card:17px;--fs-stat:20px;
+  --blue-dark:#0f4c81;
+  --blue:#1565c0;
+  --blue-mid:#1976d2;
+  --blue-light:#e3f2fd;
+  --blue-border:#bbdefb;
+  --teal-dark:#00695c;
+  --teal:#00897b;
+  --teal-light:#e0f2f1;
+  --teal-border:#80cbc4;
+  --amber:#f57c00;
+  --amber-light:#fff8e1;
+  --amber-border:#ffe082;
+  --red:#c62828;
+  --red-light:#ffebee;
+  --green:#2e7d32;
+  --green-light:#e8f5e9;
+  --gray-50:#f8fafd;
+  --gray-100:#f0f5fb;
+  --gray-200:#e2e8f0;
+  --gray-300:#cbd5e1;
+  --gray-500:#64748b;
+  --gray-700:#334155;
+  --gray-900:#0d1f3c;
+  --shadow-sm:0 1px 4px rgba(15,23,42,.06);
+  --shadow-md:0 4px 16px rgba(15,23,42,.1);
+  --shadow-lg:0 8px 32px rgba(15,23,42,.15);
+  --radius-sm:6px;
+  --radius-md:10px;
+  --radius-lg:14px;
+}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--gray-100);}
+::-webkit-scrollbar-thumb{background:#99f6e4;border-radius:10px;}
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+input[type="number"]{-moz-appearance:textfield;}
+.mono{font-family:'JetBrains Mono','Courier New',monospace!important;}
+
+/* ── HEADER ── */
+/* v5.0 — 헤더+탭바를 하나의 그라데이션 면으로 통합한다(§3-2-1). sticky 금지(§3-1).
+   v5.0-HDR (2026-09-02 확정 §18-1) — 줄높이 px 고정 · flex-start · 활성탭 단색+바 · 헤더 버튼 0개 */
+.hdr-shell{background:linear-gradient(135deg,#042f2e 0%,#134e4a 50%,#0f766e 100%);
+  box-shadow:0 2px 20px rgba(15,118,110,.35);}
+.app-header{background:transparent;color:#fff;}
+.header-inner{max-width:1300px;margin:0 auto;padding:20px 24px 16px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.brand-logo{display:flex;align-items:flex-start;min-width:0;}
+.brand-texts{min-width:0;}
+.hdr-eyebrow{font-size:11px;font-weight:600;opacity:.7;color:#fff;letter-spacing:.15em;line-height:16px;
+  text-transform:uppercase;margin-bottom:6px;}
+.hdr-h1{font-size:26px;font-weight:900;color:#fff;letter-spacing:.04em;line-height:1.2;}
+.hdr-sub{font-size:11px;margin-top:8px;color:#fff;opacity:.85;letter-spacing:.02em;line-height:17px;}
+.hdr-manmin{font-family:'Orbitron',sans-serif!important;font-weight:900;font-size:12px;
+  color:#99f6e4;letter-spacing:.08em;text-shadow:0 0 8px rgba(153,246,228,.6);
+  white-space:nowrap;display:inline-block;line-height:17px;vertical-align:top;}
+.hdr-right-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+  padding-bottom:2px;flex-shrink:0;}
+.hdr-right{text-align:right;opacity:.75;color:#fff;font-size:11px;line-height:16px;}   /* 4줄 13/11/11/10 = 70px ≤ 78.2 */
+.hdr-right strong{font-size:13px;font-weight:700;line-height:19px;}
+.hdr-right em{font-size:11px;color:#99f6e4;font-style:normal;display:block;margin-top:4px;line-height:15px;}
+@media(max-width:768px){ .hdr-right{display:none;} .hdr-right-wrap{gap:0;} }
+@media(max-width:640px){
+  .hdr-h1{font-size:18px;}
+  /* eyebrow 표시 · sub 11px · 각인 12px 유지 · 좌우 14px · 유령 gap 제거 (01 마스터 실측 §18-4) */
+  .header-inner{padding:20px 14px 16px;row-gap:0;}
+  .hdr-right-wrap{padding-bottom:0;}
+  .tab-bar-inner{padding:4px 14px 0;}
+}
+
+/* ── TAB BAR ── */
+.tab-bar{background:transparent;overflow-x:auto;scrollbar-width:none;}   /* 배경은 .hdr-shell 이 담당 */
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-bar-inner{max-width:1300px;margin:0 auto;padding:4px 24px 0;display:flex;}
+.tb{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.75);font-family:inherit;
+  padding:11px 16px;font-size:13px;font-weight:700;letter-spacing:.02em;line-height:19px;
+  border-bottom:3px solid transparent;   /* 11+19+11+3 = 44px */
+  transition:all .15s;display:flex;align-items:center;gap:5px;
+  white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.tb:hover{color:#fff;background:rgba(255,255,255,.09);}
+.tb.tb-manual{margin-left:auto;text-decoration:none;color:rgba(255,255,255,.85);}  /* v5.1.0 — 매뉴얼 버튼 탭 막대 끝 */
+.tb.active{color:#fff;background:#0f766e;border-bottom-color:#99f6e4;}
+/* v5.0-HDR — 요약 스트립 (헤더 3층) */
+.sum-bar-wrap{background:#0f172a;padding:10px 0;}
+.sum-bar{max-width:1300px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;gap:14px;}
+.sum-item{font-size:12px;color:#94a3b8;line-height:18px;}
+.sum-item b{font-family:'JetBrains Mono','Pretendard Variable',Pretendard,'Noto Sans KR',monospace;font-weight:700;color:#99f6e4;}
+@media(max-width:640px){.sum-bar{padding:0 14px;}.sum-item{font-size:11px;}}
+/* ⛔ v5.0 — 모바일 계산 후 문서폭 471px 넘침(§2⑤ 배포본 실측). 그리드 자식 min-width:auto 가 표 폭만큼 벌어진다 → 20 건물우수 §7 처방 */
+.two-col>*{min-width:0;}
+
+/*══════════════════════════════════════
+  LAYOUT
+══════════════════════════════════════*/
+.main-wrap{max-width:1400px;margin:0 auto;padding:14px 14px 110px;}
+@media(max-width:640px){.main-wrap{padding:10px 10px 110px;}}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+.two-col{display:grid;grid-template-columns:440px 1fr;gap:14px;align-items:start;}
+@media(max-width:1024px) and (min-width:769px){.two-col{grid-template-columns:380px 1fr;}}
+@media(max-width:768px){.two-col{grid-template-columns:1fr;}}
+
+/*══════════════════════════════════════
+  CARD
+══════════════════════════════════════*/
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:14px;}
+.card-head{display:flex;align-items:center;gap:9px;padding:11px 14px;border-bottom:1px solid #f0f5fb;}
+.card-ico{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
+.card-ico.blue{background:#e3f2fd;}.card-ico.teal{background:#e0f2f1;}.card-ico.amber{background:#fff8e1;}.card-ico.red{background:#ffebee;}
+.card-tit{font-size:11.5px;font-weight:800;color:#0d1f3c;letter-spacing:.03em;flex:1;}
+.cbadge{font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.cbadge.blue{background:#e3f2fd;color:#1565c0;border:1px solid var(--blue-border);}
+.cbadge.teal{background:#e0f2f1;color:#00695c;border:1px solid var(--teal-border);}
+.cbadge.amber{background:#fff8e1;color:#f57c00;border:1px solid var(--amber-border);}
+.cbadge.red{background:var(--red-light);color:#c62828;border:1px solid #ef9a9a;}
+.cbadge.grn{background:var(--green-light);color:#2e7d32;border:1px solid #a5d6a7;}
+.card-body{padding:13px 14px;}
+@media(max-width:480px){.card-body{padding:11px 12px;}}
+
+/*══════════════════════════════════════
+  FORM
+══════════════════════════════════════*/
+.flbl{font-size:11px;font-weight:700;color:#546e7a;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;display:block;}
+.finput{width:100%;padding:8px 11px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;color:#0d1f3c;font-size:12.5px;font-weight:600;font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s;height:38px;box-sizing:border-box;}
+.finput:focus{border-color:#1ea596;box-shadow:0 0 0 3px rgba(30,165,150,.1);background:#fff;}
+@media(max-width:768px){.finput{font-size:16px;padding:9px 11px;}.fselect{font-size:16px;padding:9px 26px 9px 10px;}}
+.fselect{width:100%;padding:8px 26px 8px 10px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;color:#0d1f3c;font-size:11.5px;font-weight:700;font-family:inherit;outline:none;cursor:pointer;transition:border-color .15s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%231565c0' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;}
+.fselect:focus{border-color:#1ea596;box-shadow:0 0 0 3px rgba(30,165,150,.1);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px;}
+@media(max-width:640px){.frow{grid-template-columns:1fr;}}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:9px;}
+@media(max-width:768px){.frow3{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.frow3{grid-template-columns:1fr;}}
+.fgrp{display:flex;flex-direction:column;gap:3px;}
+.fgrp.full{grid-column:1/-1;}
+.input-sfx{display:flex;}
+.input-sfx .finput{border-radius:8px 0 0 8px;}
+.sfx{padding:8px 10px;background:#ccfbf1;border:1.5px solid #dde3ed;border-left:none;border-radius:0 8px 8px 0;font-size:11.5px;font-weight:700;color:#0f766e;white-space:nowrap;display:flex;align-items:center;}
+.fdivider{height:1px;background:linear-gradient(90deg,transparent,var(--gray-200),transparent);margin:12px 0;}
+
+/*══════════════════════════════════════
+  SECTION TITLE
+══════════════════════════════════════*/
+.sec-title{font-size:11px;font-weight:800;color:#0f766e;padding:5px 10px;background:#ccfbf1;border-radius:6px;margin-bottom:9px;display:flex;align-items:center;gap:5px;border-left:3px solid #1ea596;}
+.sec-title.teal{color:#00695c;background:#e0f2f1;border-left-color:#00897b;}
+.sec-title.amber{color:#f57c00;background:#fff8e1;border-left-color:#ffa726;}
+.sec-title.red{color:#c62828;background:#ffebee;border-left-color:#ef5350;}
+
+/*══════════════════════════════════════
+  NOTICE BOXES
+══════════════════════════════════════*/
+.nb{border-radius:9px;padding:9px 12px;margin-bottom:9px;}
+.nb.blue{background:#e3f2fd;border:1.5px solid var(--blue-border);}
+.nb.teal{background:#e0f2f1;border:1.5px solid var(--teal-border);}
+.nb.amber{background:#fff8e1;border:1.5px solid var(--amber-border);}
+.nb.red{background:var(--red-light);border:1.5px solid #ef9a9a;}
+.nb.grn{background:var(--green-light);border:1.5px solid #a5d6a7;}
+.nb-tit{font-size:11px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:4px;}
+.nb.blue .nb-tit{color:#1565c0;}.nb.teal .nb-tit{color:#00695c;}.nb.amber .nb-tit{color:#f57c00;}.nb.red .nb-tit{color:#c62828;}.nb.grn .nb-tit{color:#2e7d32;}
+.nb-txt{font-size:11px;line-height:1.8;word-break:keep-all;overflow-wrap:break-word;}
+.nb.blue .nb-txt{color:#1a3a6b;}.nb.teal .nb-txt{color:#004d40;}.nb.amber .nb-txt{color:#4a2c00;}.nb.red .nb-txt{color:#7f0000;}.nb.grn .nb-txt{color:#1b5e20;}
+
+/*══════════════════════════════════════
+  RESULT HERO
+══════════════════════════════════════*/
+.result-hero{padding:18px;border-radius:12px;color:#fff;text-align:center;margin-bottom:13px;position:relative;overflow:hidden;}
+.result-hero.blue{background:linear-gradient(135deg,#0d47a1,#1565c0);}
+.result-hero.teal{background:linear-gradient(135deg,#004d40,#00695c);}
+.result-hero.red{background:linear-gradient(135deg,#b71c1c,#c62828);}
+.result-hero.grn{background:linear-gradient(135deg,#1b5e20,#2e7d32);}
+.result-hero::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(255,255,255,.05);border-radius:50%;}
+.rh-label{font-size:11px;opacity:.65;margin-bottom:2px;font-weight:700;letter-spacing:.05em;}
+.rh-num{font-size:44px;font-weight:900;color:#fff176;line-height:1;font-family:'JetBrains Mono',monospace!important;}
+@media(max-width:420px){.rh-num{font-size:32px;}}
+.rh-unit{font-size:13px;font-weight:700;opacity:.8;margin-top:3px;}
+.rh-note{font-size:11px;opacity:.65;margin-top:7px;line-height:1.5;}
+.rh-badge{display:inline-block;margin-top:8px;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:900;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.3);}
+
+/*══════════════════════════════════════
+  STAT GRID
+══════════════════════════════════════*/
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:13px;}
+@media(max-width:480px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+.sbox{background:#fff;border:1px solid var(--gray-200);border-radius:10px;padding:10px;text-align:center;box-shadow:var(--shadow-sm);}
+.sbox.pass{border-color:#a5d6a7;background:#f1f8e9;}
+.sbox.fail{border-color:#ef9a9a;background:#ffebee;}
+.sico{font-size:15px;margin-bottom:3px;}
+.sval{font-size:16px;font-weight:900;color:#0f766e;font-family:'JetBrains Mono',monospace!important;line-height:1.1;word-break:break-all;}
+.sval.teal{color:#00897b;}
+.sval.red{color:#c62828;}
+.sval.grn{color:#2e7d32;}
+.slbl{font-size:11px;color:#64748b;font-weight:700;margin-top:2px;}
+.spass{font-size:11px;font-weight:800;margin-top:2px;}
+.spass.ok{color:#2e7d32;}.spass.ng{color:#c62828;}
+
+/*══════════════════════════════════════
+  TABLE
+══════════════════════════════════════*/
+.tbl-wrap{overflow-x:auto;border-radius:9px;border:1px solid var(--gray-200);margin-bottom:13px;}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+table th{background:#ccfbf1;padding:8px 10px;text-align:center;font-weight:800;color:#0f766e;border-bottom:1.5px solid #99f6e4;white-space:nowrap;}
+table.teal th{background:#e0f2f1;color:#00695c;border-bottom-color:#80cbc4;}
+table td{padding:7px 10px;border-bottom:1px solid var(--gray-200);font-weight:600;white-space:nowrap;}
+table tr:last-child td{border-bottom:none;}
+table tr:nth-child(even) td{background:#f8fafd;}
+.td-pass{color:#2e7d32;font-weight:900;}
+.td-fail{color:#c62828;font-weight:900;}
+
+/*══════════════════════════════════════
+  STEP BAR
+══════════════════════════════════════*/
+.step-bar{display:flex;align-items:center;margin-bottom:13px;background:#fff;border:1px solid var(--gray-200);border-radius:10px;padding:8px 12px;overflow-x:auto;gap:0;scrollbar-width:none;}
+.step-bar::-webkit-scrollbar{display:none;}
+.step-item{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.sc{width:22px;height:22px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#94a3b8;flex-shrink:0;transition:all .2s;}
+.sc.done{background:#43a047;color:#fff;}
+.sc.active{background:#1ea596;color:#fff;box-shadow:0 0 0 3px rgba(30,165,150,.22);}
+.sl{font-size:11px;font-weight:700;color:#94a3b8;white-space:nowrap;}
+@media(max-width:420px){.sl{display:none;}}
+.sl.active{color:#0f766e;}.sl.done{color:#2e7d32;}
+.sdiv{width:16px;height:2px;background:#e2e8f0;margin:0 3px;flex-shrink:0;transition:background .2s;}
+.sdiv.done{background:#43a047;}
+
+/*══════════════════════════════════════
+  MODAL
+══════════════════════════════════════*/
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:16px;width:min(520px,calc(100vw - 24px));max-height:80vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);display:flex;flex-direction:column;}
+.modal-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--gray-200);}
+.modal-tit{font-size:13px;font-weight:900;color:#0d1f3c;flex:1;}
+.modal-cls{width:28px;height:28px;border:none;background:#f1f5f9;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#64748b;}
+.modal-cls:hover{background:#e2e8f0;}
+.modal-body{padding:16px 18px;overflow-y:auto;}
+
+/*══════════════════════════════════════
+  TOAST
+══════════════════════════════════════*/
+.toast{position:fixed;bottom:calc(90px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(14px);background:#0d1f3c;color:#fff;padding:9px 18px;border-radius:16px;font-size:12px;font-weight:700;opacity:0;transition:all .28s;z-index:999;pointer-events:none;white-space:nowrap;max-width:calc(100vw - 32px);text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/*══════════════════════════════════════
+  BOTTOM ACTION BAR
+══════════════════════════════════════*/
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#134e4a,#115e59);border-top:1px solid rgba(255,255,255,.1);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));z-index:100;box-shadow:0 -4px 20px rgba(13,31,60,.3);}
+.bottom-bar-inner{max-width:1400px;margin:0 auto;display:flex;gap:8px;align-items:center;}
+.btn-calc{flex:1;background:linear-gradient(135deg,#1ea596,#46e0c9);color:#fff;border:none;padding:12px;border-radius:10px;font-size:13px;font-weight:900;cursor:pointer;font-family:inherit;transition:all .2s;box-shadow:0 3px 12px rgba(30,165,150,.4);display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-calc:hover{background:linear-gradient(135deg,#0f766e,#1ea596);transform:translateY(-1px);}
+.btn-calc:active{transform:translateY(0);}
+.btn-secondary{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.25);padding:12px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.btn-secondary:hover{background:rgba(255,255,255,.25);}
+@media(max-width:480px){
+  .btn-calc{font-size:12px;padding:11px;}
+  .btn-secondary .btn-stxt{display:none;}
+}
+/* ── A4 미리보기 (v5.0 §3-3 · §3-4 · §3-4-1 · §17-2) ── */
+.a4-export-bar{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.bar-lbl{font-size:11px;font-weight:700;color:#546e7a;}
+/* 출력 버튼 규격 (§3-6). 진입점은 이 출력바 한 곳뿐이다(헤더 버튼·FAB 출력·모바일 탭 제거). */
+.btn-export,.mm-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 16px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;
+  border:none;font-family:inherit;white-space:nowrap;line-height:1.2;min-height:38px;
+  transition:background .15s,box-shadow .15s,transform .1s;}
+.mm-btn-print{background:#0f766e;color:#fff;}
+.mm-btn-jpg{background:#7e22ce;color:#fff;}
+/* ⛔ width:100% 는 출력바 안으로 한정한다(§16-5). 전역이면 저장 시트 닫기 버튼까지 100% 를 먹는다. */
+@media(max-width:480px){ .a4-export-bar{flex-direction:column;align-items:stretch;}
+  .a4-export-bar .btn-export,.a4-export-bar .mm-btn{width:100%;} }
+.a4-wrap{background:#64748b;padding:20px 20px 32px;min-height:300px;display:flex;justify-content:center;align-items:flex-start;border-radius:10px;overflow:hidden;}
+@media(max-width:640px){.a4-wrap{padding:8px 8px 24px;}}
+.a4-scale-wrap{display:block;transform-origin:top center;flex-shrink:0;}
+/* ⛔ .a4-page 는 언제나 794px 고정(§17-2). 좁은 화면은 .a4-scale-wrap 의 transform:scale() 이 담당한다.
+   화면 여백 = @page 여백 (14/12/22/14mm → 53/45/83/53px) → 내용 영역 696×986px = 184×261mm */
+.a4-page{background:#fff;width:794px;min-height:1122px;margin:0;padding:53px 45px 83px 53px;box-shadow:0 8px 40px rgba(0,0,0,.28);font-size:11px;color:#111827;display:block;position:relative;
+  font-family:'Noto Sans KR Local','Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+.a4-page .mono,.a4-page code{font-family:'JetBrains Mono','Noto Sans KR Local',monospace;}
+.a4-tit{font-size:22px;font-weight:900;color:#042f2e;text-align:center;border-bottom:2.5px solid #0f766e;padding-bottom:9px;margin-bottom:12px;letter-spacing:-.02em;}
+.a4-head2{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px;}
+.a4-head2 .a4-proj{font-size:12px;font-weight:800;color:#111827;}
+.a4-head2 .a4-meta{font-size:9px;color:#64748b;text-align:right;line-height:1.6;font-weight:600;}
+.a4-sub{font-size:13px;font-weight:800;color:#0f766e;margin-bottom:4px;margin-top:9px;padding-left:7px;border-left:3px solid #0f766e;text-align:left;}
+.a4-tbl{width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:8px;}
+.a4-tbl th{background:#ccfbf1;padding:5px 7px;text-align:center;font-weight:800;color:#0f766e;border:1px solid #99f6e4;}
+.a4-tbl.teal th{background:#e0f2f1;color:#00695c;border-color:#80cbc4;}
+.a4-tbl td{padding:5px 7px;text-align:center;border:1px solid #e2e8f0;font-weight:600;color:#111827;}
+.a4-tbl tr:nth-child(even) td{background:#f8fafd;}
+.a4-tbl tfoot td{background:#ccfbf1!important;font-weight:900;}
+.a4-tbl.teal tfoot td{background:#e0f2f1!important;}
+/* 섹션 소제목 — 51 의미색 변형(토압 amber · 판정 grn/red) */
+.a4-sub.amber{color:#f57c00;border-left-color:#ffa726;}
+.a4-sub.grn{color:#2e7d32;border-left-color:#43a047;}
+.a4-sub.red{color:#c62828;border-left-color:#ef5350;}
+.a4-tbl.a4-law td{white-space:normal;word-break:keep-all;}  /* v5.1.0 — 적용 기준 조항 표 줄바꿈 */
+.a4-tbl.a4-law td:last-child{text-align:left;}
+.a4-tbl .mono{font-family:'JetBrains Mono','Noto Sans KR Local',monospace;}
+.a4-tbl .pass-cell{color:#2e7d32;font-weight:900;background:#e8f5e9!important;}
+.a4-tbl .fail-cell{color:#c62828;font-weight:900;background:#ffebee!important;}
+/* 51 고유 — 판정 박스 · 격자 셀 (원형 보존) */
+.a4iso-judge{border-radius:10px;padding:14px 18px;color:#fff;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.a4iso-judge.pass{background:linear-gradient(135deg,#1b5e20,#2e7d32);}
+.a4iso-judge.fail{background:linear-gradient(135deg,#b71c1c,#c62828);}
+.a4iso-judge-main{font-size:20px;font-weight:900;}
+.a4iso-judge-sub{font-size:10px;opacity:.8;margin-top:3px;}
+.a4iso-judge-fs{font-size:36px;font-weight:900;color:#fff176;font-family:'JetBrains Mono',monospace!important;line-height:1;}
+.a4iso-grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.a4iso-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:10px;}
+.a4iso-grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:10px;}
+.a4iso-cell{background:#f8fafd;border:1px solid #e2e8f0;border-radius:5px;padding:6px 9px;}
+.a4iso-cell-k{font-size:8px;font-weight:700;color:#78909c;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px;}
+.a4iso-cell-v{font-size:12px;font-weight:900;color:#0d1f3c;font-family:'JetBrains Mono',monospace!important;display:block;}
+/* 푸터 3분할 (§3-4). 인쇄에서는 flex 가 어긋나므로 table-cell 33.33% 로 고정한다. */
+.a4-footer{border-top:1px solid #e2e8f0;padding-top:8px;font-size:9px;color:#9ca3af;
+  margin-top:16px;line-height:1.6;font-weight:600;display:table;width:100%;table-layout:fixed;}
+.a4-footer>span{display:table-cell;width:33.33%;vertical-align:top;}
+.a4-footer>span:nth-child(2){text-align:center;}
+.a4-footer>span:nth-child(3){text-align:right;}
+/* JPG 저장 시트 (§3-5 · §3-5-3) — 1매여도 뜬다. */
+#mm-save-ov{display:none;position:fixed;inset:0;z-index:9999;background:rgba(12,26,46,.82);
+  align-items:center;justify-content:center;padding:18px;}
+#mm-save-ov.show{display:flex;}
+.mm-sheet{background:#fff;border:1px solid #e2e8f0;border-radius:14px;width:100%;max-width:720px;
+  max-height:88vh;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(0,0,0,.45);}
+.mm-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 18px;border-bottom:1px solid #e2e8f0;}
+.mm-sheet-title{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:900;
+  letter-spacing:.12em;color:#0f766e;text-transform:uppercase;}
+.mm-sheet-note{font-size:11px;color:#64748b;margin-top:4px;}
+.mm-sheet-body{padding:16px 18px;overflow-y:auto;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+.mm-shot{background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:9px;
+  display:flex;flex-direction:column;gap:8px;}
+.mm-shot img{width:100%;height:auto;border-radius:4px;background:#fff;display:block;
+  border:1px solid #e2e8f0;}
+.mm-shot-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 10px;
+  border-radius:7px;border:1px solid #c4b5fd;background:none;color:#7e22ce;
+  font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;transition:background .15s;}
+.mm-shot-btn:hover{background:#f5f3ff;}
+.mm-sheet-foot{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;
+  padding:13px 18px;border-top:1px solid #e2e8f0;}
+.mm-btn-close{background:#e2e8f0;color:#334155;}
+.mm-sheet-head > div:first-child{flex:1 1 auto;min-width:0;}
+.mm-sheet-head .btn-export{flex:0 0 auto;}
+@media(max-width:480px){
+  .mm-sheet-body{grid-template-columns:1fr;padding:12px;}
+  .mm-sheet-body.multi{grid-template-columns:repeat(2,1fr);}
+  .mm-sheet-foot{justify-content:stretch;} .mm-sheet-foot .btn-export{flex:1;}
+  .mm-sheet-head{padding:12px 14px;gap:8px;}
+  .mm-sheet-title{font-size:11px;}
+  .mm-sheet-note{font-size:11px;line-height:1.45;}
+  .mm-sheet-head .btn-export{padding:6px 9px!important;min-height:28px!important;
+    font-size:11px!important;align-self:flex-start;}
+  .mm-shot{padding:7px;} .mm-shot-btn{padding:6px;font-size:11px;}
+  .mm-shot img{max-height:46vh;object-fit:contain;}
+}
+/* 버전 각인 (§3-3). position:fixed 라 인쇄 시 매 페이지 우하단에 찍힌다. */
+#dev-stamp{display:none;}
+
+/* ══ FAB · 모달 (v5.0 §18-11 — 09 제연 기준본 규격 · 색만 기계 토큰) ══ */
+#fab-group{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));right:18px;   /* v5.1.7 — 하단 계산바 삭제(§25-6-31) → 다른 도구와 같은 높이 */z-index:1200;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.help-fab{
+  position:relative;z-index:auto;
+  background:linear-gradient(135deg,#042f2e 0%,#0f766e 55%,#1ea596 100%);
+  border:1px solid rgba(153,246,228,.3);
+  color:#fff;border-radius:16px;padding:11px 8px;width:72px;min-width:72px;cursor:pointer;font-family:inherit;   /* 두 버튼 폭·높이 완전 동일 (§16-18 취지 · MIN 2026-09-03) */
+  box-shadow:0 4px 20px rgba(15,118,110,.65);
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  line-height:1.3;transition:transform .15s,box-shadow .15s;
+  animation:fabIn .55s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes fabIn{from{opacity:0;transform:scale(.3) rotate(-20deg);}to{opacity:1;transform:scale(1) rotate(0);}}
+.help-fab:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(15,118,110,.65);}
+.help-fab:active{transform:translateY(0);}
+.help-fab .fab-icon{font-size:20px;line-height:1;}
+.help-fab .fab-lbl{font-size:11px;font-weight:800;letter-spacing:.04em;color:#fff;}
+.help-fab .fab-sub{font-size:11px;opacity:.8;}
+
+/* 통합 모달 — 중앙 다이얼로그 (§18-11 overlay·box·head·close·tab·body) */
+.master-modal-ov{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);
+  display:none;align-items:center;justify-content:center;padding:16px;}
+.master-modal-ov.open{display:flex;animation:fadeIn .2s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.master-modal-box{background:#fff;border-radius:20px;width:100%;max-width:800px;
+  max-height:calc(100vh - 32px);display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.4);animation:slideUp .25s cubic-bezier(.34,1.5,.64,1);}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:none;opacity:1;}}
+.master-modal-hd{background:linear-gradient(135deg,#042f2e,#0f766e,#1ea596);color:#fff;padding:18px 22px 0;flex-shrink:0;}
+.master-modal-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:13px;gap:10px;}
+.master-modal-tit{font-size:14px;font-weight:900;color:#fff;letter-spacing:.04em;margin-bottom:3px;}
+.master-modal-sub{font-size:11px;color:#99f6e4;font-weight:500;margin-top:1px;}
+.master-modal-cls{width:34px;height:34px;border:none;background:rgba(255,255,255,.13);color:#fff;border-radius:50%;
+  cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
+.master-modal-cls:hover{background:rgba(255,255,255,.26);}
+.master-modal-tabs{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-shrink:0;}
+.master-modal-tabs::-webkit-scrollbar{display:none;}
+.mm-mtab{padding:9px 18px;border:none;background:transparent;color:rgba(255,255,255,.6);font-size:12px;font-weight:700;
+  font-family:inherit;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;flex-shrink:0;}
+.mm-mtab.active{color:#fff;border-bottom-color:#99f6e4;}
+.mm-mtab:hover:not(.active){color:rgba(255,255,255,.88);}
+.master-modal-body{padding:20px 22px 26px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;}
+.master-modal-body::-webkit-scrollbar{width:5px;}
+.master-modal-body::-webkit-scrollbar-thumb{background:#99f6e4;border-radius:3px;}
+@media(max-width:540px){
+  .master-modal-ov{padding:0;align-items:flex-end;}
+  .master-modal-box{border-radius:20px 20px 0 0;max-height:92vh;}
+  .master-modal-hd{padding:14px 16px 0;}
+  .master-modal-body{padding:16px 16px 36px;}
+  .mm-mtab{padding:9px 13px;font-size:11px;}
+  #fab-group{bottom:calc(16px + env(safe-area-inset-bottom,0px));right:12px;}
+  .help-fab{padding:10px 8px;}
+}
+/* 51 — 도움말 모달은 .open 토글(JS toggleHelp) · 패널 전이 유지 */
+.help-overlay.open{display:flex;}
+.help-panel{transform:scale(.94) translateY(10px);opacity:0;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;}
+.help-overlay.open .help-panel{transform:scale(1) translateY(0);opacity:1;}
+.help-tab-panel{display:none;}
+.help-tab-panel.active{display:block;}
+.help-item{margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #f0f5fb;}
+.help-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.help-step{display:flex;gap:9px;align-items:flex-start;}
+.help-num{width:22px;height:22px;background:#0f766e;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;margin-top:1px;}
+.help-txt{font-size:11px;line-height:1.75;color:#334155;word-break:keep-all;}
+.help-txt b{color:#134e4a;font-weight:800;}
+.law-item{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #f0f5fb;}
+.law-item:last-child{border-bottom:none;}
+.law-code{font-size:11px;font-weight:900;color:#0f766e;font-family:'JetBrains Mono',monospace!important;margin-bottom:3px;}
+.law-desc{font-size:11px;line-height:1.65;color:#334155;}
+.law-limit{font-size:11px;color:#c62828;font-weight:700;background:#ffebee;padding:3px 8px;border-radius:5px;display:inline-block;margin-top:3px;}
+/* PREVIEW 옹벽 선택 탭 바 (원형 보존 · 색만 토목) */
+.preview-sel-bar{display:flex;gap:6px;justify-content:center;padding:0 0 10px;flex-wrap:wrap;}
+.prev-sel-btn{background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:6px 16px;font-size:11.5px;font-weight:800;color:#64748b;cursor:pointer;font-family:inherit;transition:all .18s;display:flex;align-items:center;gap:5px;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.prev-sel-btn:hover{border-color:#0f766e;color:#134e4a;background:#fffbeb;}
+.prev-sel-btn.active{background:linear-gradient(135deg,#0f766e,#1ea596);border-color:#0f766e;color:#fff;box-shadow:0 2px 8px rgba(15,118,110,.35);}
+.prev-sel-btn.disabled{opacity:.4;cursor:not-allowed;}
+.prev-sel-badge{font-size:11px;font-weight:900;padding:1px 6px;border-radius:10px;background:rgba(255,255,255,.25);}
+.prev-sel-btn:not(.active) .prev-sel-badge{background:#e2e8f0;color:#94a3b8;}
+
+/* ══ PWA 설치 배너 ══ */
+#pwa-banner{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(135deg,#042f2e 0%,#115e59 60%,#0a3d6b 100%);
+  border-top:2px solid rgba(70,224,201,.4);
+  border-radius:20px 20px 0 0;
+  padding:14px 18px calc(14px + env(safe-area-inset-bottom,0px));
+  box-shadow:0 -6px 32px rgba(17,94,89,.55);
+  animation:rw-banner-up .35s cubic-bezier(.22,.61,.36,1);
+}
+#pwa-banner.visible{display:block;}
+@keyframes rw-banner-up{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}
+.rw-pwa-inner{max-width:540px;margin:0 auto;display:flex;align-items:center;gap:13px;}
+.rw-pwa-icon{
+  width:52px;height:52px;border-radius:13px;overflow:hidden;flex-shrink:0;
+  border:1.5px solid rgba(70,224,201,.4);
+  box-shadow:0 2px 12px rgba(17,94,89,.35);
+}
+.rw-pwa-icon img{width:100%;height:100%;object-fit:cover;display:block;}
+.rw-pwa-texts{flex:1;min-width:0;}
+.rw-pwa-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px;}
+.rw-pwa-desc{font-size:11px;color:#5eead4;line-height:1.5;}
+.rw-pwa-btns{display:flex;gap:7px;flex-shrink:0;}
+.rw-pwa-ok{
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:#fff;border:none;padding:10px 18px;border-radius:10px;
+  font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;
+  white-space:nowrap;box-shadow:0 2px 10px rgba(249,115,22,.4);
+  transition:all .2s;
+}
+.rw-pwa-ok:hover{transform:translateY(-1px);}
+.rw-pwa-no{
+  background:rgba(255,255,255,.12);color:#5eead4;
+  border:1px solid rgba(70,224,201,.3);
+  padding:10px 13px;border-radius:10px;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:inherit;white-space:nowrap;
+  transition:all .15s;flex-shrink:0;
+}
+.rw-pwa-no:hover{color:#ccfbf1;}
+@media(max-width:480px){
+  .rw-pwa-icon{width:42px;height:42px;}
+  .rw-pwa-desc{display:none;}
+}
+
+/* ══ iOS 안내 모달 ══ */
+#ios-modal-rw{
+  position:fixed;bottom:0;left:0;right:0;z-index:10000;
+  background:linear-gradient(135deg,#042f2e,#115e59);
+  border-top:2px solid rgba(70,224,201,.5);
+  border-radius:20px 20px 0 0;
+  padding:22px 20px calc(18px + env(safe-area-inset-bottom,0px));
+  display:none;
+  box-shadow:0 -8px 40px rgba(17,94,89,.55);
+  animation:rw-banner-up .35s cubic-bezier(.22,.61,.36,1);
+}
+#ios-modal-rw.show{display:block;}
+.rw-ios-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.rw-ios-title{font-size:15px;font-weight:800;color:#fff;}
+.rw-ios-cls{background:rgba(255,255,255,.12);border:none;color:#fff;
+  width:28px;height:28px;border-radius:50%;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+.rw-ios-step{display:flex;align-items:flex-start;gap:12px;
+  background:rgba(255,255,255,.07);border-radius:10px;padding:12px;margin-bottom:8px;}
+.rw-ios-num{min-width:26px;height:26px;border-radius:50%;
+  background:rgba(249,115,22,.35);border:1px solid rgba(249,115,22,.6);
+  color:#fed7aa;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rw-ios-txt{font-size:13px;color:#5eead4;line-height:1.5;}
+.rw-ios-txt strong{color:#fff;}
+.rw-ios-foot{text-align:center;font-size:11px;color:#64b5f6;margin-top:12px;}
+
+/* ── 인쇄 전용 (v5.0 §3-3 · §16-9 · §16-13 · §16-15 · §17-3) ── */
+@media print{
+  #dev-stamp{display:block!important;position:fixed;right:0;bottom:6mm;
+    font-family:'Orbitron',sans-serif;font-size:8pt;font-weight:700;
+    color:#9CA3AF;letter-spacing:.06em;z-index:9999;}
+  html,body{background:#fff!important;margin:0;padding:0;}
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  .hdr-shell,.app-header,.tab-bar,.sum-bar-wrap,.main-wrap .tab-panel:not(#panel-a4preview),.a4-export-bar,
+  #help-overlay,#fab-group,.bottom-bar,.toast,.pwa-banner,.pwa-update-bar,.net-toast,.pwa-done-toast,#pwa-banner,#ios-modal-rw,#mm-save-ov,.no-print{display:none!important;}
+  #panel-a4preview{display:block!important;}
+  /* ⛔ 컨테이너 패딩이 남으면 A4 가 아래로 밀린다(§16-15). A4 패널이 .main-wrap 안이라 패딩만 해제한다. */
+  .main-wrap{padding:0!important;margin:0!important;max-width:none!important;}
+  .a4-wrap{background:#fff!important;padding:0!important;min-height:unset!important;border-radius:0!important;display:block!important;}
+  .a4-scale-wrap{transform:none!important;margin:0!important;height:auto!important;width:auto!important;max-width:none!important;}
+  /* 여백은 @page 하나로만 일원화한다(§3-3). .a4-page 자체 패딩은 인쇄 시 해제. */
+  .a4-page{width:100%!important;max-width:100%!important;box-shadow:none!important;min-height:unset!important;
+    padding:0!important;margin:0!important;font-size:9.5px!important;}
+  /* 표는 통째로 한 장에 둔다(§16-13). 한 장보다 긴 표(.long)만 분할 허용 + thead 반복. */
+  .a4-tbl,.a4iso-judge,.a4iso-grid4,.a4iso-grid3,.a4iso-grid2{break-inside:avoid;page-break-inside:avoid;}
+  .a4-tbl.long{break-inside:auto!important;page-break-inside:auto!important;}
+  .a4-tbl thead{display:table-header-group;}
+  .a4-tbl tr{page-break-inside:avoid;page-break-after:auto;}
+  .a4-sub{page-break-after:avoid;page-break-before:auto;}
+  .a4-sub + table{break-before:avoid;page-break-before:avoid;}
+  /* 2026-10-31 v5.1.3 — 바닥글이 혼자 2쪽으로 넘어가 빈 쪽이 생김 → 앞 블록(주의사항)과 함께 넘어가게 */
+  .a4-footer{break-before:avoid;page-break-before:avoid;break-inside:avoid;}
+  @page{size:A4 portrait;margin:14mm 12mm 22mm 14mm;}
+}
+</style>
+<style id="mm-r1">/* R1 (2026-09-04 · 지시서 §20-1 · S10 소급) — 인쇄 PDF 하단 각인 MANMIN · Ver 비표시. 버전은 A4 푸터 [MANMIN-Ver5.0] 이 담당 */
+#dev-stamp,#dev-stamp-print,.dev-stamp{display:none!important;}
+@media print{#dev-stamp,#dev-stamp-print,.dev-stamp{display:none!important;}}</style>
+<style id="mm-r24">/* R24 ③ (2026-09-04 · 지시서 §20-17 ③) — 원본 전역 table tr:last-child td{border-bottom:none} 이 A4 표에 새어 마지막 행 아래선이 사라진다 */
+.a4-page tr:last-child td{border-bottom:1px solid #e2e8f0;}</style>
+<style id="mm-r24b">/* R24 ①② (2026-09-05 · S10 3-B 소급 · 지시서 §21-1 R24) — 인쇄 시 collapse 표의 우측 세로선 소실 → separate + 셀 자체 선. 화면·JPG·PDF 동일 DOM(§2②). 선색은 기존 값 유지. */
+.a4-tbl{border-collapse:separate;border-spacing:0;border:0;}
+.a4-tbl th{border:0;border-right:1px solid #99f6e4;border-bottom:1px solid #99f6e4;}
+.a4-tbl th:first-child{border-left:1px solid #99f6e4;}
+.a4-tbl tr:first-child th{border-top:1px solid #99f6e4;}
+.a4-tbl td{border:0;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;}
+.a4-tbl td:first-child{border-left:1px solid #e2e8f0;}
+.a4-tbl tr:first-child td{border-top:1px solid #e2e8f0;}
+.a4-tbl.teal th,.a4-tbl.teal th:first-child{border-color:#80cbc4;}
+</style>
+<style id="mm-foot-css">/* 하단 버전 표시 — 건축 도구와 같은 형식 · 화면 폭 전체 (2026-10-31) */
+footer.mm-foot{position:relative;z-index:1;border-top:1px solid #e4e9f0;background:#fff;padding:20px;margin-top:10px;width:100%;box-sizing:border-box;align-self:stretch;font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif}
+.mm-foot .foot-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.mm-foot .foot-nm{font-weight:900;font-size:13px;color:#0f766e;letter-spacing:.06em}
+.mm-foot .foot-desc{font-size:11px;color:#64748b;line-height:1.6}
+.mm-foot .foot-copy{font-size:11px;color:#64748b;font-family:'DM Mono',ui-monospace,monospace}
+@media screen{sub,sup{font-size:max(.75em,11px)}[class*="a4"] sub,[class*="a4"] sup,#report-zone sub,#report-zone sup{font-size:smaller}}
+@media print{footer.mm-foot{display:none!important}}
+</style>
+<style id="sb-css">/* 지내력 v1.0.0 (2026-11-09) — 도구 고유 규칙. 공통 틀(옹벽 v5.1.10)의 카드 · 표 · 결과 상자를 그대로 쓰고 아래만 더함 */
+.sb-ta{width:100%;min-height:190px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;line-height:1.55;padding:9px 10px;border:1.5px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f172a;resize:vertical;box-sizing:border-box;white-space:pre;overflow:auto}
+.sb-ta:focus{outline:none;border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,.15)}
+.sb-hint{font-size:11.5px;color:#64748b;line-height:1.6;margin-top:6px}
+.sb-hint code{font-family:'JetBrains Mono',monospace;background:#f1f5f9;padding:0 4px;border-radius:4px;color:#0f766e}
+.sb-btnrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sb-mini{font:inherit;font-size:12px;font-weight:700;padding:6px 10px;border-radius:7px;border:1px solid #99d5cf;background:#f0fdfa;color:#0f766e;cursor:pointer}
+.sb-mini:hover{background:#ccfbf1}
+.sb-chk{display:flex;align-items:flex-start;gap:7px;font-size:12.5px;color:#334155;line-height:1.5;margin:6px 0}
+.sb-chk input{margin-top:3px;accent-color:#0f766e}
+.sb-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.sb-tbl th,.sb-tbl td{border:1px solid #e2e8f0;padding:5px 6px;text-align:center;white-space:nowrap}
+.sb-tbl th{background:#f0fdfa;color:#115e59;font-weight:800}
+.sb-tbl tr.zone td{background:#ecfeff}
+.sb-tbl tr.gov td{font-weight:800}
+.sb-tbl td.l{text-align:left;white-space:normal}
+.sb-chart{width:100%;max-width:360px;display:block;margin:0 auto;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafd}
+.sb-warn li{margin:2px 0}
+.sb-note{font-size:11px;color:#64748b;margin-top:6px;line-height:1.6}
+.a4-page .sb-tbl{font-size:10.5px}
+.a4-page .sb-tbl th,.a4-page .sb-tbl td{padding:3px 4px}
+.a4-page .sb-chart{max-width:300px;border:none;background:#fff}
+.a4-tbl.sb-calc{table-layout:fixed;width:100%}
+.a4-tbl.sb-calc td,.a4-tbl.sb-calc th{white-space:normal!important;word-break:keep-all;overflow-wrap:anywhere}
+.a4-two{display:grid;grid-template-columns:1fr 300px;gap:10px;align-items:start}
+@media (max-width:700px){.a4-two{grid-template-columns:1fr}}
+@media print{.a4-two{grid-template-columns:1fr 300px}}
+</style>
+</head>
+<body>
+<div id="root-app">
+
+<!-- ══════ HEADER ══════ -->
+<!-- 지내력 v1.0.0 : 옹벽 v5.1.10 공통 틀 · 토목 토큰 (#0f766e) -->
+<div class="hdr-shell">
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand-logo">
+      <div class="brand-texts">
+        <div class="hdr-eyebrow">SPT N-value Bearing Capacity · KDS 41 19 00</div>
+        <h1 class="hdr-h1">N값 지내력 환산 시스템</h1>
+        <div class="hdr-sub">
+          지반조사 보고서 표준관입시험 N값 → 내부마찰각 · 점착력 → 허용지지력 자동 산정
+          <span class="hdr-manmin">MANMIN · Ver-1.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="hdr-right-wrap">
+      <!-- v1.0.0 — KDS 41 19 00 (2022. 10. 11.) · KDS 11 50 05 (2025. 12. 24.) 원문 대조 2026-11-09 -->
+      <div class="hdr-right"><strong>기초 설계기준</strong><br/>KDS 41 19 00 건축물 기초구조 (2022)<br/>KDS 11 50 05 얕은기초 (2025. 12. 24.)<br/><em>[qa = (qu − qo)/SF + qo · SF ≥ 3]</em></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════ TAB BAR ══════ -->
+<nav class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tb active" onclick="switchTab('calc')" id="tab-calc">🧮 입력 · 계산</button>
+    <button class="tb" onclick="switchTab('a4preview')" id="tab-a4preview">📄 A4 계산서</button>
+  </div>
+</nav>
+</div><!-- /.hdr-shell -->
+<div class="sum-bar-wrap no-print">
+  <div class="sum-bar">
+    <span class="sum-item">🪨 지반: <b id="sb-soil">—</b></span>
+    <span class="sum-item">🔢 대표 N₆₀: <b id="sb-n">—</b></span>
+    <span class="sum-item">📐 φ / cu: <b id="sb-phi">—</b></span>
+    <span class="sum-item">⬇️ 산정 qa: <b id="sb-qa">—</b></span>
+    <span class="sum-item">✅ 채택 qa: <b id="sb-adopt">—</b></span>
+    <span class="sum-item">🏗️ 접지압: <b id="sb-judge">—</b></span>
+  </div>
+</div>
+
+<!-- ══════ MAIN ══════ -->
+<main class="main-wrap">
+
+<div class="tab-panel active" id="panel-calc">
+  <div class="nb amber" style="margin-bottom:12px;">
+    <div class="nb-tit">⚠️ 참고용 산정 도구</div>
+    <div class="nb-txt">현행 KDS 에는 N값 → 허용지지력 환산식이 없습니다. 이 도구는 <b>문헌식에 따른 참고 추정값</b>을 내며, 기초 설계 책임은 설계자 · 구조기술사에게 있습니다.
+    우선순위 : <b>평판재하시험 · 실내시험 값 &gt; 지반조사 보고서 제시 허용지지력 &gt; 이 도구의 환산값</b>. 입증자료 없이 KDS 41 19 00 표 4.2-1 값을 넘을 수 없습니다(4.2.2).</div>
+  </div>
+  <div class="two-col">
+    <!-- 입력 -->
+    <div>
+      <div class="card">
+        <div class="card-head"><div class="card-ico blue">📋</div><span class="card-tit">기본 정보</span><span class="cbadge blue">STEP 1</span></div>
+        <div class="card-body">
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">사업명</label><input class="finput" id="p-projname" value="만민 근린생활시설 신축공사"/></div>
+            <div class="fgrp"><label class="flbl">작성자</label><input class="finput" id="p-author" value="김만민"/></div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">위치</label><input class="finput" id="p-site" value=""/></div>
+            <div class="fgrp"><label class="flbl">작성일</label><input class="finput" type="date" id="p-date"/></div>
+          </div>
+          <div class="fgrp"><label class="flbl">지반조사 보고서 (선택)</label><input class="finput" id="p-report" placeholder="예: ○○지반 지반조사 보고서 (2026. 10.)"/></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico amber">🔢</div><span class="card-tit">표준관입시험 N값 표</span><span class="cbadge amber">STEP 2</span></div>
+        <div class="card-body">
+          <textarea class="sb-ta" id="p-table" spellcheck="false"></textarea>
+          <div class="sb-hint">한 줄에 <code>공번 심도(m) N 토질</code> — 엑셀 · 보고서 표를 그대로 붙여 넣어도 됩니다(탭 · 쉼표 · 공백 구분). 공번을 빼면 BH-1 로 봅니다.<br/>
+          관입 불능은 <code>50/10</code> 처럼(타격수/관입량 cm) 넣으면 50 × 30/10 으로 환산 후 상한을 적용합니다. 토질은 <code>모래 · 실트질 모래 · SM · 점토 · CL · 자갈 · 풍화토 · 풍화암 · 연암</code> 등을 인식합니다.</div>
+          <div class="sb-btnrow">
+            <button class="sb-mini" type="button" onclick="sbExample(1)">예제 ① 사질토</button>
+            <button class="sb-mini" type="button" onclick="sbExample(2)">예제 ② 점성토</button>
+            <button class="sb-mini" type="button" onclick="sbExample(3)">예제 ③ 시추공 2개</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico teal">🏗️</div><span class="card-tit">기초 · 지하수위</span><span class="cbadge teal">STEP 3</span></div>
+        <div class="card-body">
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">기초 형식</label>
+              <select class="fselect" id="p-ftype">
+                <option value="square" selected>독립기초 (정방형 B = L)</option>
+                <option value="rect">독립기초 (장방형 B × L)</option>
+                <option value="strip">연속기초 (줄기초)</option>
+                <option value="mat">전면기초 (B × L)</option>
+              </select></div>
+            <div class="fgrp"><label class="flbl">근입깊이 Df (m)</label><div class="input-sfx"><input class="finput" type="number" id="p-Df" value="1.5" step="0.1" min="0"/><span class="sfx">m</span></div></div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">기초 폭 B (m · 짧은 변)</label><div class="input-sfx"><input class="finput" type="number" id="p-B" value="2.0" step="0.1" min="0.3"/><span class="sfx">m</span></div></div>
+            <div class="fgrp"><label class="flbl">기초 길이 L (m)</label><div class="input-sfx"><input class="finput" type="number" id="p-L" value="2.0" step="0.1" min="0.3"/><span class="sfx">m</span></div></div>
+          </div>
+          <div class="fdivider"></div>
+          <div class="sec-title teal">💧 지하수위 · 단위중량</div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">지하수위 GL− (m)</label><div class="input-sfx"><input class="finput" type="number" id="p-Dw" value="10" step="0.1" min="0"/><span class="sfx">m</span></div></div>
+            <div class="fgrp"><label class="flbl">습윤 단위중량 γt</label><div class="input-sfx"><input class="finput" type="number" id="p-gt" value="18" step="0.5" min="14"/><span class="sfx">kN/m³</span></div></div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">포화 단위중량 γsat</label><div class="input-sfx"><input class="finput" type="number" id="p-gsat" value="19" step="0.5" min="15"/><span class="sfx">kN/m³</span></div></div>
+            <div class="fgrp"><label class="flbl">설계 접지압 (선택)</label><div class="input-sfx"><input class="finput" type="number" id="p-qd" value="" step="5" min="0" placeholder="비우면 판정 생략"/><span class="sfx">kN/㎡</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico red">⚙️</div><span class="card-tit">N값 보정 · 환산식</span><span class="cbadge red">STEP 4</span></div>
+        <div class="card-body">
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">해머 에너지 효율 ER (%)</label><div class="input-sfx"><input class="finput" type="number" id="p-ER" value="60" step="1" min="30" max="100"/><span class="sfx">%</span></div></div>
+            <div class="fgrp"><label class="flbl">대표 N값</label>
+              <select class="fselect" id="p-rep"><option value="avg" selected>영향 깊이 평균</option><option value="min">영향 깊이 최솟값</option></select></div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">N값 상한</label>
+              <select class="fselect" id="p-Ncap"><option value="50" selected>50</option><option value="60">60</option></select></div>
+            <div class="fgrp"><label class="flbl">φ 상한 (°)</label>
+              <select class="fselect" id="p-phiCap"><option value="40" selected>40°</option><option value="45">45°</option></select></div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">사질토 φ 환산식</label>
+              <select class="fselect" id="p-phiM">
+                <option value="dunham" selected>Dunham (1954)</option>
+                <option value="osaki">오사키 (大崎)</option>
+                <option value="peck">Peck 등 (1974)</option>
+                <option value="hatanaka">Hatanaka·Uchida (1996)</option>
+              </select></div>
+            <div class="fgrp"><label class="flbl">Dunham 입자 · 입도</label>
+              <select class="fselect" id="p-dk">
+                <option value="15" selected>둥글고 균등 (+15 · 보수)</option>
+                <option value="20">둥글고 양호 · 모나고 균등 (+20)</option>
+                <option value="25">모나고 양호 (+25)</option>
+              </select></div>
+          </div>
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">안전계수 SF (≥ 3)</label><input class="finput" type="number" id="p-SF" value="3" step="0.5" min="3"/></div>
+            <div class="fgrp"><label class="flbl">허용 침하량 Se (사질토)</label><div class="input-sfx"><input class="finput" type="number" id="p-Se" value="25" step="5" min="5"/><span class="sfx">mm</span></div></div>
+          </div>
+          <label class="sb-chk"><input type="checkbox" id="p-useCR" checked/><span>롯드 길이 보정 C<sub>R</sub> (Skempton 1986 · 4 m 미만 0.75 ~ 10 m 이상 1.0) — KDS 11 50 05 4.1.5②</span></label>
+          <label class="sb-chk"><input type="checkbox" id="p-useCw" checked/><span>침하 기준식 지하수위 보정 C<sub>w</sub> (Peck 등 1974)</span></label>
+          <label class="sb-chk"><input type="checkbox" id="p-fineSand"/><span>지하수위 아래 실트질 세립 모래 N &gt; 15 보정 N′ = 15 + ½(N − 15) (Terzaghi·Peck)</span></label>
+          <label class="sb-chk"><input type="checkbox" id="p-useD"/><span>Meyerhof 깊이계수 적용 (기본 끔 — 근입부 전단저항 무시, 보수적)</span></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-ico blue">🧪</div><span class="card-tit">시험값 · 입증자료 (선택)</span><span class="cbadge blue">STEP 5</span></div>
+        <div class="card-body">
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">평판재하 항복하중 qy</label><div class="input-sfx"><input class="finput" type="number" id="p-plY" value="" step="10" min="0"/><span class="sfx">kN/㎡</span></div></div>
+            <div class="fgrp"><label class="flbl">평판재하 극한하중 qult</label><div class="input-sfx"><input class="finput" type="number" id="p-plU" value="" step="10" min="0"/><span class="sfx">kN/㎡</span></div></div>
+          </div>
+          <div class="fgrp"><label class="flbl">점성토 비배수 전단강도 cu 시험값 (일축 qu/2 · 삼축 · 베인)</label><div class="input-sfx"><input class="finput" type="number" id="p-cu" value="" step="1" min="0"/><span class="sfx">kN/㎡</span></div></div>
+          <label class="sb-chk"><input type="checkbox" id="p-evid" checked/><span>지반조사 자료로 입증 · 담당원 승인 (끄면 KDS 41 19 00 표 4.2-1 값을 상한으로 채택)</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 결과 -->
+    <div>
+      <div id="sb-result"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── A4 계산서 탭 ─── -->
+<div class="tab-panel" id="panel-a4preview">
+  <div class="a4-export-bar no-print">
+    <span class="bar-lbl">📄 A4 출력 :</span>
+    <button class="mm-btn mm-btn-print" onclick="printA4()">🖨️ 인쇄 / PDF 저장</button>
+    <button class="mm-btn mm-btn-jpg" id="btn-jpg" onclick="exportA4Jpg()">🖼️ JPG 저장</button>
+    <span style="font-size:11px;color:#64748b;margin-left:4px;">※ 인쇄 대화상자에서 "PDF로 저장" 가능</span>
+  </div>
+  <div class="a4-wrap" id="a4Wrap">
+    <div class="a4-scale-wrap" id="a4iso-scale-wrap">
+      <div class="a4-page" id="a4iso-content"></div>
+    </div>
+  </div>
+</div>
+
+</main><!-- /main-wrap -->
+
+<!-- ══ FAB 버튼 그룹 (초기화 위 · 도움말 아래) ══ -->
+<div id="fab-group" class="no-print">
+  <button class="help-fab" id="fabReset" onclick="resetAll()" title="전체 초기화">
+    <span class="fab-icon">🔄</span>
+    <span class="fab-lbl">초기화</span>
+    <span class="fab-sub">전체</span>
+  </button>
+  <button class="help-fab" id="fabHelp" onclick="toggleHelp()" title="도움말">
+    <span class="fab-icon">📐</span>
+    <span class="fab-lbl">설계기준</span>
+    <span class="fab-sub">도움말</span>
+  </button>
+</div>
+
+<!-- ══════ 도움말 모달 ══════ -->
+<div class="master-modal-ov help-overlay no-print" id="help-overlay" onclick="handleHelpOverlayClick(event)">
+  <div class="master-modal-box help-panel" id="help-panel">
+    <div class="master-modal-hd">
+      <div class="master-modal-head">
+        <div>
+          <div class="master-modal-tit">📐 N값 지내력 환산 도움말</div>
+          <div class="master-modal-sub">KDS 41 19 00 (2022) · KDS 11 50 05 (2025. 12. 24.) · MANMIN Ver-1.0</div>
+        </div>
+        <button class="master-modal-cls" onclick="toggleHelp()">✕</button>
+      </div>
+      <div class="master-modal-tabs">
+        <button class="mm-mtab help-tab active" onclick="switchHelpTab('usage')">📘 사용방법</button>
+        <button class="mm-mtab help-tab" onclick="switchHelpTab('law')">⚖️ 관련 기준</button>
+        <button class="mm-mtab help-tab" onclick="switchHelpTab('formula')">📐 계산식</button>
+      </div>
+    </div>
+    <div class="master-modal-body">
+      <div class="help-tab-panel active" id="help-usage">
+        <div class="help-item"><div class="help-step"><div class="help-num">1</div><div class="help-txt"><b>N값 표 붙여 넣기</b>: 지반조사 보고서의 시추주상도 · N값 표를 「공번 심도 N 토질」 순서로 붙여 넣습니다. 관입 불능은 50/10 처럼 넣습니다.</div></div></div>
+        <div class="help-item"><div class="help-step"><div class="help-num">2</div><div class="help-txt"><b>기초 · 지하수위</b>: 기초 형식 · 폭 B · 길이 L · 근입깊이 Df, 보고서의 지하수위와 단위중량을 넣습니다.</div></div></div>
+        <div class="help-item"><div class="help-step"><div class="help-num">3</div><div class="help-txt"><b>보정 · 환산식</b>: 보고서에 해머 효율이 있으면 ER 을 고칩니다(없으면 60 % = 보정 없음). φ 환산식 · 상한을 고릅니다.</div></div></div>
+        <div class="help-item"><div class="help-step"><div class="help-num">4</div><div class="help-txt"><b>시험값</b>: 평판재하시험 · 일축압축시험 값이 있으면 넣습니다. 평판재하 값이 있으면 그 값을 먼저 채택합니다.</div></div></div>
+        <div class="help-item"><div class="help-step"><div class="help-num">5</div><div class="help-txt"><b>결과</b>: 입력하면 바로 계산합니다. 시추공별 허용지지력 중 가장 작은 공을 채택하고, KDS 41 19 00 표 4.2-1 값과 대조합니다.</div></div></div>
+        <div class="help-item"><div class="help-step"><div class="help-num">6</div><div class="help-txt"><b>📄 A4 계산서</b>: 환산 과정 · 근거식 · 기준 조항이 담긴 계산서를 인쇄 / PDF · JPG 로 저장합니다. 사업명 · 작성자는 우측 하단 「건물개요」 단추로 다른 도구와 주고받습니다.</div></div></div>
+      </div>
+      <div class="help-tab-panel" id="help-law">
+        <div class="law-item"><div class="law-code">KDS 41 19 00 건축물 기초구조 설계기준 (2022. 10. 11.)</div>
+          <div class="law-desc">4.2.2 — 지표면에 가까운 지반의 설계지지력은 더 큰 값을 입증할 자료를 제출해 승인받지 않는 한 표 4.2-1 값을 넘을 수 없음. 4.2.4.1 식(4.2-1) 허용 수직지지력 qa = (qu − qo)/SF + qo, qu 최대 3,000 kPa, SF 3 이상. 4.4.4 기초 깊이 · 폭 최소 300 mm.</div>
+          <span class="law-limit">표 4.2-1 : 결정질 기반암 580 · 퇴적암 190 · 자갈 140 · 모래 100 · 점토 70 kN/㎡</span></div>
+        <div class="law-item"><div class="law-code">KDS 11 50 05 얕은기초 설계기준(일반설계법) (2025. 12. 24.)</div>
+          <div class="law-desc">4.1.2 허용지지력 = min(극한지지력 / 안전율, 허용변위량으로 정한 지지력). 4.1.4 경험적 지지력은 2B 깊이까지 균질 · 수평 지층 등 조건에서 신중히 적용, 외국 경험식은 적용성 확인 후 사용. 4.1.5② SPT 는 해머 에너지 효율 보정 N 사용, 필요하면 롯드 길이 · 시추공 크기 · 유효상재하중 보정.</div>
+          <span class="law-limit">1.8(2) Df/B &lt; 1.0 이면 측면저항 무시 · 1.3.2 KS F 2444 평판재하시험</span></div>
+        <div class="law-item"><div class="law-code">KDS 11 30 05 연약지반 설계 일반 (2025. 12. 24.)</div>
+          <div class="law-desc">표 1.6-1 연약지반 판정 — 점성토 · 이탄질 N 4 이하(층두께 10 m 미만) · 6 이하(10 m 이상), qu 60 · 100 kN/㎡ 이하 / 사질토 N 10 이하.</div>
+          <span class="law-limit">점성토 N 판정은 신중히 적용(1.6(3)②)</span></div>
+        <div class="law-item"><div class="law-code">KDS 41 17 00 · KDS 17 10 00 내진 지반분류</div>
+          <div class="law-desc">지반종류 S1 ~ S6 는 기반암 깊이와 토층 평균 전단파속도로 분류합니다. N값은 분류 기준이 아니므로 이 도구는 지반종류를 판정하지 않습니다(설계하중 도구에서 보고서의 지반종류를 선택).</div></div>
+      </div>
+      <div class="help-tab-panel" id="help-formula">
+        <div class="law-item"><div class="law-code">N값 보정</div><div class="law-desc">N₆₀ = N × ER/60 × C<sub>R</sub> (N ≤ 상한) · σv′ = Σγh − u · C<sub>N</sub> = √(98.1/σv′) ≤ 2 · (N₁)₆₀ = C<sub>N</sub>·N₆₀ · 관입 불능 50/x → 50 × 30/x</div></div>
+        <div class="law-item"><div class="law-code">사질토 φ (°)</div><div class="law-desc">Dunham φ = √(12N) + 15 · 20 · 25 / 오사키 φ = √(20N) + 15 / Peck(Wolff) φ = 27.1 + 0.3N − 0.00054N² / Hatanaka·Uchida φ = √(20N₁) + 20</div></div>
+        <div class="law-item"><div class="law-code">점성토 cu</div><div class="law-desc">Terzaghi·Peck qu ≈ N/8 kgf/㎠ = 12.5N kN/㎡ → cu = qu/2 = 6.25·N₆₀ kN/㎡</div></div>
+        <div class="law-item"><div class="law-code">극한지지력 (Meyerhof 1963)</div><div class="law-desc">qu = c·Nc·sc·dc + q·Nq·sq·dq + ½·γ·B·Nγ·sγ·dγ · Nq = e^(π tanφ)·tan²(45°+φ/2) · Nc = (Nq−1)cotφ (φ=0 → 5.14) · Nγ = (Nq−1)tan(1.4φ) · sc = 1 + 0.2Kp·B/L · sq = sγ = 1 + 0.1Kp·B/L (φ &gt; 10°)</div></div>
+        <div class="law-item"><div class="law-code">지하수위</div><div class="law-desc">q = qo = γt·Dw + γ′(Df − Dw) (Dw &lt; Df) · Nγ 항 γ : Dw ≤ Df → γ′ / Df &lt; Dw &lt; Df+B → 보간 / 그 아래 → γt</div></div>
+        <div class="law-item"><div class="law-code">침하 기준 (사질토, Meyerhof 1965 · Bowles 1996)</div><div class="law-desc">B ≤ 1.2 m : qa = 19.16·N₆₀·Fd·(Se/25) · B &gt; 1.2 m : qa = 11.98·N₆₀·((3.28B+1)/3.28B)²·Fd·(Se/25) · Fd = 1 + 0.33Df/B ≤ 1.33 · C<sub>w</sub> = 0.5 ~ 1.0</div></div>
+        <div class="law-item"><div class="law-code">허용지지력 · 채택</div><div class="law-desc">qa(지지력) = (qu − qo)/SF + qo (KDS 41 19 00 식 4.2-1) · qa = min(지지력, 침하) · 시추공 최솟값 · 평판재하 min(qy/2, qult/3) 우선 · 입증자료 없으면 표 4.2-1 상한</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+</div><!-- /root-app -->
+<script>
+/* SBENG v1.0.0 — N값 지내력 환산 순수 엔진 (DOM 무관)
+   근거 (kcsc.re.kr · standard.go.kr 원문 대조 2026-11-09)
+   - KDS 41 19 00:2022 건축물 기초구조 설계기준 (2022.10.11) 4.2.2 · 표 4.2-1 추정 지지력 · 4.2.4.1 식(4.2-1) qa = (qu − qo)/SF + qo, qu ≤ 3,000 kPa, SF ≥ 3
+   - KDS 11 50 05:2025 얕은기초 설계기준(일반설계법) (2025.12.24) 4.1.2 허용지지력 = min(극한/안전율, 허용변위 지지력) · 4.1.4 경험적 지지력 · 4.1.5② SPT 에너지 보정 N
+   - KDS 11 30 05:2025 연약지반 설계 일반 (2025.12.24) 1.6 표 1.6-1 연약지반 판정기준
+   환산식은 기준 조항이 아닌 문헌식 (Dunham 1954 · 오사키 · Peck 등 1974/Wolff 1989 · Hatanaka·Uchida 1996 · Terzaghi·Peck 1967 · Meyerhof 1963 · Meyerhof 1965/Bowles 1996 · Skempton 1986) */
+(function(root){
+  var D2R = Math.PI / 180, GW = 9.81, PA = 98.1;
+
+  /* KDS 41 19 00 표 4.2-1 얕은기초의 추정 지지력 (수직 kN/㎡) */
+  var TBL421 = {
+    rock1: {nm: '1. 결정질 기반암', q: 580},
+    rock2: {nm: '2. 퇴적암 및 엽리성암', q: 190},
+    gravel: {nm: '3. 모래질 자갈/자갈 (GW · GP)', q: 140},
+    sand: {nm: '4. 모래 · 실트질/점토질 모래 · 실트질/점토질 자갈 (SW · SP · SM · SC · GM · GC)', q: 100},
+    clay: {nm: '5. 점토 · 모래질/실트질 점토 · 점토질 실트 · 실트 · 모래질 실트 (CL · ML · MH · CH)', q: 70}
+  };
+  var SOIL = {
+    sand: {nm: '사질토', grp: 'c', tbl: 'sand'},
+    gravel: {nm: '자갈', grp: 'c', tbl: 'gravel'},
+    clay: {nm: '점성토', grp: 'f', tbl: 'clay'},
+    wsoil: {nm: '풍화토', grp: 'c', tbl: 'sand'},
+    wrock: {nm: '풍화암', grp: 'r', tbl: 'rock2'},
+    rock: {nm: '암반', grp: 'r', tbl: 'rock2'}
+  };
+
+  /* 토질 이름 → 분류 (보고서 표기 그대로 붙여 넣어도 인식) */
+  function soilOf(s){
+    s = String(s || '').toUpperCase().replace(/\s/g, '');
+    if(!s) return 'sand';
+    /* 「실트질 모래(SM)」 — 괄호 밖 이름으로 먼저 판정, 이름이 없으면 괄호 안 기호로 */
+    var nm = s.replace(/\(.*?\)/g, ''), code = (s.match(/\(([^)]*)\)/) || [])[1];
+    if(nm && nm !== s) return soilOf1(nm);
+    if(!nm && code) return soilOf1(code);
+    return soilOf1(s);
+  }
+  function soilOf1(s){
+    if(/풍화암|WR/.test(s)) return 'wrock';
+    if(/연암|경암|보통암|기반암|암반|ROCK/.test(s)) return 'rock';
+    if(/풍화토|WS|잔류토/.test(s)) return 'wsoil';
+    if(/(자갈|호박돌|역)\)?$|^(GW|GP|GM|GC)/.test(s)) return 'gravel';     // 끝말이 자갈 = 자갈 (점토질 자갈 포함)
+    if(/모래\)?$|^(SW|SP|SM|SC)|사질/.test(s)) return 'sand';               // 끝말이 모래 = 사질토 (실트질 모래 포함)
+    if(/점토|실트|점성|CL|CH|ML|MH|OL|OH|PT|이탄/.test(s)) return 'clay';
+    if(/자갈|GW|GP|GM|GC/.test(s)) return 'gravel';
+    return 'sand';
+  }
+
+  /* N 기록값 → 환산 N (50/10 = 50 × 30/10 = 150) */
+  function parseN(raw){
+    var s = String(raw == null ? '' : raw).trim().replace(/\s/g, '');
+    if(!s) return null;
+    var m = /^(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/.exec(s);
+    if(m){ var n = +m[1], p = +m[2]; if(p <= 0) return null; return {raw: s, n: n * 30 / p, refusal: p < 30}; }
+    if(/^\d+(?:\.\d+)?$/.test(s)) return {raw: s, n: +s, refusal: false};
+    return null;
+  }
+
+  /* 붙여 넣은 표 → 행 [{hole, z, raw, soil}] — 열: 공번 · 심도(m) · N · 토질 (공번 생략 가능) */
+  function parseTable(text, defHole){
+    var rows = [], bad = [];
+    String(text || '').split(/\r?\n/).forEach(function(line, i){
+      var t = line.trim(); if(!t || /^(#|\/\/)/.test(t)) return;
+      var c = t.split(/\t|,|\s{1,}/).filter(function(x){ return x !== ''; });
+      var hole, z, nraw, soil;
+      if(c.length >= 2 && isFinite(parseFloat(c[0])) && /^[\d.]+$/.test(c[0])){ hole = defHole || 'BH-1'; z = c[0]; nraw = c[1]; soil = c.slice(2).join(' '); }
+      else { hole = c[0]; z = c[1]; nraw = c[2]; soil = c.slice(3).join(' '); }
+      var zz = parseFloat(z), pn = parseN(nraw);
+      if(!isFinite(zz) || !pn){ if(!/공번|심도|depth|N값/i.test(t)) bad.push(i + 1); return; }
+      rows.push({hole: hole, z: zz, raw: pn.raw, n0: pn.n, refusal: pn.refusal, soilTxt: soil || '', soil: soilOf(soil)});
+    });
+    rows.sort(function(a, b){ return a.hole < b.hole ? -1 : a.hole > b.hole ? 1 : a.z - b.z; });
+    return {rows: rows, bad: bad};
+  }
+
+  /* 유효상재압 σv′ (kPa) */
+  function sigv(z, p){
+    var dw = p.Dw, gt = p.gt, gs = p.gsat;
+    var tot = z <= dw ? gt * z : gt * dw + gs * (z - dw);
+    var u = z > dw ? GW * (z - dw) : 0;
+    return Math.max(tot - u, 1);
+  }
+  /* 롯드 길이 보정 CR (Skempton 1986) — 롯드 길이 ≈ 심도 */
+  function cRod(z){ return z < 4 ? 0.75 : z < 6 ? 0.85 : z < 10 ? 0.95 : 1.0; }
+
+  /* N → φ (°) — N 은 N60 */
+  var PHI = {
+    dunham: {nm: 'Dunham (1954)', f: function(N, a){ return Math.sqrt(12 * N) + (a.dk || 15); }, eq: function(a){ return 'φ = √(12N) + ' + (a.dk || 15); }},
+    osaki: {nm: '오사키 (大崎)', f: function(N){ return Math.sqrt(20 * N) + 15; }, eq: function(){ return 'φ = √(20N) + 15'; }},
+    peck: {nm: 'Peck 등 (1974, Wolff 1989)', f: function(N){ return 27.1 + 0.3 * N - 0.00054 * N * N; }, eq: function(){ return 'φ = 27.1 + 0.3N − 0.00054N²'; }},
+    hatanaka: {nm: 'Hatanaka·Uchida (1996)', f: function(N, a){ return Math.sqrt(20 * a.N1) + 20; }, eq: function(){ return 'φ = √(20N₁) + 20, N₁ = N·C_N'; }}
+  };
+
+  function nqf(phi){ var t = Math.tan(phi * D2R); return Math.exp(Math.PI * t) * Math.pow(Math.tan((45 + phi / 2) * D2R), 2); }
+  /* Meyerhof (1963) 지지력계수 · 형상 · 깊이계수 */
+  function meyerhof(o){
+    var phi = o.phi, B = o.B, L = o.L, Df = o.Df, c = o.c || 0, q = o.q, g = o.g;
+    var BL = L > 0 && isFinite(L) ? Math.min(1, B / L) : 0;
+    var Nq, Nc, Ng, Kp = Math.pow(Math.tan((45 + phi / 2) * D2R), 2);
+    if(phi < 0.01){ Nq = 1; Nc = 5.14; Ng = 0; }
+    else { Nq = nqf(phi); Nc = (Nq - 1) / Math.tan(phi * D2R); Ng = (Nq - 1) * Math.tan(1.4 * phi * D2R); }
+    var sc = 1 + 0.2 * Kp * BL, sq = phi > 10 ? 1 + 0.1 * Kp * BL : 1, sg = sq;
+    var dc = 1, dq = 1, dg = 1;
+    if(o.useD){ dc = 1 + 0.2 * Math.sqrt(Kp) * Df / B; dq = dg = phi > 10 ? 1 + 0.1 * Math.sqrt(Kp) * Df / B : 1; }
+    var tc = c * Nc * sc * dc, tq = q * Nq * sq * dq, tg = 0.5 * g * B * Ng * sg * dg;
+    return {Nc: Nc, Nq: Nq, Ng: Ng, Kp: Kp, BL: BL, sc: sc, sq: sq, sg: sg, dc: dc, dq: dq, dg: dg, tc: tc, tq: tq, tg: tg, qu: tc + tq + tg};
+  }
+
+  /* 침하 25 mm 기준 허용지지력 (Meyerhof 1965 · Bowles 1996, SI) — N60 적용 */
+  function settleQa(N, B, Df, Se, Cw){
+    var Fd = Math.min(1.33, 1 + 0.33 * Df / B), base;
+    if(B <= 1.2) base = 19.16 * N;
+    else base = 11.98 * N * Math.pow((3.28 * B + 1) / (3.28 * B), 2);
+    return {Fd: Fd, base: base, Cw: Cw, qa: base * Fd * (Se / 25) * Cw, eq: B <= 1.2 ? '19.16·N₆₀·Fd·(Se/25)' : '11.98·N₆₀·((3.28B+1)/3.28B)²·Fd·(Se/25)'};
+  }
+
+  /* 기초 영향 깊이 — 정방형 · 원형 1.5B, 연속 2B (B/L 보간) */
+  function zoneDepth(B, L){ var BL = L > 0 && isFinite(L) ? Math.min(1, B / L) : 0; return B * (2 - 0.5 * BL); }
+
+  function prep(rows, p){
+    return rows.map(function(r){
+      var nT = r.n0;
+      if(p.fineSand && (r.soil === 'sand') && r.z > p.Dw && nT > 15) nT = 15 + 0.5 * (nT - 15);   // Terzaghi·Peck (1948)
+      var nc = Math.min(nT, p.Ncap);
+      var CR = p.useCR ? cRod(r.z) : 1;
+      var N60 = nc * (p.ER / 60) * CR;
+      var sv = sigv(r.z, p), CN = Math.min(2, Math.sqrt(PA / sv));
+      return Object.assign({}, r, {nT: nT, nc: nc, CR: CR, N60: N60, sv: sv, CN: CN, N1: N60 * CN, capped: nT > p.Ncap});
+    });
+  }
+
+  /* 공(孔) 1개 계산 */
+  function hole(rowsH, p){
+    var B = p.B, L = p.ftype === 'strip' ? Infinity : (p.ftype === 'square' ? B : p.L), Df = p.Df;
+    var zf = zoneDepth(B, L), z1 = Df, z2 = Df + zf;
+    var inZ = rowsH.filter(function(r){ return r.z >= z1 - 1e-9 && r.z <= z2 + 1e-9; });
+    if(!inZ.length){ var below = rowsH.filter(function(r){ return r.z >= z1; }); if(below.length) inZ = [below[0]]; }
+    rowsH.forEach(function(r){ r.inZone = inZ.indexOf(r) >= 0; });
+    var out = {hole: rowsH.length ? rowsH[0].hole : '-', rows: rowsH, zf: zf, z1: z1, z2: z2, L: L, warn: []};
+    if(!inZ.length){ out.ok = false; out.warn.push('기초 저면(Df ' + Df + ' m) 아래 N값이 없습니다.'); return out; }
+    /* 대표 토질 = 구간 안 다수 (같으면 위쪽) */
+    var cnt = {}; inZ.forEach(function(r){ cnt[r.soil] = (cnt[r.soil] || 0) + 1; });
+    var soil = inZ[0].soil; Object.keys(cnt).forEach(function(k){ if(cnt[k] > cnt[soil]) soil = k; });
+    var grps = {}; inZ.forEach(function(r){ grps[SOIL[r.soil].grp] = 1; });
+    if(Object.keys(grps).length > 1) out.warn.push('영향 깊이 안에 사질토 · 점성토 · 암이 섞여 있습니다 — 층상지반은 KDS 11 50 05 4.1.3(4) 에 따라 층상 영향을 따로 검토하십시오. (대표 토질 ' + SOIL[soil].nm + ' 적용)');
+    var zs = inZ.filter(function(r){ return r.soil === soil; });
+    var avg = function(k){ return zs.reduce(function(s, r){ return s + r[k]; }, 0) / zs.length; };
+    var mn = function(k){ return Math.min.apply(null, zs.map(function(r){ return r[k]; })); };
+    var useMin = p.rep === 'min';
+    out.soil = soil; out.soilNm = SOIL[soil].nm; out.grp = SOIL[soil].grp; out.nZone = zs.length;
+    out.N60avg = avg('N60'); out.N60min = mn('N60'); out.N60 = useMin ? out.N60min : out.N60avg;
+    out.N1avg = avg('N1'); out.N1min = mn('N1'); out.N1 = useMin ? out.N1min : out.N1avg;
+    out.Nfavg = avg('n0');
+
+    /* 상재압 · 단위중량 (지하수위) */
+    var gt = p.gt, gsub = p.gsat - GW, Dw = p.Dw;
+    var qo = Dw >= Df ? gt * Df : gt * Dw + gsub * (Df - Dw);
+    var g = Dw <= Df ? gsub : (Dw >= Df + B ? gt : gsub + (Dw - Df) / B * (gt - gsub));
+    out.qo = qo; out.gEff = g; out.gsub = gsub;
+
+    /* 연약지반 (KDS 11 30 05 표 1.6-1) */
+    var thick = zs.length > 1 ? zs[zs.length - 1].z - zs[0].z : 0;
+    if(out.grp === 'f'){ var lim = thick >= 10 ? 6 : 4; if(out.Nfavg <= lim) out.warn.push('점성토 N ' + out.Nfavg.toFixed(1) + ' ≤ ' + lim + ' — KDS 11 30 05 표 1.6-1 연약지반 판정 대상. 압밀침하 · 지반개량을 별도 검토하십시오.'); }
+    if(out.grp === 'c' && out.Nfavg <= 10) out.warn.push('사질토 N ' + out.Nfavg.toFixed(1) + ' ≤ 10 — KDS 11 30 05 표 1.6-1 연약지반 판정 대상(액상화 검토 여부 포함).');
+
+    var tbl = TBL421[SOIL[soil].tbl];
+    out.tblKey = SOIL[soil].tbl; out.tblNm = tbl.nm; out.tblQ = tbl.q;
+
+    if(out.grp === 'r'){
+      out.ok = true; out.rock = true;
+      out.warn.push(SOIL[soil].nm + ' — 암반 지지력은 KDS 11 50 05 4.1.6 (강도 · 불연속면 · RQD · 풍화도) 으로 정합니다. N값 환산식을 적용하지 않고 표 4.2-1 값 · 보고서 제시값을 참고합니다.');
+      out.qaStr = NaN; out.qaSet = NaN; out.qaCalc = NaN;
+      return out;
+    }
+    var MB = {B: B, L: L, Df: Df, q: qo, g: g, useD: p.useD};
+    if(out.grp === 'c'){
+      var a = {dk: p.dk, N1: out.N1};
+      var phis = {}; Object.keys(PHI).forEach(function(k){ phis[k] = Math.min(p.phiCap, PHI[k].f(out.N60, a)); });
+      out.phis = phis; out.phi = phis[p.phiM] != null ? phis[p.phiM] : phis.dunham; out.phiEq = PHI[p.phiM].eq(a); out.phiNm = PHI[p.phiM].nm;
+      out.phiCapped = PHI[p.phiM].f(out.N60, a) > p.phiCap;
+      MB.phi = out.phi; MB.c = 0;
+    } else {
+      out.cu = p.cuTest > 0 ? p.cuTest : 6.25 * out.N60; out.cuSrc = p.cuTest > 0 ? '시험값' : 'Terzaghi·Peck qu = N/8 kgf/㎠ → cu = 6.25·N₆₀';
+      out.quConf = 2 * out.cu;
+      if(p.cuTest > 0 && out.quConf <= (thick >= 10 ? 100 : 60)) out.warn.push('일축압축강도 qu = ' + out.quConf.toFixed(0) + ' kPa — KDS 11 30 05 표 1.6-1 연약지반 판정 대상.');
+      MB.phi = 0; MB.c = out.cu;
+    }
+    var m = meyerhof(MB); out.m = m;
+    out.quRaw = m.qu; out.qu = Math.min(m.qu, 3000); out.quCapped = m.qu > 3000;
+    out.SF = p.SF;
+    out.qaStr = (out.qu - qo) / p.SF + qo;    // KDS 41 19 00 식 (4.2-1)
+    if(out.grp === 'c'){
+      var Cw = 1; if(p.useCw){ Cw = Dw <= Df ? 0.5 : Dw >= Df + B ? 1 : 0.5 + 0.5 * (Dw - Df) / B; }
+      out.set = settleQa(out.N60, B, Df, p.Se, Cw);
+      out.qaSet = out.set.qa;
+      out.qaCalc = Math.min(out.qaStr, out.qaSet); out.gov = out.qaSet < out.qaStr ? '침하' : '지지력';
+    } else {
+      out.qaSet = NaN; out.qaCalc = out.qaStr; out.gov = '지지력';
+      out.warn.push('점성토 — 압밀침하(KDS 11 50 05 4.2.4)는 압밀시험 값으로 별도 산정하십시오. 이 도구의 허용지지력은 전단파괴 기준만입니다.');
+      if(!(p.cuTest > 0)) out.warn.push('점성토 N값의 cu 환산은 분산이 큽니다 — 일축 · 삼축 · 베인시험 값이 있으면 입력하십시오(KDS 11 50 05 4.1.5④).');
+    }
+    out.ok = true;
+    return out;
+  }
+
+  function run(p){
+    var parsed = parseTable(p.table, 'BH-1');
+    var rows = prep(parsed.rows, p);
+    var holes = {}; rows.forEach(function(r){ (holes[r.hole] = holes[r.hole] || []).push(r); });
+    var list = Object.keys(holes).map(function(h){ return hole(holes[h], p); });
+    var R = {p: p, rows: rows, bad: parsed.bad, holes: list, warn: []};
+    if(!rows.length){ R.ok = false; R.warn.push('N값 표를 읽지 못했습니다. 「공번 심도 N 토질」 순서로 한 줄에 하나씩 넣으십시오.'); return R; }
+    if(parsed.bad.length) R.warn.push(parsed.bad.join(', ') + '번째 줄은 읽지 못해 제외했습니다.');
+    if(p.SF < 3) R.warn.push('안전계수가 3 미만입니다 — KDS 41 19 00 4.2.4.1 은 3 이상.');
+    if(p.B < 0.3) R.warn.push('기초 폭 300 mm 미만 — KDS 41 19 00 4.4.4.');
+    if(p.Df < 0.3) R.warn.push('근입깊이 300 mm 미만 — KDS 41 19 00 4.4.4 (동결심도 이상 4.4.5).');
+    var ok = list.filter(function(h){ return h.ok && isFinite(h.qaCalc); });
+    var rock = list.filter(function(h){ return h.ok && h.rock; });
+    if(!ok.length && !rock.length){ R.ok = false; return R; }
+    R.ok = true;
+    var gov = ok.length ? ok.reduce(function(a, b){ return b.qaCalc < a.qaCalc ? b : a; }) : rock[0];
+    R.gov = gov;
+    R.qaCalc = ok.length ? gov.qaCalc : NaN;
+    R.tblQ = gov.tblQ; R.tblNm = gov.tblNm;
+    R.overTbl = isFinite(R.qaCalc) && R.qaCalc > R.tblQ;
+    /* 채택 순서: 평판재하시험 > 산정값(입증자료 있음) / 표 4.2-1 상한(입증자료 없음) */
+    if(p.plY > 0 || p.plU > 0){
+      var c1 = p.plY > 0 ? p.plY / 2 : Infinity, c2 = p.plU > 0 ? p.plU / 3 : Infinity;
+      R.qaPlate = Math.min(c1, c2); R.adopt = R.qaPlate; R.adoptSrc = '평판재하시험 (KS F 2444) — min(항복/2, 극한/3)';
+    } else if(gov.rock){
+      R.adopt = R.tblQ; R.adoptSrc = 'KDS 41 19 00 표 4.2-1 (' + gov.soilNm + ')';
+    } else if(p.evid){
+      R.adopt = R.qaCalc; R.adoptSrc = 'N값 환산 산정값 (지반조사 자료로 입증 · 담당원 승인 전제, 4.2.2)';
+    } else {
+      R.adopt = Math.min(R.qaCalc, R.tblQ); R.adoptSrc = R.overTbl ? 'KDS 41 19 00 표 4.2-1 상한 (입증자료 없음, 4.2.2)' : 'N값 환산 산정값 (표 4.2-1 이하)';
+    }
+    if(p.qd > 0){ R.qd = p.qd; R.pass = p.qd <= R.adopt; }
+    return R;
+  }
+
+  root.SBENG = {version: '1.0.0', TBL421: TBL421, SOIL: SOIL, PHI: PHI, soilOf: soilOf, parseN: parseN, parseTable: parseTable,
+    sigv: sigv, cRod: cRod, nqf: nqf, meyerhof: meyerhof, settleQa: settleQa, zoneDepth: zoneDepth, prep: prep, hole: hole, run: run};
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+<script>
+/* ════════════════════════════════════════════
+   지내력 v1.0.0 화면 · 계산서 (2026-11-09) — 계산은 SBENG, 여기는 입력 읽기 · 결과 표시 · A4 계산서
+════════════════════════════════════════════ */
+var currentTab = 'calc';
+var SB = {result: null};
+var previewSel = {a4: 'main'};                       /* JPG 저장 엔진(공통 틀) 호환 */
+function getResultByType(){ return SB.result && SB.result.ok ? SB.result : null; }
+
+var SB_EX = {
+  1: 'BH-1\t1.5\t12\t모래\nBH-1\t3.0\t15\t실트질 모래\nBH-1\t4.5\t18\t실트질 모래(SM)\nBH-1\t6.0\t20\t모래\nBH-1\t7.5\t26\t풍화토\nBH-1\t9.0\t50/12\t풍화암',
+  2: 'BH-1\t1.5\t6\t점토(CL)\nBH-1\t3.0\t8\t실트질 점토\nBH-1\t4.5\t9\t점토\nBH-1\t6.0\t30\t풍화토',
+  3: 'BH-1\t1.5\t14\t모래\nBH-1\t3.0\t17\t실트질 모래\nBH-1\t4.5\t22\t모래\nBH-1\t6.0\t50/15\t풍화암\nBH-2\t1.5\t9\t실트질 모래\nBH-2\t3.0\t11\t실트질 모래\nBH-2\t4.5\t16\t모래\nBH-2\t6.0\t28\t풍화토'
+};
+var SB_DEF = {'p-ftype': 'square', 'p-Df': '1.5', 'p-B': '2.0', 'p-L': '2.0', 'p-Dw': '10', 'p-gt': '18', 'p-gsat': '19', 'p-qd': '',
+  'p-ER': '60', 'p-rep': 'avg', 'p-Ncap': '50', 'p-phiCap': '40', 'p-phiM': 'dunham', 'p-dk': '15', 'p-SF': '3', 'p-Se': '25',
+  'p-plY': '', 'p-plU': '', 'p-cu': ''};
+var SB_CHK = {'p-useCR': true, 'p-useCw': true, 'p-fineSand': false, 'p-useD': false, 'p-evid': true};
+
+function sbV(id, d){ var el = document.getElementById(id); if(!el) return d; var v = parseFloat(el.value); return isNaN(v) ? d : v; }
+function sbS(id, d){ var el = document.getElementById(id); return el && el.value !== '' ? el.value : d; }
+function sbC(id){ var el = document.getElementById(id); return !!(el && el.checked); }
+function f1(n){ return isFinite(n) ? n.toFixed(1) : '—'; }
+function f2(n){ return isFinite(n) ? n.toFixed(2) : '—'; }
+function f3(n){ return isFinite(n) ? n.toFixed(3) : '—'; }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]; }); }
+
+function sbParams(){
+  var ft = sbS('p-ftype', 'square'), B = Math.max(0.1, sbV('p-B', 2)), L = Math.max(B, sbV('p-L', B));
+  return {
+    table: document.getElementById('p-table').value,
+    ftype: ft, B: B, L: ft === 'square' ? B : L, Df: Math.max(0, sbV('p-Df', 1.5)),
+    Dw: Math.max(0, sbV('p-Dw', 10)), gt: sbV('p-gt', 18), gsat: sbV('p-gsat', 19), qd: sbV('p-qd', 0),
+    ER: Math.min(100, Math.max(30, sbV('p-ER', 60))), rep: sbS('p-rep', 'avg'), Ncap: sbV('p-Ncap', 50), phiCap: sbV('p-phiCap', 40),
+    phiM: sbS('p-phiM', 'dunham'), dk: sbV('p-dk', 15), SF: Math.max(1, sbV('p-SF', 3)), Se: sbV('p-Se', 25),
+    useCR: sbC('p-useCR'), useCw: sbC('p-useCw'), fineSand: sbC('p-fineSand'), useD: sbC('p-useD'), evid: sbC('p-evid'),
+    plY: sbV('p-plY', 0), plU: sbV('p-plU', 0), cuTest: sbV('p-cu', 0),
+    proj: sbS('p-projname', ''), author: sbS('p-author', ''), site: sbS('p-site', ''), report: sbS('p-report', ''), date: sbS('p-date', '')
+  };
+}
+var SB_FT = {square: '독립기초 (정방형)', rect: '독립기초 (장방형)', strip: '연속기초', mat: '전면기초'};
+
+function sbSyncL(){
+  var ft = sbS('p-ftype', 'square'), L = document.getElementById('p-L');
+  if(ft === 'square'){ L.value = document.getElementById('p-B').value; L.disabled = true; }
+  else if(ft === 'strip'){ L.disabled = true; }
+  else L.disabled = false;
+}
+
+/* ── 심도 - N 그래프 (SVG 문자열) ── */
+function sbChart(R, w, h){
+  var h0 = R.gov ? R.gov.hole : null, rows = R.rows;
+  var zmax = Math.max.apply(null, rows.map(function(r){ return r.z; }).concat([R.p.Df + (R.gov ? R.gov.zf : 2), 3]));
+  zmax = Math.ceil(zmax / 3) * 3;
+  var nmax = 50, L = 40, T = 32, W = w - L - 12, H = h - T - 14;
+  var X = function(n){ return L + Math.min(n, nmax) / nmax * W; }, Y = function(z){ return T + z / zmax * H; };
+  var s = '<svg class="sb-chart" viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,\'Noto Sans KR\',sans-serif">';
+  if(R.gov){ s += '<rect x="' + L + '" y="' + Y(R.gov.z1) + '" width="' + W + '" height="' + Math.max(1, Y(Math.min(R.gov.z2, zmax)) - Y(R.gov.z1)) + '" fill="#ccfbf1" opacity=".7"/>'; }
+  for(var n = 0; n <= nmax; n += 10){ s += '<line x1="' + X(n) + '" y1="' + T + '" x2="' + X(n) + '" y2="' + (T + H) + '" stroke="#e2e8f0"/><text x="' + X(n) + '" y="' + (T - 5) + '" font-size="9" text-anchor="middle" fill="#64748b">' + n + '</text>'; }
+  for(var z = 0; z <= zmax; z += 3){ s += '<line x1="' + L + '" y1="' + Y(z) + '" x2="' + (L + W) + '" y2="' + Y(z) + '" stroke="#e2e8f0"/><text x="' + (L - 5) + '" y="' + (Y(z) + 3) + '" font-size="9" text-anchor="end" fill="#64748b">' + z + '</text>'; }
+  s += '<text x="' + (L + W / 2) + '" y="9" font-size="9" text-anchor="middle" fill="#334155" font-weight="700">N (● 기록 · ◆ N₆₀)</text>';
+  s += '<text x="10" y="' + (T + H / 2) + '" font-size="9" fill="#334155" font-weight="700" transform="rotate(-90 10 ' + (T + H / 2) + ')" text-anchor="middle">심도 GL−(m)</text>';
+  s += '<line x1="' + L + '" y1="' + Y(R.p.Df) + '" x2="' + (L + W) + '" y2="' + Y(R.p.Df) + '" stroke="#0f766e" stroke-width="1.5"/><text x="' + (L + W - 2) + '" y="' + (Y(R.p.Df) - 3) + '" font-size="9" text-anchor="end" fill="#0f766e" font-weight="700">기초저면 Df ' + R.p.Df + ' m</text>';
+  if(R.p.Dw < zmax) s += '<line x1="' + L + '" y1="' + Y(R.p.Dw) + '" x2="' + (L + W) + '" y2="' + Y(R.p.Dw) + '" stroke="#2563eb" stroke-dasharray="4 3"/><text x="' + (L + 2) + '" y="' + (Y(R.p.Dw) - 3) + '" font-size="9" fill="#2563eb">▽ 지하수위 ' + R.p.Dw + ' m</text>';
+  var cols = ['#0f766e', '#b45309', '#7c3aed', '#be123c', '#1d4ed8'], holes = [];
+  rows.forEach(function(r){ if(holes.indexOf(r.hole) < 0) holes.push(r.hole); });
+  holes.forEach(function(hn, i){
+    var c = cols[i % cols.length], hr = rows.filter(function(r){ return r.hole === hn; });
+    var pts = hr.map(function(r){ return X(r.N60) + ',' + Y(r.z); }).join(' ');
+    s += '<polyline points="' + pts + '" fill="none" stroke="' + c + '" stroke-width="' + (hn === h0 ? 2 : 1.2) + '"/>';
+    hr.forEach(function(r){
+      s += '<circle cx="' + X(Math.min(r.n0, nmax)) + '" cy="' + Y(r.z) + '" r="2.4" fill="none" stroke="' + c + '"/>';
+      s += '<rect x="' + (X(r.N60) - 2.6) + '" y="' + (Y(r.z) - 2.6) + '" width="5.2" height="5.2" fill="' + c + '" transform="rotate(45 ' + X(r.N60) + ' ' + Y(r.z) + ')"/>';
+    });
+    s += '<text x="' + (L + W - 4) + '" y="' + (T + 12 + i * 11) + '" font-size="9" text-anchor="end" fill="' + c + '" font-weight="700">' + esc(hn) + (hn === h0 ? ' (채택)' : '') + '</text>';
+  });
+  s += '<rect x="' + L + '" y="' + T + '" width="' + W + '" height="' + H + '" fill="none" stroke="#94a3b8"/></svg>';
+  return s;
+}
+
+function sbBox(pass, ico, val, lbl, txt){
+  return '<div class="sbox ' + (pass === null ? '' : (pass ? 'pass' : 'fail')) + '"><div class="sico">' + ico + '</div><div class="sval' + (pass === null ? '' : (pass ? ' grn' : ' red')) + '">' + val + '</div><div class="slbl">' + lbl + '</div>'
+    + (txt ? '<div class="spass ' + (pass ? 'ok' : 'ng') + '">' + txt + '</div>' : '') + '</div>';
+}
+
+function sbRowsTable(R, cls){
+  var h = '<table class="sb-tbl' + (cls ? ' ' + cls : '') + '"><thead><tr><th>공번</th><th>심도<br/>(m)</th><th>N<br/>기록</th><th>N<br/>환산</th><th>C<sub>R</sub></th><th>N₆₀</th><th>σv′<br/>(kPa)</th><th>(N₁)₆₀</th><th>토질</th><th>영향<br/>깊이</th></tr></thead><tbody>';
+  R.rows.forEach(function(r){
+    h += '<tr class="' + (r.inZone ? 'zone' : '') + '"><td>' + esc(r.hole) + '</td><td>' + r.z.toFixed(1) + '</td><td>' + esc(r.raw) + '</td><td>' + (r.n0 % 1 ? r.n0.toFixed(1) : r.n0) + (r.capped ? '→' + r.nc : '') + '</td><td>' + r.CR.toFixed(2) + '</td><td><b>' + f1(r.N60) + '</b></td><td>' + f1(r.sv) + '</td><td>' + f1(r.N1) + '</td><td class="l">' + esc(r.soilTxt || SBENG.SOIL[r.soil].nm) + '</td><td>' + (r.inZone ? '●' : '') + '</td></tr>';
+  });
+  return h + '</tbody></table>';
+}
+
+function sbHolesTable(R){
+  var h = '<table class="sb-tbl"><thead><tr><th>공번</th><th>대표 토질</th><th>대표 N₆₀</th><th>φ / cu</th><th>qu<br/>(kN/㎡)</th><th>지지력 qa</th><th>침하 qa</th><th>산정 qa</th></tr></thead><tbody>';
+  R.holes.forEach(function(o){
+    var gov = o === R.gov;
+    if(!o.ok){ h += '<tr><td>' + esc(o.hole) + '</td><td colspan="7" class="l">' + esc(o.warn[0] || '계산 불가') + '</td></tr>'; return; }
+    var pc = o.rock ? '—' : (o.grp === 'c' ? f1(o.phi) + '°' : f1(o.cu) + ' kPa');
+    h += '<tr class="' + (gov ? 'gov zone' : '') + '"><td>' + esc(o.hole) + (gov ? ' ★' : '') + '</td><td>' + o.soilNm + '</td><td>' + f1(o.N60) + '</td><td>' + pc + '</td><td>' + f1(o.qu) + '</td><td>' + f1(o.qaStr) + '</td><td>' + f1(o.qaSet) + '</td><td><b>' + (o.rock ? '표 4.2-1' : f1(o.qaCalc)) + '</b></td></tr>';
+  });
+  return h + '</tbody></table>';
+}
+
+function sbWarnList(R){
+  var w = R.warn.slice(); R.holes.forEach(function(o){ o.warn.forEach(function(x){ var t = '[' + o.hole + '] ' + x; if(w.indexOf(t) < 0) w.push(t); }); });
+  return w;
+}
+
+function renderResult(R){
+  var el = document.getElementById('sb-result');
+  if(!R.ok){
+    el.innerHTML = '<div class="nb red"><div class="nb-tit">⚠️ 계산할 수 없습니다</div><div class="nb-txt">' + sbWarnList(R).map(esc).join('<br/>') + '</div></div>';
+    return;
+  }
+  var g = R.gov, p = R.p, h = '';
+  var heroCls = R.pass === false ? 'red' : 'grn';
+  h += '<div class="result-hero ' + heroCls + '">';
+  h += '<div class="rh-label">채택 허용지지력 — ' + esc(R.adoptSrc) + '</div>';
+  h += '<div class="rh-num">' + f1(R.adopt) + '</div>';
+  h += '<div class="rh-unit">kN/㎡ (' + f2(R.adopt / 9.81) + ' tf/㎡) · 산정 ' + f1(R.qaCalc) + ' · 표 4.2-1 ' + R.tblQ + ' kN/㎡</div>';
+  h += '<div class="rh-badge">' + (R.pass == null ? '📌 참고값 — 설계 접지압을 넣으면 판정' : (R.pass ? '✅ 접지압 ' + f1(R.qd) + ' ≤ qa (OK)' : '⚠️ 접지압 ' + f1(R.qd) + ' &gt; qa (NG)')) + '</div></div>';
+  h += '<div class="stat-grid">';
+  h += sbBox(null, '🔢', f1(g.N60), '대표 N₆₀ (' + esc(g.hole) + ')');
+  h += sbBox(null, g.grp === 'f' ? '🧱' : '📐', g.rock ? '—' : (g.grp === 'c' ? f1(g.phi) + '°' : f1(g.cu)), g.rock ? g.soilNm : (g.grp === 'c' ? '내부마찰각 φ' : '점착력 cu (kPa)'));
+  h += sbBox(null, '⬇️', g.rock ? '—' : f1(g.qu), '극한지지력 qu (kPa)');
+  h += sbBox(null, '🏗️', g.rock ? '—' : f1(g.qaStr), '지지력 기준 qa');
+  h += sbBox(null, '📏', isFinite(g.qaSet) ? f1(g.qaSet) : '—', '침하 기준 qa (Se ' + p.Se + ')');
+  h += sbBox(R.overTbl ? false : true, '📘', R.tblQ, '표 4.2-1 (kN/㎡)', R.overTbl ? '산정값 초과 → 입증자료' : '산정값 이하');
+  h += '</div>';
+  h += '<div class="card"><div class="card-head"><div class="card-ico teal">📈</div><span class="card-tit">심도 - N 분포 (영향 깊이 ' + f2(g.z1) + ' ~ ' + f2(g.z2) + ' m)</span></div><div class="card-body" style="padding:10px;">' + sbChart(R, 360, 300) + '</div></div>';
+  h += '<div class="card"><div class="card-head"><div class="card-ico amber">📊</div><span class="card-tit">시추공별 결과 (최솟값 공 채택 ★)</span></div><div class="card-body"><div class="tbl-wrap">' + sbHolesTable(R) + '</div></div></div>';
+  if(g.grp === 'c' && g.phis){
+    var t = '<table class="sb-tbl"><thead><tr><th>환산식</th><th>φ (°)</th></tr></thead><tbody>';
+    Object.keys(SBENG.PHI).forEach(function(k){ t += '<tr class="' + (k === p.phiM ? 'gov zone' : '') + '"><td class="l">' + SBENG.PHI[k].nm + (k === p.phiM ? ' (적용)' : '') + '</td><td>' + f1(g.phis[k]) + '</td></tr>'; });
+    t += '</tbody></table>';
+    h += '<div class="card"><div class="card-head"><div class="card-ico blue">📐</div><span class="card-tit">φ 환산식 비교 (대표 N₆₀ ' + f1(g.N60) + ' · (N₁)₆₀ ' + f1(g.N1) + ')</span></div><div class="card-body"><div class="tbl-wrap">' + t + '</div><div class="sb-note">φ 상한 ' + p.phiCap + '° 적용. 식마다 차이가 크므로 보고서의 제시값 · 시험값과 비교하십시오(KDS 11 50 05 4.1.3(1) 설계자 판단).</div></div></div>';
+  }
+  h += '<div class="card"><div class="card-head"><div class="card-ico red">🔢</div><span class="card-tit">N값 보정표 (ER ' + p.ER + ' % · ● 영향 깊이)</span></div><div class="card-body"><div class="tbl-wrap">' + sbRowsTable(R) + '</div></div></div>';
+  var w = sbWarnList(R);
+  if(w.length) h += '<div class="nb amber"><div class="nb-tit">📌 확인 사항</div><div class="nb-txt"><ul class="sb-warn" style="margin:0;padding-left:18px;">' + w.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div></div>';
+  if(R.overTbl && !(R.qaPlate > 0)) h += '<div class="nb blue"><div class="nb-tit">📘 KDS 41 19 00 4.2.2</div><div class="nb-txt">산정값 ' + f1(R.qaCalc) + ' kN/㎡ 가 표 4.2-1 추정 지지력 ' + R.tblQ + ' kN/㎡ 보다 큽니다. 더 큰 값을 쓰려면 지반조사 보고서 · 재하시험 등 입증자료를 제출해 승인받아야 합니다.' + (p.evid ? '' : ' (입증자료 없음 → 표 값 채택)') + '</div></div>';
+  el.innerHTML = h;
+}
+
+/* ════════════════════════════════════════════
+   A4 계산서
+════════════════════════════════════════════ */
+function renderA4Iso(R){
+  var el = document.getElementById('a4iso-content');
+  if(!el) return;
+  if(R === undefined) R = getResultByType();
+  if(!R){ el.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:600px;color:#90a4ae;"><div style="font-size:56px;margin-bottom:16px;">📄</div><div style="font-size:16px;font-weight:800;color:#546e7a;">N값 표를 넣으면 계산서가 만들어집니다</div></div>'; return; }
+  var p = R.p, g = R.gov, ymd = (p.date || '').replace(/-/g, '.') || new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+  function cell(k, v){ return '<div class="a4iso-cell"><span class="a4iso-cell-k">' + k + '</span><span class="a4iso-cell-v">' + v + '</span></div>'; }
+  function row(sym, k, v, u, src){ return '<tr><td>' + sym + '</td><td style="text-align:left;">' + k + '</td><td class="mono" style="font-weight:800;">' + v + '</td><td>' + u + '</td><td style="text-align:left;">' + src + '</td></tr>'; }
+  var pass = R.pass;
+  var html = '';
+  html += '<div class="a4-tit">표준관입시험 N값 지내력 환산 계산서</div>';
+  html += '<div class="a4-head2"><div class="a4-proj">사업명 : ' + esc(p.proj || '-') + '</div>';
+  html += '<div class="a4-meta">위치 : ' + esc(p.site || '-') + '<br/>작성일 : ' + ymd + ' &nbsp;·&nbsp; 작성자 : ' + esc(p.author || '-') + '<br/>지반조사 : ' + esc(p.report || '-') + '</div></div>';
+  html += '<div class="a4iso-judge ' + (pass === false ? 'fail' : 'pass') + '"><div><div class="a4iso-judge-main">채택 허용지지력 qa = ' + f1(R.adopt) + ' kN/㎡</div>';
+  html += '<div class="a4iso-judge-sub">' + esc(R.adoptSrc) + '</div></div>';
+  html += '<div style="text-align:right;"><div style="font-size:11px;opacity:.7;margin-bottom:2px;">' + (R.qd ? '설계 접지압 / 채택 qa' : '산정 qa / 표 4.2-1') + '</div>';
+  html += '<div class="a4iso-judge-fs">' + (R.qd ? f1(R.qd) + ' / ' + f1(R.adopt) : f1(R.qaCalc) + ' / ' + R.tblQ) + '</div>';
+  html += '<div style="font-size:11px;opacity:.7;margin-top:2px;">' + (R.qd ? (pass ? '✓ OK' : '✗ NG') : 'kN/㎡ · 참고값') + '</div></div></div>';
+
+  html += '<div class="a4-sub">① 설계 조건</div><div class="a4iso-grid4">';
+  html += cell('기초 형식', SB_FT[p.ftype]) + cell('기초 폭 B × 길이 L', p.B + ' × ' + (p.ftype === 'strip' ? '∞' : p.L) + ' m') + cell('근입깊이 Df', p.Df + ' m') + cell('지하수위', 'GL−' + p.Dw + ' m');
+  html += cell('γt · γsat', p.gt + ' · ' + p.gsat + ' kN/m³') + cell('해머 효율 ER', p.ER + ' %' + (p.useCR ? ' · C<sub>R</sub> 적용' : '')) + cell('N 상한 · φ 상한', p.Ncap + ' · ' + p.phiCap + '°') + cell('안전계수 SF', p.SF);
+  html += '</div>';
+
+  html += '<div class="a4-sub amber">② N값 보정 (KDS 11 50 05 4.1.5② — 에너지 효율 · 롯드 길이 · 유효상재압)</div>';
+  html += '<div class="a4-two"><div>' + sbRowsTable(R, 'long') + '</div><div>' + sbChart(R, 300, 300) + '</div></div>';
+  html += '<div class="sb-note">N₆₀ = N × ER/60 × C<sub>R</sub> (N ≤ ' + p.Ncap + ', 관입 불능 50/x → 50 × 30/x) · σv′ = Σγh − u · (N₁)₆₀ = N₆₀ × √(98.1/σv′) (C<sub>N</sub> ≤ 2) · 영향 깊이 = Df ~ Df + ' + f2(g.zf) + ' m (' + (p.ftype === 'strip' ? '2B' : (p.ftype === 'square' ? '1.5B' : 'B(2 − 0.5B/L)')) + ') · 대표값 = ' + (p.rep === 'min' ? '최솟값' : '평균') + (p.fineSand ? ' · 수중 세립 모래 N′ = 15 + ½(N−15)' : '') + '</div>';
+
+  html += '<div class="a4-sub">③ 시추공별 허용지지력 (최솟값 공 채택 ★)</div>' + sbHolesTable(R);
+
+  html += '<div class="a4-sub grn">④ 채택 공 ' + esc(g.hole) + ' 산정 과정</div>';
+  html += '<table class="a4-tbl sb-calc"><colgroup><col style="width:9%"/><col style="width:24%"/><col style="width:16%"/><col style="width:7%"/><col style="width:44%"/></colgroup><thead><tr><th>기호</th><th>항목</th><th>수치</th><th>단위</th><th>산출근거</th></tr></thead><tbody>';
+  html += row('N₆₀', '대표 N값 (' + g.soilNm + ', ' + g.nZone + '개 평균' + (p.rep === 'min' ? '→최솟값' : '') + ')', f2(g.N60), '회', '영향 깊이 ' + f2(g.z1) + ' ~ ' + f2(g.z2) + ' m');
+  if(g.rock){
+    html += row('—', '암반 (' + g.soilNm + ')', '—', '', 'KDS 11 50 05 4.1.6 — N값 환산 미적용');
+  } else {
+    if(g.grp === 'c') html += row('φ', '내부마찰각 — ' + g.phiNm, f2(g.phi), '°', g.phiEq + (g.phiCapped ? ' (상한 ' + p.phiCap + '° 적용)' : ''));
+    else html += row('cu', '비배수 전단강도', f2(g.cu), 'kN/㎡', g.cuSrc);
+    html += row('qo', '근입부 유효상재압', f2(g.qo), 'kN/㎡', 'γt·Df' + (p.Dw < p.Df ? ' − 수중 γ′ 적용' : '') + ' (KDS 41 19 00 4.2.4.1)');
+    html += row('γ', 'Nγ 항 단위중량', f2(g.gEff), 'kN/m³', p.Dw <= p.Df ? 'γ′ = γsat − 9.81' : (p.Dw >= p.Df + p.B ? 'γt' : 'γ′ ~ γt 보간'));
+    html += row('Nc · Nq · Nγ', '지지력계수 (Meyerhof)', f2(g.m.Nc) + ' · ' + f2(g.m.Nq) + ' · ' + f2(g.m.Ng), '', g.grp === 'c' ? 'Nq = e^(π tanφ)·tan²(45°+φ/2) · Nγ = (Nq−1)tan(1.4φ)' : 'φ = 0 → Nc = 5.14');
+    html += row('s · d', '형상계수 sc · sq · 깊이계수', f3(g.m.sc) + ' · ' + f3(g.m.sq) + (p.useD ? ' · dq ' + f3(g.m.dq) : ''), '', 'sc = 1 + 0.2Kp·B/L · sq = 1 + 0.1Kp·B/L' + (p.useD ? '' : ' · 깊이계수 미적용'));
+    html += row('qu', '극한지지력', f2(g.qu) + (g.quCapped ? ' (상한)' : ''), 'kN/㎡', 'c·Nc·sc + q·Nq·sq + ½γB·Nγ·sγ = ' + f1(g.m.tc) + ' + ' + f1(g.m.tq) + ' + ' + f1(g.m.tg) + (g.quCapped ? ' → 3,000' : ''));
+    html += row('qa₁', '지지력 기준 허용지지력', f2(g.qaStr), 'kN/㎡', '(qu − qo)/SF + qo, SF = ' + p.SF + ' (KDS 41 19 00 식 4.2-1)');
+    if(isFinite(g.qaSet)) html += row('qa₂', '침하 기준 허용지지력', f2(g.qaSet), 'kN/㎡', g.set.eq + ' · Fd ' + f3(g.set.Fd) + ' · C<sub>w</sub> ' + f2(g.set.Cw) + ' (Se ' + p.Se + ' mm)');
+    html += row('qa', '산정 허용지지력', f2(g.qaCalc), 'kN/㎡', isFinite(g.qaSet) ? 'min(qa₁, qa₂) — ' + g.gov + ' 지배 (KDS 11 50 05 4.1.2)' : '전단파괴 기준 (압밀침하 별도)');
+  }
+  html += row('q<sub>t</sub>', 'KDS 41 19 00 표 4.2-1 추정 지지력', R.tblQ, 'kN/㎡', g.tblNm);
+  if(R.qaPlate > 0) html += row('q<sub>p</sub>', '평판재하시험 허용지지력', f2(R.qaPlate), 'kN/㎡', 'min(qy/2, qult/3) — qy ' + (p.plY || '-') + ' · qult ' + (p.plU || '-'));
+  html += row('qa', '<b>채택 허용지지력</b>', '<b>' + f2(R.adopt) + '</b>', 'kN/㎡', esc(R.adoptSrc));
+  if(R.qd) html += row('q<sub>d</sub>', '설계 접지압 판정', f2(R.qd), 'kN/㎡', R.pass ? '≤ qa → ✓ OK' : '&gt; qa → ✗ NG');
+  html += '</tbody></table>';
+
+  var w = sbWarnList(R);
+  if(w.length) html += '<div class="a4-sub red">⑤ 확인 사항</div><div style="font-size:11px;line-height:1.7;color:#334155;">' + w.map(function(x){ return '• ' + esc(x); }).join('<br/>') + '</div>';
+
+  html += '<div class="a4-sub">▣ 적용 법령 및 기준</div>';
+  html += '<table class="a4-tbl a4-law"><thead><tr><th>기준</th><th>조항</th><th>적용 내용</th></tr></thead><tbody>';
+  html += '<tr><td>KDS 41 19 00 건축물 기초구조 설계기준 (2022. 10. 11.)</td><td>4.2.2 · 표 4.2-1</td><td>입증자료 승인 없이 표 4.2-1 추정 지지력 초과 불가 (결정질 기반암 580 · 퇴적암 190 · 자갈 140 · 모래 100 · 점토 70 kN/㎡)</td></tr>';
+  html += '<tr><td>KDS 41 19 00</td><td>4.2.4.1 식(4.2-1) · 4.2.4.3</td><td>qa = (qu − qo)/SF + qo · qu ≤ 3,000 kPa · SF ≥ 3 · qu 는 KDS 11 50 05 에 따름</td></tr>';
+  html += '<tr><td>KDS 11 50 05 얕은기초 설계기준 (2025. 12. 24.)</td><td>4.1.2 · 4.1.3 · 4.1.4</td><td>허용지지력 = min(극한/안전율, 허용변위 지지력) · 이론식 · 경험식은 적용성 확인 후 신중 적용</td></tr>';
+  html += '<tr><td>KDS 11 50 05</td><td>4.1.5②</td><td>표준관입시험 — 해머 에너지 효율 보정 N, 필요시 롯드 길이 · 시추공 크기 · 유효상재하중 보정</td></tr>';
+  html += '<tr><td>KDS 11 30 05 연약지반 설계 일반 (2025. 12. 24.)</td><td>표 1.6-1</td><td>연약지반 판정 — 점성토 N ≤ 4(10 m 이상 6) · qu ≤ 60(100) kN/㎡ / 사질토 N ≤ 10</td></tr>';
+  html += '<tr><td>문헌식</td><td>—</td><td>Dunham(1954) · 오사키 · Peck 등(1974) · Hatanaka·Uchida(1996) · Terzaghi·Peck(1967) · Meyerhof(1963 · 1965) · Bowles(1996) · Skempton(1986)</td></tr>';
+  html += '</tbody></table>';
+  html += '<div style="margin-top:12px;padding:8px 12px;background:#fff3e0;border-left:4px solid #ff9800;border-radius:0 6px 6px 0;font-size:11px;color:#795548;line-height:1.8;">';
+  html += '<b>※ 주 의 사 항</b><br/>① 현행 KDS 에는 N값 → 허용지지력 환산식이 없습니다. 이 계산서는 문헌식에 따른 <b>참고 추정값</b>이며 기초 설계 책임은 설계자 · 구조기술사에게 있습니다.<br/>';
+  html += '② 평판재하시험 · 실내시험 값 &gt; 지반조사 보고서 제시 허용지지력 &gt; 이 계산서 순으로 우선합니다. 경험식은 영향 깊이(2B)까지 거의 균질 · 수평 지층일 때 적용합니다(KDS 11 50 05 4.1.4).<br/>';
+  html += '③ 점성토 압밀침하 · 액상화 · 경사지 · 편심 · 경사하중 · 층상지반 · 암반 지지력은 별도 검토 대상입니다.';
+  html += '</div>';
+  html += '<div class="a4-footer"><span>N값 지내력 환산 시스템 [MANMIN-Ver1.0]</span><span>KDS 41 19 00 (2022) · KDS 11 50 05 (2025. 12. 24.)</span><span>작성일: ' + ymd + '</span></div>';
+  el.innerHTML = html;
+  if(typeof markLongTables === 'function') markLongTables(el);
+}
+
+function scaleA4Iso(){
+  var wrap = document.getElementById('a4iso-scale-wrap'), outer = document.getElementById('a4Wrap');
+  if(!wrap || !outer) return;
+  if(window.matchMedia('print').matches){ wrap.style.transform = 'none'; wrap.style.height = ''; return; }
+  var tab = document.getElementById('panel-a4preview');
+  if(tab && !tab.classList.contains('active')) return;
+  var ocs = getComputedStyle(outer);
+  var availW = outer.clientWidth - (parseFloat(ocs.paddingLeft) || 0) - (parseFloat(ocs.paddingRight) || 0);
+  if(availW <= 0){ wrap.style.transform = 'none'; wrap.style.height = ''; return; }
+  var scale = Math.max(0.05, Math.min(1, availW / 794));
+  wrap.style.transform = 'scale(' + scale.toFixed(5) + ')';
+  var page = document.getElementById('a4iso-content');
+  wrap.style.height = ((page ? page.offsetHeight : 1122) * scale) + 'px';
+}
+window._scaleA4 = scaleA4Iso;
+
+function printA4(){
+  var r = getResultByType();
+  if(!r){ showToast('⚠️ 먼저 N값 표를 넣어 계산하세요'); return; }
+  renderA4Iso(r);
+  window.print();
+}
+
+function calcAll(){
+  var p = sbParams();
+  var R = SBENG.run(p);
+  SB.result = R;
+  renderResult(R);
+  renderA4Iso(R.ok ? R : null);
+  sbSum();
+  if(currentTab === 'a4preview') scaleA4Iso();
+  return R;
+}
+
+function sbSum(){
+  var f = function(id, v){ var e = document.getElementById(id); if(e) e.textContent = v; };
+  var R = getResultByType();
+  if(!R){ ['sb-soil', 'sb-n', 'sb-phi', 'sb-qa', 'sb-adopt', 'sb-judge'].forEach(function(id){ f(id, '—'); }); return; }
+  var g = R.gov;
+  f('sb-soil', g.soilNm + ' (' + g.hole + ')'); f('sb-n', f1(g.N60));
+  f('sb-phi', g.rock ? '—' : (g.grp === 'c' ? f1(g.phi) + '°' : f1(g.cu) + ' kPa'));
+  f('sb-qa', isFinite(R.qaCalc) ? f1(R.qaCalc) + ' kN/㎡' : '—'); f('sb-adopt', f1(R.adopt) + ' kN/㎡');
+  f('sb-judge', R.pass == null ? '—' : (R.pass ? 'OK' : 'NG'));
+}
+
+function switchTab(name){
+  currentTab = name;
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tb:not(.tb-manual)').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('panel-' + name).classList.add('active');
+  var tb = document.getElementById('tab-' + name); if(tb) tb.classList.add('active');
+  if(name === 'a4preview'){ renderA4Iso(getResultByType()); scaleA4Iso(); }
+}
+
+var SB_EXG = {1: ['square', '2.0', '2.0', '1.5', '10'], 2: ['strip', '1.2', '1.2', '1.0', '1.5'], 3: ['rect', '2.0', '3.0', '1.5', '4.0']};
+function sbExample(n){
+  document.getElementById('p-table').value = SB_EX[n];
+  var g = SB_EXG[n]; ['p-ftype', 'p-B', 'p-L', 'p-Df', 'p-Dw'].forEach(function(id, i){ document.getElementById(id).value = g[i]; });
+  sbSyncL(); calcAll();
+}
+
+function resetAll(){
+  Object.keys(SB_DEF).forEach(function(id){ var e = document.getElementById(id); if(e) e.value = SB_DEF[id]; });
+  Object.keys(SB_CHK).forEach(function(id){ var e = document.getElementById(id); if(e) e.checked = SB_CHK[id]; });
+  document.getElementById('p-table').value = SB_EX[1];
+  sbSyncL(); calcAll();
+  showToast('🔄 기본값으로 되돌렸습니다');
+}
+
+/* 도움말 (중앙 모달) */
+var _helpOpen = false, _scrollY = 0;
+function toggleHelp(){
+  _helpOpen = !_helpOpen;
+  var overlay = document.getElementById('help-overlay');
+  if(_helpOpen){
+    _scrollY = window.scrollY; overlay.classList.add('open');
+    document.body.style.overflow = 'hidden'; document.body.style.position = 'fixed'; document.body.style.top = '-' + _scrollY + 'px'; document.body.style.width = '100%';
+  } else {
+    overlay.classList.remove('open');
+    document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.top = ''; document.body.style.width = '';
+    window.scrollTo(0, _scrollY);
+  }
+}
+function handleHelpOverlayClick(e){ if(e.target === document.getElementById('help-overlay')) toggleHelp(); }
+function switchHelpTab(name){
+  document.querySelectorAll('.help-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.help-tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('help-' + name).classList.add('active');
+  var idx = ['usage', 'law', 'formula'].indexOf(name), tabs = document.querySelectorAll('.help-tab');
+  if(tabs[idx]) tabs[idx].classList.add('active');
+}
+function showToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+
+/* 입력이 바뀌면 0.3초 뒤 다시 계산 (옹벽 §25-6-31 자동 계산과 같은 방식) */
+(function(){
+  var T = null;
+  function on(e){
+    var t = e.target; if(!t || !t.closest || !t.closest('#panel-calc')) return;
+    if(t.id === 'p-ftype' || t.id === 'p-B') sbSyncL();
+    clearTimeout(T); T = setTimeout(calcAll, 300);
+  }
+  document.addEventListener('input', on, true);
+  document.addEventListener('change', on, true);
+})();
+
+document.addEventListener('DOMContentLoaded', function(){
+  var d = document.getElementById('p-date');
+  if(d && !d.value){ var t = new Date(); d.value = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2); }
+  var ta = document.getElementById('p-table'); if(ta && !ta.value) ta.value = SB_EX[1];
+  sbSyncL();
+  setTimeout(calcAll, 0);
+  var rt;
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(scaleA4Iso, 100); });
+  window.addEventListener('orientationchange', function(){ setTimeout(scaleA4Iso, 300); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && _helpOpen) toggleHelp(); });
+});
+</script>
+
+
+<!-- ═══ iOS 홈화면 추가 안내 모달 ═══ -->
+<div id="ios-modal-rw">
+  <div class="rw-ios-hdr">
+    <div class="rw-ios-title">📱 홈 화면에 추가하기 (iOS)</div>
+    <button class="rw-ios-cls" onclick="document.getElementById('ios-modal-rw').classList.remove('show')">✕</button>
+  </div>
+  <div class="rw-ios-step"><div class="rw-ios-num">1</div><div class="rw-ios-txt">Safari 하단 <strong>공유 버튼</strong> (□↑) 을 탭하세요</div></div>
+  <div class="rw-ios-step"><div class="rw-ios-num">2</div><div class="rw-ios-txt">스크롤해서 <strong>홈 화면에 추가</strong>를 탭하세요</div></div>
+  <div class="rw-ios-step"><div class="rw-ios-num">3</div><div class="rw-ios-txt">오른쪽 상단 <strong>추가</strong>를 탭하면 완료!</div></div>
+  <div class="rw-ios-foot">지내력을 홈 화면에서 오프라인으로도 사용 가능합니다 ✓</div>
+</div>
+
+<!-- ═══ PWA 설치 배너 ═══ -->
+<div id="pwa-banner">
+  <div class="rw-pwa-inner">
+    <div class="rw-pwa-icon">
+      <img src="./icons/brand-icon.jpg" alt="지내력 MANMIN"/>
+    </div>
+    <div class="rw-pwa-texts">
+      <div class="rw-pwa-title">📲 지내력 앱으로 설치!</div>
+      <div class="rw-pwa-desc">홈화면 추가 → 오프라인 지내력 환산 · 빠른 실행</div>
+    </div>
+    <div class="rw-pwa-btns">
+      <button class="rw-pwa-ok" onclick="window.pwaTriggerInstall&&window.pwaTriggerInstall()">설치하기</button>
+      <button class="rw-pwa-no" onclick="window.pwaDismiss&&window.pwaDismiss()">나중에</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Service Worker 등록 + PWA 설치 로직 ═══ -->
+<script>
+(function(){
+  var deferred = null;
+  var _isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var _isSA  = window.matchMedia('(display-mode:standalone)').matches || !!navigator.standalone;
+
+  /* ── 1. Service Worker 등록 ── */
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js', {scope:'./'})
+        .then(function(r){
+          console.log('[PWA] SW 등록:', r.scope);
+          r.addEventListener('updatefound', function(){
+            var nw = r.installing; if(!nw) return;
+            nw.addEventListener('statechange', function(){
+              if(nw.state === 'installed' && navigator.serviceWorker.controller){
+                var b = document.createElement('div');
+                b.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:9999;background:#115e59;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(17,94,89,.5);white-space:nowrap;font-family:inherit;';
+                b.innerHTML = '<span>🔄 새 버전 준비됨</span>'
+                  + '<button onclick="navigator.serviceWorker.ready.then(function(r){if(r.waiting)r.waiting.postMessage({type:&#39;SKIP_WAITING&#39;});});this.parentNode.remove();location.reload();" '
+                  + 'style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:5px 12px;border-radius:7px;cursor:pointer;font-weight:800;font-family:inherit;">지금 적용</button>'
+                  + '<button onclick="this.parentNode.remove()" style="background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:16px;padding:0 4px;">✕</button>';
+                document.body.appendChild(b);
+                setTimeout(function(){if(b.parentNode)b.remove();}, 8000);
+              }
+            });
+          });
+        }).catch(function(e){ console.warn('[PWA] SW 실패:', e); });
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        if(!window._pwaR){ window._pwaR=true; location.reload(); }
+      });
+    });
+  }
+
+  /* ── 2. beforeinstallprompt (Android/PC) ── */
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    /* standalone 모드에서는 무시 */
+    var isSA_now = window.matchMedia('(display-mode:standalone)').matches
+                   || (window.navigator.standalone === true);
+    if(isSA_now){ return; }
+    deferred = e;
+    /* v5.0 — 헤더 설치 버튼 없음(§3-1). 설치 진입은 하단 배너. */
+    if(!sessionStorage.getItem('pwa-dismissed')){
+      setTimeout(function(){
+        var b = document.getElementById('pwa-banner');
+        if(b) b.classList.add('visible');
+      }, 2000);
+    }
+  });
+
+  /* ── 3. iOS 헤더 버튼 + standalone 숨김
+     ※ </body> 직전 <script>이므로 DOMContentLoaded는 이미 완료 상태.
+        readyState === 'loading' 일 때만 addEventListener, 아니면 즉시 실행. ── */
+  function _rwPwaInit(){
+    /* _isSA 재계산 — 일부 브라우저에서 초기 평가 오류 방지 */
+    var isSA2 = window.matchMedia('(display-mode:standalone)').matches
+                || (window.navigator.standalone === true);
+    if(_isIOS && !isSA2){
+      if(!sessionStorage.getItem('pwa-dismissed')){
+        setTimeout(function(){
+          var m = document.getElementById('ios-modal-rw');
+          if(m) m.classList.add('show');
+        }, 2000);
+      }
+    }
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', _rwPwaInit);
+  } else {
+    _rwPwaInit(); /* 이미 로딩 완료 → 즉시 실행 */
+  }
+
+  /* ── 4. 설치 실행 ── */
+  window.pwaTriggerInstall = function(){
+    var b = document.getElementById('pwa-banner');
+    if(b) b.classList.remove('visible');
+    /* 실행 시점의 standalone 상태 재계산 */
+    var isSA_now = window.matchMedia('(display-mode:standalone)').matches
+                   || (window.navigator.standalone === true);
+    if(_isIOS && !isSA_now){
+      var m = document.getElementById('ios-modal-rw');
+      if(m) m.classList.add('show');
+      return;
+    }
+    if(!deferred){
+      if(isSA_now){ alert('✅ 이미 설치된 앱입니다.'); return; }
+      alert('📱 브라우저 메뉴 → 앱 설치 / 홈 화면에 추가를 선택하세요.');
+      return;
+    }
+    deferred.prompt();
+    deferred.userChoice.then(function(r){
+      if(r.outcome === 'accepted'){
+        deferred = null;
+      } else {
+        deferred = null;
+      }
+    });
+  };
+
+  /* ── 5. 배너 닫기 ── */
+  window.pwaDismiss = function(){
+    var b = document.getElementById('pwa-banner');
+    if(b){
+      b.style.transition = 'transform .3s,opacity .25s';
+      b.style.transform = 'translateY(110%)';
+      b.style.opacity = '0';
+      setTimeout(function(){ b.classList.remove('visible'); b.style = ''; }, 330);
+    }
+    try{ sessionStorage.setItem('pwa-dismissed','1'); }catch(e){}
+  };
+
+  /* ── 6. 설치 완료 ── */
+  window.addEventListener('appinstalled', function(){
+    var b   = document.getElementById('pwa-banner');
+    if(b)   b.classList.remove('visible');
+    deferred = null;
+  });
+})();
+</script>
+<script>
+/* ═══════════════ v5.0 — A4 페이지 단위 JPG + 저장 시트 (§3-5 · §14-2 · §17-7) ═══════════════
+   22 냉온배관 v5.0 엔진 이식(옹벽 v5.1.10 경유). 통짜 1장 캡처 → A4 비율(794×1123) 쪽 분할 + 미리보기 시트. */
+function mmSafeCuts(page){
+  var pr=page.getBoundingClientRect(), out=[];
+  page.querySelectorAll('.a4-head2,table.a4-tbl tbody tr')
+    .forEach(function(el){ out.push(el.getBoundingClientRect().bottom-pr.top); });
+  page.querySelectorAll('.a4-sub')
+    .forEach(function(el){ out.push(el.getBoundingClientRect().top-pr.top); });
+  out.push(page.scrollHeight);
+  out.sort(function(a,b){return a-b;});
+  return out.filter(function(v,i,a){return i===0 || v-a[i-1]>0.5;});
+}
+function mmPickCut(cuts,y,limit){
+  var best=0;
+  for(var i=0;i<cuts.length;i++){
+    if(cuts[i]>y+1 && cuts[i]<=limit) best=cuts[i];
+    else if(cuts[i]>limit) break;
+  }
+  return best;
+}
+/* ⛔ .a4-page 에 min-height:1122px 이 걸려 있어 scrollHeight 를 그대로 쓰면 유령 여백이 문서 높이로 잡힌다(§14-2). */
+function mmContentHeight(page){
+  var pr=page.getBoundingClientRect(), max=0;
+  page.querySelectorAll('*').forEach(function(el){
+    var cs=getComputedStyle(el);
+    if(cs.display==='none' || cs.visibility==='hidden') return;
+    var b=el.getBoundingClientRect().bottom-pr.top;
+    if(b>max) max=b;
+  });
+  var pad=parseFloat(getComputedStyle(page).paddingBottom)||0;
+  var h=Math.ceil(max+pad);
+  return (h>0 && h<page.scrollHeight) ? h : page.scrollHeight;
+}
+/* 쪽 나눔은 @page 여백과 같은 값을 쓴다(§3-5-1). 세로 유효 높이 297-14-22 = 261mm. */
+var MM_PAGE = { W:794, H:1123, MT:14, MR:12, MB:22, ML:14 };
+/* 한 장에 못 들어가는 표에는 .long 을 붙여 분할을 허용한다(§16-13). */
+function markLongTables(page){
+  var mmPerPx=210/794, usable=(297-14-22)/mmPerPx;   /* 261mm ≈ 987px */
+  page.querySelectorAll('table.a4-tbl').forEach(function(t){
+    t.classList.toggle('long', t.getBoundingClientRect().height>usable || t.classList.contains('shadow') || t.classList.contains('splitok'));
+  });
+}
+/* 블록 원자 방식(§17-7) — #a4Page 직계 자식. 소제목(.a4-sub)은 바로 뒤 형제와 한 덩어리. */
+function mmBlocks(page){
+  var pr=page.getBoundingClientRect(), out=[], pend=null;
+  Array.prototype.forEach.call(page.children, function(el){
+    var b=el.getBoundingClientRect();
+    if(b.height<=0) return;
+    var mb=parseFloat(getComputedStyle(el).marginBottom)||0;
+    var top=b.top-pr.top, bot=b.bottom-pr.top+mb;
+    if(el.classList.contains('a4-sub')){
+      if(pend) out.push(pend);
+      pend={top:top, bot:bot};
+      return;
+    }
+    if(pend){ out.push({top:pend.top, bot:bot, split:el.classList.contains('long')}); pend=null; return;   /* R23: 소제목+표 병합 블록 split 승계(§20-16 ①) */ }
+    out.push({top:top, bot:bot, split:el.classList.contains('long')});
+  });
+  if(pend) out.push(pend);
+  out.sort(function(a,b){ return a.top-b.top; });
+  return out;
+}
+function mmSegments(page){
+  var mmPerPx=210/MM_PAGE.W;
+  var cs=getComputedStyle(page);
+  var padTop=parseFloat(cs.paddingTop)||0, padBot=parseFloat(cs.paddingBottom)||0;
+  var usable=(297-MM_PAGE.MT-MM_PAGE.MB)/mmPerPx;
+  var docH=mmContentHeight(page);
+  var stop=Math.max(padTop, docH-padBot);
+  var blocks=mmBlocks(page);
+  if(!blocks.length) return [[padTop,stop]];
+  var cuts=mmSafeCuts(page);
+  var segs=[], y=padTop, i=0, guard=0;
+  while(i<blocks.length && guard++<120){
+    var limit=y+usable, j=i, end=y;
+    while(j<blocks.length && blocks[j].bot<=limit+0.5){ end=blocks[j].bot; j++; }
+    if(j===i){
+      var cut=mmPickCut(cuts, y, limit);
+      if(!cut || cut<=y+1) cut=limit;
+      segs.push([y,cut]);
+      if(cut>=blocks[i].bot-0.5) i++;
+      y=cut; continue;
+    }
+        /* R23 (S10 소급 · 지시서 §20-15 ④·§20-16 ①): 다음 블록이 행 나눔 허용 표(.long)이고 남은 공간이 1/4 이상이면 행 경계에서 잘라 미리보기 순서대로 채운다 */
+    if(j<blocks.length && blocks[j].split && (limit-end)>usable*0.25){ var c2=mmPickCut(cuts,end,limit); if(c2>blocks[j].top+20){ segs.push([y,c2]); y=c2; blocks[j].top=c2; i=j; continue; } }
+    segs.push([y,end]); y=end; i=j;
+  }
+  if(stop-y>5) segs.push([y,stop]);
+  return segs.length ? segs : [[padTop,stop]];
+}
+function mmDownload(url,name){
+  var a=document.createElement('a');
+  a.download=name; a.href=url;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+function mmCloseSheet(){
+  var ov=document.getElementById('mm-save-ov');
+  if(ov) ov.classList.remove('show');
+}
+function mmOpenSheet(shots, base){
+  var prev=document.getElementById('mm-save-ov');
+  if(prev) prev.remove();
+  var ov=document.createElement('div');
+  ov.id='mm-save-ov';
+  var body='';
+  shots.forEach(function(url,i){
+    body+='<div class="mm-shot"><img src="'+url+'" alt="'+(i+1)+'쪽 미리보기"/>'
+        + '<button class="mm-shot-btn" data-i="'+i+'">🖼 '+(i+1)+'쪽 저장</button></div>';
+  });
+  ov.innerHTML =
+    '<div class="mm-sheet" role="dialog" aria-modal="true" aria-label="산정서 저장">'
+    + '<div class="mm-sheet-head"><div>'
+    +   '<div class="mm-sheet-title">산정서 저장 · 총 '+shots.length+'매</div>'
+    +   '<div class="mm-sheet-note">'+(shots.length>1?'브라우저가 연속 다운로드를 차단하므로 쪽별로 저장합니다.':'미리보기를 확인하고 저장하세요.')+'</div>'
+    + '</div><button class="btn-export mm-btn-close" id="mm-sheet-x">✕ 닫기</button></div>'
+    + '<div class="mm-sheet-body'+(shots.length>1?' multi':'')+'">'+body+'</div>'
+    + '<div class="mm-sheet-foot">'
+    +   '<button class="btn-export mm-btn-jpg" id="mm-save-all">🖼 전체 저장 ('+shots.length+'매)</button>'
+    + '</div></div>';
+  document.body.appendChild(ov);
+  ov.classList.add('show');
+  ov.querySelectorAll('.mm-shot-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      mmDownload(shots[+b.getAttribute('data-i')], base+'_'+(+b.getAttribute('data-i')+1)+'of'+shots.length+'.jpg');
+    });
+  });
+  document.getElementById('mm-sheet-x').addEventListener('click',mmCloseSheet);
+  ov.addEventListener('click',function(e){ if(e.target===ov) mmCloseSheet(); });
+  document.getElementById('mm-save-all').addEventListener('click',function(){
+    shots.forEach(function(url,i){
+      setTimeout(function(){ mmDownload(url, base+'_'+(i+1)+'of'+shots.length+'.jpg'); }, i*400);
+    });
+  });
+}
+
+window.exportA4Jpg = function(){
+  var el = document.getElementById('a4iso-content');
+  if(!el){ showToast('A4 미리보기 탭으로 이동 후 시도하세요'); return; }
+  var _r = getResultByType();
+  if(!_r){ showToast('⚠️ 먼저 N값 표를 넣어 계산하세요'); return; }
+  renderA4Iso(_r);
+  showToast('📸 JPG 생성 중...');
+  /* ⛔ 미리보기 축소 배율을 반드시 먼저 푼다(§16-17). 해제 → 리플로우 → 측정·캡처 → 복원 */
+  var scaleWrap = document.getElementById('a4iso-scale-wrap');
+  var prevTransform = scaleWrap ? scaleWrap.style.transform : '';
+  if(scaleWrap) scaleWrap.style.transform = 'none';
+  void el.offsetHeight;
+  var restoreScale = function(){ if(scaleWrap) scaleWrap.style.transform = prevTransform; };
+  markLongTables(el);
+  var segs = mmSegments(el);
+  var fullH = Math.max(mmContentHeight(el),1);
+  html2canvas(el, {
+    scale: 2, useCORS: true, allowTaint: false,
+    backgroundColor: '#ffffff', logging: false,
+    width: el.scrollWidth, height: fullH,
+    windowWidth: el.scrollWidth, windowHeight: fullH,
+    scrollX: 0, scrollY: 0
+  }).then(function(canvas){
+    restoreScale();
+    var now = new Date();
+    var ts = now.getFullYear()+''+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')
+      +'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0');
+    var base = 'N값지내력환산_MANMIN-Ver1.0_'+ts;
+    if(!segs || !segs.length){
+      mmDownload(canvas.toDataURL('image/jpeg',0.95), base+'.jpg');
+      showToast('✅ JPG 저장 완료!'); return;
+    }
+    /* 각 쪽을 A4 용지 비율(794×1123 · 1:1.414) 캔버스에 얹는다(§3-5-2). 윗여백 14mm 전 쪽 동일(§3-5-1). */
+    var S = canvas.width/el.scrollWidth;
+    var PAGE_W=MM_PAGE.W, PAGE_H=MM_PAGE.H, mmPerPx=210/PAGE_W;
+    var topPx = MM_PAGE.MT/mmPerPx;
+    var shots = segs.map(function(sg, idx){
+      var h=Math.max(1,Math.round((sg[1]-sg[0])*S));
+      var tmp=document.createElement('canvas');
+      tmp.width=Math.round(PAGE_W*S); tmp.height=Math.round(PAGE_H*S);
+      var ctx=tmp.getContext('2d');
+      ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,tmp.width,tmp.height);
+      ctx.drawImage(canvas,0,Math.round(sg[0]*S),canvas.width,h, 0,Math.round(topPx*S),canvas.width,h);
+      /* 쪽 번호 각인 — JPG 전용 규격(§3-5-5 · §18-12). 2쪽 이상일 때만. */
+      if(segs.length>1){
+        var fs=Math.round(9*S);
+        ctx.fillStyle='#9CA3AF';
+        ctx.font='700 '+fs+'px Orbitron, "JetBrains Mono", monospace';
+        ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+        ctx.fillText((idx+1)+' / '+segs.length,
+                     Math.round(MM_PAGE.ML/mmPerPx*S),
+                     Math.round((MM_PAGE.H - MM_PAGE.MB/mmPerPx + fs/S*0.4)*S));
+      }
+      return tmp.toDataURL('image/jpeg',0.95);
+    });
+    mmOpenSheet(shots, base);
+    showToast(shots.length>1 ? '📄 '+shots.length+'매로 나눴습니다' : '📄 미리보기에서 저장하세요');
+  }).catch(function(err){
+    restoreScale();
+    showToast('❌ JPG 저장 실패: '+err.message);
+  });
+};
+</script>
+<!-- ══ FOOTER (하단 버전 표시) ══ -->
+<footer class="mm-foot no-print">
+  <div class="foot-inner">
+    <div>
+      <div class="foot-nm">MANMIN Ver-1.0</div>
+      <div class="foot-desc">N값 지내력 환산 시스템 | KDS 41 19 00 · KDS 11 50 05</div>
+    </div>
+    <div class="foot-copy">ARCHITECT KIM MANMIN © 2026</div>
+  </div>
+</footer>
+<script id="mm-mono-print">/* v5.1.5 (2026-10-31) — A4 단색 인쇄(작업지시서 §25-6-25 · v2 §25-6-26) */
+/* MANMIN A4 단색 인쇄 v2 (2026-10-31, 작업지시서 §25-6-25 · v2 §25-6-26) — 인쇄할 때만(beforeprint) 계산서를 검정 · 회색으로, 끝나면(afterprint) 화면 그대로 되돌림.
+   진한 띠 → 바탕 없이 굵은 글자 + 선(표 머리는 연회색), 색 카드 → 회색 테두리, 색 글자 → 검정 · 회색, 색 선 → 회색, 그림 문자 → 회색.
+   색이 남는 곳: ① 판정(적합 · 부적합 등 짧은 글) ② 도구가 지정한 최종 결과(window.MM_MONO_KEEP 선택자) ③ 두께 8px 이하 공종색 선.
+   v2 — 쪽 전체를 감싸는 바탕(body · 계산서 바깥 틀: 인쇄 폭 80% 이상 · 높이 500px 이상)은 바탕만 지우고 테두리 선을 긋지 않음(소방 9종 쪽 외곽선 제거).
+   도구별 설정(선택): window.MM_MONO_ROOT = 인쇄 영역 선택자(기본 body) · window.MM_MONO_KEEP = 색 유지 선택자 · window.MM_MONO_OFF = true 면 끔. */
+(function () {
+  if (window.__mmMono) return; window.__mmMono = 1;
+  var saved = [], accent = new Map(), keeps = [];
+  var VERDICT = /^[\s✓✔✗✘○●◎△×▲▼⚠️✅❌🟢🔴🟠🟡·:()\[\]【】「」]*(기준\s*(미달|충족|만족|초과)|미달|달성|미달성|합격|불합격|적합|부적합|만족|불만족|충족|미충족|OK|O\.K\.?|NG|N\.G\.?|가능|불가|불가능|허용|불허|의무|의무대상|비대상|해당|해당없음|비해당|대상|적정|부족|초과|통과|주의|위험|안전|양호|불량|PASS|FAIL)(\s*[(（\[][^)）\]]{0,24}[)）\]])?[\s.!·:\]】」✓✔✗✘]*$/i;
+  var EMOJI = /\p{Extended_Pictographic}/u;
+  function rgb(s) { var m = /rgba?\(([^)]+)\)/.exec(s || ''); if (!m) return null; var p = m[1].split(/[\s,\/]+/).filter(Boolean).map(parseFloat); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; }
+  function lum(c) { return (0.299 * c.r + 0.587 * c.g + 0.114 * c.b) / 255; }
+  function chroma(c) { return Math.max(c.r, c.g, c.b) - Math.min(c.r, c.g, c.b); }
+  function css(c) { return 'rgb(' + Math.round(c.r) + ',' + Math.round(c.g) + ',' + Math.round(c.b) + ')'; }
+  function mix(c, t) { return { r: c.r + (255 - c.r) * t, g: c.g + (255 - c.g) * t, b: c.b + (255 - c.b) * t }; }
+  function dark(c) { var l = lum(c); if (l < 0.45) return c; var k = 0.45 / l; return { r: c.r * k, g: c.g * k, b: c.b * k }; }
+  function set(el, p, v) {
+    if (!el.__mmS) { el.__mmS = 1; saved.push([el, el.getAttribute('style')]); }
+    el.style.setProperty(p, v, 'important');
+  }
+  /* 덧그린 선은 안쪽 그림자 — 테두리처럼 높이를 바꾸지 않아 쪽 나눔이 그대로 */
+  function line(el, v) { el.__mmL = 1; set(el, 'box-shadow', v); }
+  /* 판정 글(짧은 글 · VERDICT)이 있으면, 그 글을 감싼 색 상자(위로 3단계, 표 칸에서 멈춤)까지 색 유지 */
+  function tinted(cs) { var b = rgb(cs.backgroundColor), t = rgb(cs.borderTopColor), w = parseFloat(cs.borderTopWidth) || parseFloat(cs.borderLeftWidth); return (b && b.a > 0.05 && chroma(b) > 8) || (w > 0 && t && chroma(t) > 40) || /gradient/.test(cs.backgroundImage); }
+  function markKeep(root, sel) {
+    root.querySelectorAll('*').forEach(function (el) {
+      if (el.children.length || el instanceof SVGElement) return; var t = (el.textContent || '').trim(); if (!t || t.length > 30 || !VERDICT.test(t)) return;
+      var k = el, a = el;
+      for (var n = 0; n < 4 && a && a !== root; n++) { if (tinted(getComputedStyle(a)) && a.getBoundingClientRect().height < 160) { k = a; break; } if (a.tagName === 'TD' || a.tagName === 'TH') break; a = a.parentElement; }
+      k.__mmK = 1; keeps.push(k);
+    });
+    if (sel) root.querySelectorAll(sel).forEach(function (el) { el.__mmK = 1; keeps.push(el); });
+  }
+  function keepOf(el) { for (var a = el; a; a = a.parentElement) if (a.__mmK) return a; return null; }
+  function run() {
+    if (window.MM_MONO_OFF) return;
+    var sel = window.MM_MONO_KEEP || '', roots = document.querySelectorAll(window.MM_MONO_ROOT || 'body');
+    roots.forEach(function (root) {
+      markKeep(root, sel);
+      var rw = root.getBoundingClientRect().width || document.documentElement.clientWidth;
+      var list = [root].concat(Array.prototype.slice.call(root.querySelectorAll('*')));
+      list.forEach(function (el) {
+        var tag = el.tagName; if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'IMG' || tag === 'VIDEO' || tag === 'CANVAS') return;
+        var cs = getComputedStyle(el); if (cs.display === 'none') return;
+        var keep = keepOf(el), isSvg = el instanceof SVGElement;
+        if (isSvg) {
+          if (keep) return;
+          ['fill', 'stroke'].forEach(function (p) { var c = rgb(cs[p]); if (c && c.a > 0 && chroma(c) > 40) { var l = lum(c); set(el, p, l < 0.55 ? '#555' : (l < 0.8 ? '#999' : '#ddd')); } });
+          return;
+        }
+        var bg = rgb(cs.backgroundColor), img = cs.backgroundImage;
+        if (img && img !== 'none' && /gradient/.test(img)) { var g = rgb((/rgba?\([^)]+\)/.exec(img) || [''])[0]); if (g) bg = g; set(el, 'background-image', 'none'); if (bg) set(el, 'background-color', css(bg)); }
+        var rc = el.getBoundingClientRect(), h = rc.height, page = el === root || tag === 'BODY' || tag === 'HTML' || (rc.width >= rw * 0.8 && h >= 500), cell = tag === 'TD' || tag === 'TH' || tag === 'TR', head = tag === 'TH' || !!el.closest('thead');
+        if (bg && bg.a > 0.05) {
+          var bl = lum(bg), bc = chroma(bg);
+          if (h > 0 && h <= 8 && (bc > 40 || bl < 0.5)) { /* 얇은 공종색 선 — 그대로 */ }
+          else if (keep) { if (bc > 40 && bl < 0.75) { var a = dark(bg); accent.set(keep, a); set(el, 'background-color', css(mix(bg, 0.88))); line(el, 'inset 0 0 0 1.5px ' + css(a)); set(el, 'color', css(a)); } }
+          else if (page) set(el, 'background-color', 'transparent');
+          else if (bl < 0.6) {
+            if (head) set(el, 'background-color', '#ececec');
+            else if (cell) { set(el, 'background-color', 'transparent'); line(el, 'inset 0 1.5px 0 #111, inset 0 -1.5px 0 #111'); set(el, 'font-weight', '800'); }
+            else if (h < 64) { set(el, 'background-color', 'transparent'); line(el, 'inset 3px 0 0 ' + (bc > 40 ? css(bg) : '#111') + ', inset 0 -1px 0 #999'); }
+            else { set(el, 'background-color', 'transparent'); line(el, 'inset 0 0 0 1.5px #555'); }
+          }
+          else if (bc > 8) {
+            if (cell || head) set(el, 'background-color', '#f3f3f3');
+            else { set(el, 'background-color', 'transparent'); if (parseFloat(cs.borderTopWidth) === 0 && h > 20) line(el, 'inset 0 0 0 1px #bbb'); }
+          }
+          set(el, '-webkit-print-color-adjust', 'exact'); set(el, 'print-color-adjust', 'exact');
+        }
+        ['Top', 'Right', 'Bottom', 'Left'].forEach(function (s) {
+          if (keep || parseFloat(cs['border' + s + 'Width']) <= 0) return; var c = rgb(cs['border' + s + 'Color']);
+          if (c && c.a > 0 && chroma(c) > 40) set(el, 'border-' + s.toLowerCase() + '-color', lum(c) < 0.6 ? '#555' : '#aaa');
+        });
+        var c = rgb(cs.color);
+        if (c) {
+          if (keep) { if (lum(c) > 0.8) set(el, 'color', css(accent.get(keep) || { r: 17, g: 17, b: 17 })); }
+          else if (chroma(c) > 40) set(el, 'color', lum(c) < 0.6 ? '#111' : '#555');
+          else if (lum(c) > 0.8) set(el, 'color', '#111');
+        }
+        if (cs.textShadow !== 'none') set(el, 'text-shadow', 'none');
+        if (cs.boxShadow !== 'none' && !el.__mmL) set(el, 'box-shadow', 'none');
+        if (!keep && !el.children.length && EMOJI.test(el.textContent || '')) set(el, 'filter', 'grayscale(1)');
+      });
+    });
+  }
+  function undo() { for (var i = saved.length - 1; i >= 0; i--) { var e = saved[i][0], s = saved[i][1]; if (s === null) e.removeAttribute('style'); else e.setAttribute('style', s); e.__mmS = 0; e.__mmL = 0; } saved = []; accent = new Map(); keeps.forEach(function (k) { k.__mmK = 0; }); keeps = []; }
+  function arm() { addEventListener('beforeprint', function () { undo(); run(); }); addEventListener('afterprint', undo); }
+  if (document.readyState === 'complete') arm(); else addEventListener('load', arm);
+  window.__mmMonoRun = run; window.__mmMonoUndo = undo;
+})();
+</script>
+<script id="mm-foot-stick">/* v5.1.6 (2026-11-01) — 하단 버전 카드 바닥 고정(작업지시서 §25-6-30) */
+/* MANMIN 하단 버전 카드 바닥 고정 v1 (2026-11-01, 작업지시서 §25-6-30)
+   내용이 짧은 탭(기준표 · 법조문 · 결과 전 등)이나 세로로 긴 화면에서 하단 버전 카드(footer)가 내용 바로 뒤 — 화면 중간 — 에 떠 있던 것을
+   화면 맨 아래로 내린다. 내용이 화면보다 길면 아무것도 바꾸지 않는다(원래대로 내용 끝에 붙음).
+   방법: footer 위 여백(margin-top)에 「화면 높이 − 문서 끝」 만큼만 더한다. 도구마다 body 배치(flex · grid · block)가 달라 CSS 만으로는 일률 적용이 안 됨.
+   다시 맞추는 때: 처음 · 글꼴 로드 · 창 크기 · 화면 회전 · 탭 전환 등 내용 크기 변화(ResizeObserver) · 클릭 직후. 인쇄 중에는 원래 여백. */
+(function () {
+  if (window.__mmFootStick) return; window.__mmFootStick = 1;
+  var f = null, ex = 0, base = 0, raf = 0, printing = false;
+  function foot() { var a = document.querySelectorAll('footer'); return a.length ? a[a.length - 1] : null; }
+  function trail(el) {   /* footer 아래 조상들의 아래 안쪽 여백 · 테두리 */
+    var t = 0;
+    for (var x = el.parentElement; x && x !== document.documentElement; x = x.parentElement) {
+      var cs = getComputedStyle(x); t += (parseFloat(cs.paddingBottom) || 0) + (parseFloat(cs.borderBottomWidth) || 0) + (parseFloat(cs.marginBottom) || 0);
+    }
+    return t + (parseFloat(getComputedStyle(el).marginBottom) || 0);
+  }
+  function fit() {
+    raf = 0; if (printing) return;
+    f = f && f.isConnected ? f : foot(); if (!f) return;
+    if (ex) { f.style.marginTop = ''; ex = 0; }
+    if (getComputedStyle(f).display === 'none') return;
+    base = parseFloat(getComputedStyle(f).marginTop) || 0;
+    var vh = document.documentElement.clientHeight || window.innerHeight;
+    var end = f.getBoundingClientRect().bottom + (window.pageYOffset || 0) + trail(f);
+    var need = Math.floor(vh - end);
+    if (need > 0) { ex = need; f.style.marginTop = (base + need) + 'px'; }
+  }
+  function req() { if (!raf) raf = requestAnimationFrame(fit); }
+  function start() {
+    fit();
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(req); ro.observe(document.body);
+      for (var c = document.body.firstElementChild; c; c = c.nextElementSibling) if (c.tagName !== 'SCRIPT' && c.tagName !== 'STYLE') ro.observe(c);
+    }
+    window.addEventListener('resize', req); window.addEventListener('orientationchange', req); window.addEventListener('load', req);
+    document.addEventListener('click', function () { setTimeout(req, 60); setTimeout(req, 400); }, true);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(req);
+    window.addEventListener('beforeprint', function () { printing = true; if (f && ex) { f.style.marginTop = ''; ex = 0; } });
+    window.addEventListener('afterprint', function () { printing = false; req(); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
+<!-- MM-PROJECT:BEGIN v1.2 -->
+<script id="mm-project-js" data-tool="지내력" data-pos="bottom:188px;right:18px" data-map="{&quot;사업명&quot;:&quot;#p-projname&quot;,&quot;위치&quot;:&quot;#p-site&quot;,&quot;발주처&quot;:&quot;-&quot;,&quot;작성자&quot;:&quot;#p-author&quot;,&quot;연면적&quot;:&quot;-&quot;,&quot;지상층&quot;:&quot;-&quot;,&quot;지하층&quot;:&quot;-&quot;,&quot;높이&quot;:&quot;-&quot;,&quot;구조&quot;:&quot;-&quot;}">
+/* MANMIN 공통 건물개요 원본 manmin-project.js v1.2 (2026-11-09, 작업지시서 §25-6-52 · v1.1 §25-6-51 · v1.0 §25-6-50)
+   정본: Z:\MIN-A\01.만민자료\02.설계자료\11.개발자료\65.개발자료[건물개요]\버전s-1.2\manmin-project-v1.2\
+   도구에는 inject.py 가 MM-PROJECT:BEGIN · MM-PROJECT:END 표식 사이에 그대로 끼워 넣음(외부 링크 없음 · 오프라인 · Z: 사본 단독 동작). 도구에서 직접 고치지 말 것.
+   하는 일: 같은 현장의 표지 정보 · 건물 수치를 localStorage「MANMIN_PROJECT_V1」에 담고 다른 도구에서 불러옴(같은 주소 manminkim-eng.github.io 아래 공유).
+     저장 = 지금 도구 값을 담음(이 도구에 없는 항목은 저장값 그대로) · 불러오기 = 채울 값을 목록으로 먼저 보여 주고 확인하면 채움(이미 입력된 칸은 직접 체크해야 덮어씀)
+     파일 내보내기 · 가져오기(.json) = PC · 태블릿 · Z: 사본(file://) 사이 옮기기. 단추와 창은 인쇄에 나오지 않음.
+   칸 찾기: 이름표 정규식(공통 인쇄 원본의 label() 방식) → 못 찾는 칸은 script 태그 data-map 으로 지정.
+     data-map='{"작성자":"#a4Author","높이":"-"}'  값: CSS 선택자 · "re:정규식"(이름표로 찾기) · "-"(이 도구에서 쓰지 않음)
+   React 입력칸은 native value setter + input · change 이벤트로 채움. 계산 함수는 건드리지 않음.
+   기타 설정: data-tool(저장한 도구 이름) · data-pos(단추 위치 CSS, 기본 "top:10px;right:12px" — 도구의 머리 글자 · 떠 있는 단추와 겹치지 않는 자리로 지정) */
+(function () {
+  var me = document.currentScript; if (!me || window.MMProject) return;
+  var KEYNAME = 'MANMIN_PROJECT_V1', VER = 'v1.2';
+  var KEYS = ['사업명', '위치', '발주처', '작성자', '연면적', '지상층', '지하층', '높이', '구조'];
+  var NUM = { 연면적: 1, 지상층: 1, 지하층: 1, 높이: 1 };
+  /* 이름표 정규식 — 사업명은 공통 인쇄 원본 KEY 와 같음 */
+  var RX = {
+    사업명: [/공사\s*\(?현장\)?\s*명|공사명|현장명|용역명|프로젝트명|사업명|건물명|건축물명/],
+    위치: [/대지\s*위치|건축\s*위치|공사\s*위치|현장\s*위치|건설\s*위치|소재지|현장\s*주소|대지\s*주소/],
+    발주처: [/발주처|발주자|발주기관|건축주/],
+    작성자: [/작성자/],
+    연면적: [/연면적/],
+    지상층: [/지상\s*층/],
+    지하층: [/지하\s*층/],
+    높이: [/(건물|건축물)?\s*높이/, /처마|층고|천장|반자|난간|담장|옹벽|파라펫|기준|판독/],
+    구조: [/구조\s*형식|구조\s*종류|주\s*구조|구조\s*방식/]
+  };
+  var MAP = {}; try { MAP = JSON.parse(me.getAttribute('data-map') || '{}'); } catch (e) { MAP = {}; }
+  var TOOL = me.getAttribute('data-tool') || (document.title || '').split(/[·|—-]/)[0].trim();
+  var POS = me.getAttribute('data-pos') || 'top:10px;right:12px';
+
+  function label(e) {   /* 공통 인쇄 원본 manmin-print.js ② label() 과 같은 방식 */
+    var t = (e.placeholder || '') + ' ' + (e.getAttribute('aria-label') || '') + ' ' + (e.labels && e.labels[0] ? e.labels[0].innerText : '');
+    var p = e.parentElement;
+    for (var k = 0; k < 3 && p; k++, p = p.parentElement) {
+      var x = Array.prototype.filter.call(p.childNodes, function (n) { return n !== e && (n.nodeType === 3 || !n.querySelector || !n.querySelector('input,select,textarea')); })
+        .map(function (n) { return n.textContent; }).join(' ').trim();
+      if (x) { t += ' ' + x.slice(0, 40); break; }
+    }
+    return t;
+  }
+  function mine(e) { return e.closest && e.closest('.mm-proj-ui'); }
+  function kindOk(k, e) {
+    var tg = e.tagName, ty = (e.type || 'text').toLowerCase();
+    if (tg === 'TEXTAREA') return !NUM[k];
+    if (tg === 'SELECT') return k === '구조';
+    if (tg !== 'INPUT') return false;
+    if (NUM[k]) return ty === 'number' || ty === 'text';
+    return ty === 'text' || ty === 'search';
+  }
+  function byRe(k, re, ex) {
+    return Array.prototype.filter.call(document.querySelectorAll('input,select,textarea'), function (e) {
+      if (mine(e) || !kindOk(k, e)) return false; var t = label(e); return re.test(t) && !(ex && ex.test(t));
+    });
+  }
+  function fields(k) {
+    var m = MAP[k];
+    if (m === '-') return [];
+    if (m && m.indexOf('re:') === 0) return byRe(k, new RegExp(m.slice(3)));
+    if (m) { try { return Array.prototype.slice.call(document.querySelectorAll(m)); } catch (e) { return []; } }
+    var others = KEYS.filter(function (x) { return x !== k && MAP[x] && MAP[x] !== '-' && MAP[x].indexOf('re:') !== 0; });
+    return byRe(k, RX[k][0], RX[k][1]).filter(function (e) {   /* 다른 항목에 data-map 으로 지정된 칸은 빼기 */
+      return !others.some(function (x) { try { return e.matches(MAP[x]); } catch (er) { return false; } });
+    });
+  }
+  function shown(e) { return !!e.getClientRects().length; }
+  function val(e) { if (e.tagName === 'SELECT') { var o = e.options[e.selectedIndex]; return o && e.value !== '' ? (o.text || '').trim() : ''; } return (e.value || '').trim(); }
+  function current(k) {   /* 보이는 칸 우선, 없으면 숨은 칸 */
+    var fs = fields(k), v = '';
+    fs.forEach(function (e) { var x = val(e); if (x && !v && shown(e)) v = x; });
+    if (!v) fs.forEach(function (e) { var x = val(e); if (x && !v) v = x; });
+    return v;
+  }
+  function setNative(e, v) {
+    var proto = e.tagName === 'SELECT' ? HTMLSelectElement.prototype : e.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    var d = Object.getOwnPropertyDescriptor(proto, 'value');
+    if (d && d.set) d.set.call(e, v); else e.value = v;
+    e.dispatchEvent(new Event('input', { bubbles: true }));
+    e.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+  function optFor(sel, v) {   /* 선택칸은 글자가 같은 선택지가 있을 때만 */
+    var n = String(v).replace(/\s+/g, ''), hit = null;
+    Array.prototype.forEach.call(sel.options, function (o) { if (!hit && o.value !== '' && ((o.text || '').replace(/\s+/g, '') === n || o.value === v)) hit = o; });
+    return hit;
+  }
+  function canFill(e, v) { return e.tagName !== 'SELECT' || !!optFor(e, v); }
+  function fillOne(e, v) {
+    if (e.tagName === 'SELECT') { var o = optFor(e, v); if (!o) return false; setNative(e, o.value); return true; }
+    if (NUM_ok(e, v)) { setNative(e, String(v)); return true; } return false;
+  }
+  function NUM_ok(e, v) { return (e.type || '').toLowerCase() !== 'number' || /^-?\d+(\.\d+)?$/.test(String(v)); }
+
+  function read() { try { var s = localStorage.getItem(KEYNAME); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+  function write(o) { try { localStorage.setItem(KEYNAME, JSON.stringify(o)); return true; } catch (e) { return false; } }
+  function clean(o) {   /* 가져온 파일 · 저장값 점검: 정해진 항목만, 글자로 */
+    var r = {}; if (!o || typeof o !== 'object') return null;
+    KEYS.forEach(function (k) { if (o[k] != null && String(o[k]).trim() !== '') r[k] = String(o[k]).trim().slice(0, 200); });
+    r.updated = typeof o.updated === 'string' ? o.updated.slice(0, 40) : ''; r.from = typeof o.from === 'string' ? o.from.slice(0, 60) : '';
+    return r;
+  }
+  function now() { var d = new Date(), z = function (n) { return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) + ' ' + z(d.getHours()) + ':' + z(d.getMinutes()); }
+  function collect() { var o = {}; KEYS.forEach(function (k) { var v = current(k); if (v) o[k] = v; }); return o; }
+
+  /* ── 화면 ── */
+  /* 메뉴는 단추가 위쪽에 있으면 아래로, 아래쪽에 있으면 위로 연다 */
+  var MPOS = POS.replace(/(top|bottom)\s*:\s*(\d+)px/, function (x, d, n) { return d + ':' + (+n + 34) + 'px'; });
+  var theme = (document.querySelector('meta[name=theme-color]') || {}).content || '#334155';
+  var css = '.mm-proj-ui{font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;color:#1f2937;line-height:1.45;letter-spacing:0}'
+    + '.mm-proj-btn{position:fixed;' + POS + ';z-index:2147483000;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;font-weight:600;border-radius:999px;border:1px solid ' + theme + ';color:' + theme + ';background:rgba(255,255,255,.94);box-shadow:0 1px 4px rgba(0,0,0,.12);cursor:pointer;white-space:nowrap}'
+    + '.mm-proj-btn:hover{background:#fff}'
+    + '.mm-proj-menu{position:fixed;' + MPOS + ';z-index:2147483001;background:#fff;border:1px solid #d1d5db;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.16);padding:6px;min-width:190px}'
+    + '.mm-proj-menu button{display:block;width:100%;text-align:left;padding:8px 10px;font-size:13px;border:0;background:none;border-radius:6px;cursor:pointer;color:#1f2937}'
+    + '.mm-proj-menu button:hover{background:#f3f4f6}.mm-proj-menu .mm-proj-sub{font-size:11px;color:#6b7280;padding:4px 10px 6px;border-bottom:1px solid #eee;margin-bottom:4px}'
+    + '.mm-proj-back{position:fixed;inset:0;z-index:2147483002;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:12px}'
+    + '.mm-proj-dlg{background:#fff;border-radius:12px;max-width:560px;width:100%;max-height:calc(100vh - 24px);overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.25)}'
+    + '.mm-proj-dlg h3{margin:0;padding:14px 16px 4px;font-size:16px;color:' + theme + '}.mm-proj-dlg .mm-proj-note{padding:0 16px 8px;font-size:12px;color:#6b7280}'
+    + '.mm-proj-dlg table{width:100%;min-width:0;max-width:100%;table-layout:auto;border-collapse:collapse;font-size:13px}.mm-proj-dlg th,.mm-proj-dlg td{padding:6px 8px;border-top:1px solid #eef0f3;text-align:left;vertical-align:top;white-space:normal;word-break:break-all}'
+    + '.mm-proj-dlg th{font-weight:600;color:#374151;white-space:nowrap;background:#f9fafb}.mm-proj-dlg td.mm-proj-old{color:#9ca3af}.mm-proj-dlg .mm-proj-warn{color:#b45309;font-size:11px}'
+    + '.mm-proj-foot{display:flex;gap:8px;justify-content:flex-end;padding:12px 16px}.mm-proj-foot button{padding:7px 14px;font-size:13px;border-radius:8px;border:1px solid #d1d5db;background:#fff;cursor:pointer}'
+    + '.mm-proj-foot button.mm-proj-ok{background:' + theme + ';border-color:' + theme + ';color:#fff;font-weight:600}'
+    + '.mm-proj-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:2147483003;background:#111827;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;max-width:calc(100vw - 32px)}'
+    + '@media (max-width:480px){.mm-proj-dlg th,.mm-proj-dlg td{padding:5px 6px;font-size:12px}}'
+    + '@media print{.mm-proj-ui{display:none!important}}';
+  function h(tag, attrs, html) { var e = document.createElement(tag); for (var k in attrs || {}) e.setAttribute(k, attrs[k]); if (html != null) e.innerHTML = html; return e; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function toast(t) { var e = h('div', { 'class': 'mm-proj-ui mm-proj-toast no-print', role: 'status' }); e.textContent = t; document.body.appendChild(e); setTimeout(function () { e.remove(); }, 2600); }
+  function dialog(title, note, rows, okText, onOk) {
+    var back = h('div', { 'class': 'mm-proj-ui mm-proj-back no-print' }), dlg = h('div', { 'class': 'mm-proj-dlg', role: 'dialog', 'aria-modal': 'true', 'aria-label': title });
+    dlg.innerHTML = '<h3>' + esc(title) + '</h3><div class="mm-proj-note">' + note + '</div>' + rows + '<div class="mm-proj-foot"><button type="button" class="mm-proj-no">닫기</button>' + (okText ? '<button type="button" class="mm-proj-ok">' + esc(okText) + '</button>' : '') + '</div>';
+    back.appendChild(dlg); document.body.appendChild(back);
+    function close() { back.remove(); document.removeEventListener('keydown', key); }
+    function key(ev) { if (ev.key === 'Escape') close(); }
+    document.addEventListener('keydown', key);
+    back.addEventListener('click', function (ev) { if (ev.target === back) close(); });
+    dlg.querySelector('.mm-proj-no').onclick = close;
+    if (okText) dlg.querySelector('.mm-proj-ok').onclick = function () { if (onOk(dlg) !== false) close(); };
+    return dlg;
+  }
+
+  function save() {
+    var got = collect(), old = clean(read()) || {}, keys = Object.keys(got);
+    if (!keys.length) { toast('이 화면에서 담을 건물개요 값이 없습니다 — 입력 칸(프로젝트 · 공사 정보)이 있는 탭을 연 뒤 다시 저장하세요'); return; }
+    var rows = '<table><tr><th>항목</th><th>담을 값</th><th>저장돼 있던 값</th></tr>' + KEYS.map(function (k) {
+      var nv = got[k], ov = old[k] || '';
+      if (!nv && !ov) return '';
+      return '<tr><th>' + k + '</th><td>' + (nv ? esc(nv) : '<span class="mm-proj-old">(이 도구에 없음 — 그대로 둠)</span>') + '</td><td class="mm-proj-old">' + esc(ov || '—') + '</td></tr>';
+    }).join('') + '</table>';
+    dialog('건물개요 저장', '지금 도구의 값을 이 기기 브라우저에 담습니다. 다른 MANMIN 도구에서 「불러오기」로 씁니다. 작성일 · 용도는 담지 않습니다.', rows, '저장', function () {
+      var o = {}; KEYS.forEach(function (k) { var v = got[k] || old[k]; if (v) o[k] = v; }); o.updated = now(); o.from = TOOL;
+      if (!write(o)) { toast('저장하지 못했습니다(브라우저 저장소 막힘) — 「파일로 내보내기」를 쓰세요'); return; }
+      toast('건물개요를 저장했습니다 · ' + keys.length + '개 항목');
+    });
+  }
+  function plan(data) {   /* 항목별: 칸 목록 · 지금 값 · 채울 수 있는지 · 기본 체크 */
+    return KEYS.map(function (k) {
+      var v = data[k]; if (!v) return null;
+      var fs = fields(k).filter(function (e) { return canFill(e, v) && NUM_ok(e, v); }); if (!fs.length) return null;
+      var cur = '', same = true;
+      fs.forEach(function (e) { var x = val(e); if (x && !cur) cur = x; if (x !== String(v) && !(e.tagName === 'SELECT' && x.replace(/\s+/g, '') === String(v).replace(/\s+/g, ''))) same = false; });
+      return { k: k, v: v, fs: fs, cur: cur, same: same, on: !cur };
+    }).filter(Boolean);
+  }
+  function load(data) {
+    data = clean(data || read());
+    if (!data || !KEYS.some(function (k) { return data[k]; })) { toast('저장된 건물개요가 없습니다 — 다른 도구에서 먼저 「저장」하거나 파일을 가져오세요'); return; }
+    var P = plan(data), todo = P.filter(function (p) { return !p.same; });
+    var info = (data.updated ? '저장 ' + esc(data.updated) : '저장값') + (data.from ? ' · ' + esc(data.from) : '');
+    if (!todo.length) { dialog('건물개요 불러오기', info + '<br>' + (P.length ? '이미 같은 값입니다.' : '이 화면에서 채울 칸을 찾지 못했습니다. 입력 칸(프로젝트 · 공사 정보)이 있는 탭을 연 뒤 다시 불러오세요.'), '', '', null); return; }
+    var rows = '<table><tr><th></th><th>항목</th><th>불러올 값</th><th>지금 값</th></tr>' + todo.map(function (p, i) {
+      return '<tr><td><input type="checkbox" data-i="' + i + '"' + (p.on ? ' checked' : '') + ' aria-label="' + p.k + ' 채우기"></td><th>' + p.k + '</th><td>' + esc(p.v) + (p.fs.length > 1 ? ' <span class="mm-proj-warn">(칸 ' + p.fs.length + '곳)</span>' : '') + '</td><td class="mm-proj-old">' + (p.cur ? esc(p.cur) + '<br><span class="mm-proj-warn">입력돼 있음 — 체크해야 덮어씀</span>' : '(비어 있음)') + '</td></tr>';
+    }).join('') + '</table>';
+    dialog('건물개요 불러오기', info + '<br>체크한 항목만 채웁니다. 이미 입력된 칸은 체크가 꺼져 있습니다.', rows, '채우기', function (dlg) {
+      var n = 0;
+      Array.prototype.forEach.call(dlg.querySelectorAll('input[type=checkbox]'), function (c) {
+        if (!c.checked) return; var p = todo[+c.getAttribute('data-i')];
+        p.fs.forEach(function (e) { if (fillOne(e, p.v)) n++; });
+      });
+      toast(n ? '건물개요 ' + n + '칸을 채웠습니다' : '채운 칸이 없습니다');
+    });
+  }
+  function ymd() { var d = new Date(), z = function (n) { return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate()); }
+  function exportFile() {
+    var o = clean(read());
+    if (!o || !KEYS.some(function (k) { return o[k]; })) { var g = collect(); if (!Object.keys(g).length) { toast('내보낼 건물개요가 없습니다'); return; } o = g; o.updated = now(); o.from = TOOL; }
+    o.format = KEYNAME;
+    var name = ['건물개요', (o.사업명 || '').replace(/[\\\/:*?"<>|]/g, '').replace(/\s+/g, ''), ymd()].filter(Boolean).join('_') + '.json';
+    var blob = new Blob([JSON.stringify(o, null, 2)], { type: 'application/json' }), a = h('a', { href: URL.createObjectURL(blob), download: name });
+    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    toast('파일로 내보냈습니다 · ' + name);
+  }
+  function importText(txt) {
+    var o; try { o = clean(JSON.parse(txt)); } catch (e) { o = null; }
+    if (!o || !KEYS.some(function (k) { return o[k]; })) { toast('건물개요 파일이 아닙니다'); return null; }
+    write(o); load(o); return o;
+  }
+  function importFile() {
+    var f = h('input', { type: 'file', accept: '.json,application/json', 'class': 'mm-proj-ui', style: 'display:none' });
+    f.onchange = function () { var x = f.files && f.files[0]; if (!x) return; var r = new FileReader(); r.onload = function () { importText(String(r.result)); f.remove(); }; r.readAsText(x, 'utf-8'); };
+    document.body.appendChild(f); f.click();
+  }
+  function menu(btn) {
+    var old = document.querySelector('.mm-proj-menu'); if (old) { old.remove(); return; }
+    var d = clean(read()), m = h('div', { 'class': 'mm-proj-ui mm-proj-menu no-print', role: 'menu' });
+    m.innerHTML = '<div class="mm-proj-sub">' + (d && d.사업명 ? '저장됨: ' + esc(d.사업명) + '<br>' + esc(d.updated || '') : '저장된 건물개요 없음') + '</div>'
+      + '<button type="button" data-a="save" role="menuitem">💾 저장 — 지금 값 담기</button><button type="button" data-a="load" role="menuitem">📥 불러오기</button>'
+      + '<button type="button" data-a="exp" role="menuitem">⬇ 파일로 내보내기(.json)</button><button type="button" data-a="imp" role="menuitem">⬆ 파일 가져오기</button>';
+    document.body.appendChild(m);
+    m.onclick = function (ev) { var a = ev.target.closest('button'); if (!a) return; m.remove(); ({ save: save, load: function () { load(); }, exp: exportFile, imp: importFile })[a.getAttribute('data-a')](); };
+    setTimeout(function () { document.addEventListener('click', function off(ev) { if (!m.contains(ev.target) && ev.target !== btn) { m.remove(); } document.removeEventListener('click', off); }); }, 0);
+  }
+  function mount() {
+    if (document.querySelector('.mm-proj-btn')) return;
+    var st = h('style', { id: 'mm-project-style' }); st.textContent = css; document.head.appendChild(st);
+    var b = h('button', { type: 'button', 'class': 'mm-proj-ui mm-proj-btn no-print', title: '같은 현장의 표지 정보 · 건물 수치를 저장하고 다른 MANMIN 도구에서 불러옵니다', 'aria-haspopup': 'menu' }, '🏢 건물개요');
+    b.onclick = function () { menu(b); }; document.body.appendChild(b);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
+  window.MMProject = { version: VER, key: KEYNAME, keys: KEYS, fields: fields, collect: collect, read: read, save: save, load: load, plan: plan, exportFile: exportFile, importText: importText };
+})();
+</script>
+<!-- MM-PROJECT:END -->
+<!-- MM-PRINT:BEGIN v1.0 -->
+<style id="mm-print-css">
+/* MANMIN 공통 인쇄 원본 manmin-print.css v1.0 (2026-11-08, 작업지시서 §25-6-42) — 인쇄 때만 적용. 도구 색 · 카드 · 배지는 건드리지 않음.
+   이 블록은 </body> 바로 앞에 들어가 같은 선택자 · 같은 우선순위면 도구 규칙보다 뒤에 와서 이김 → 모든 도구에 맞는 것만 넣음. 행 높이 등 도구 고유 규칙은 도구에 남김. */
+@media print{
+  @page{size:A4 portrait;margin:14mm 12mm 22mm 14mm}
+  html,body{background:#fff!important}            /* 여백 바탕 흰색(위생 v5.0.18 공통화) */
+  .mm-deco{display:none!important}                 /* 장식 아이콘 숨김(펌프 v5.0.10 공통화) */
+  thead{display:table-header-group}                /* 쪽마다 머리행 반복 */
+  tfoot{display:table-footer-group}
+  tr{break-inside:avoid;page-break-inside:avoid}   /* 행이 쪽 중간에서 갈리지 않게 */
+}
+</style>
+<script id="mm-print-js" data-name="N값지내력환산계산서" data-pageno="1">
+/* MANMIN 공통 인쇄 원본 manmin-print.js v1.0 (2026-11-08, 작업지시서 §25-6-42)
+   정본: Z:\MIN-A\01.만민자료\02.설계자료\11.개발자료\64.개발자료[인쇄공통]\버전s-1.0\manmin-print-v1.0\
+   도구에는 inject.py 가 MM-PRINT:BEGIN · MM-PRINT:END 표식 사이에 그대로 끼워 넣음(외부 링크 없음 · 오프라인 동작). 도구에서 직접 고치지 말 것.
+   묶음: ① R27 html2canvas 보호 ② 인쇄 정보(쪽 번호 · PDF 이름 · 이름 없으면 제목 비우기 = R26) ③ 인쇄 선명화(맑은 고딕 · 연한 글자 · 0.5pt 선 · 고정폭 600→400)
+   도구별 설정은 script 태그 속성: data-name · data-alt · data-proj · data-pageno("1" 이면 쪽 번호). */
+
+/* ① R27 */
+/* R27 (2026-09-04 · S10) — ① html2canvas 는 문서를 복제할 때 브라우저 확장 프로그램이 shadow DOM 에 심은 style 시트(Tailwind .c{transform:rotate(30deg)} · antd 등)까지 본문으로 펼친다.
+   화면에서는 격리돼 보이지 않던 규칙이 클론에서 td.c / .r / .k 같은 짧은 클래스에 맞아 JPG 셀이 기울고 행이 부푼다(38 실측 2026-09-04 · 확장 31시트 누출).
+   처방: 캡처 직전 우리 문서의 light-DOM style/link 에 data-mm-own 을 찍고, 클론에서 표식 없는 style/link 를 제거한다.
+   ② 라이브러리가 없으면(구 SW opaque 캐시 · CDN 차단) exportA4Jpg 가 ReferenceError 로 조용히 멈춘다(40 미리보기 미표시) → 지연 로더가 CDN 에서 받아 이어서 실행한다. 계산·출력 함수 무접촉(전역 html2canvas 래핑). */
+(function(){var CDN='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';var raw=window.html2canvas;var cur;function wrap(h){if(!h||h.__mm)return h;function p(el,opt){document.querySelectorAll('style,link[rel=stylesheet]').forEach(function(n){n.setAttribute('data-mm-own','1');});opt=Object.assign({},opt||{});var prev=opt.onclone;opt.onclone=function(doc,x){doc.querySelectorAll('style,link[rel=stylesheet]').forEach(function(n){if(!n.hasAttribute('data-mm-own')&&(n.textContent||'').indexOf('___html2canvas___')<0)n.remove();});return prev?prev(doc,x):undefined;};return h(el,opt);}p.__mm=1;try{Object.keys(h).forEach(function(k){p[k]=h[k];});}catch(e){}return p;}function lazy(el,opt){return new Promise(function(res,rej){var s=document.createElement('script');s.src=CDN;s.onload=function(){if(cur&&cur!==lazy)res(cur(el,opt));else rej(new Error('html2canvas 초기화 실패'));};s.onerror=function(){rej(new Error('html2canvas 로드 실패 — 네트워크·차단 확인'));};document.head.appendChild(s);});}cur=raw?wrap(raw):lazy;try{Object.defineProperty(window,'html2canvas',{configurable:true,get:function(){return cur;},set:function(v){cur=wrap(v);}});}catch(e){window.html2canvas=cur;}})();
+
+/* ② 인쇄 정보 v1 + R26 */
+(function () {
+  var me = document.currentScript; if (!me || window.__mmMeta) return; window.__mmMeta = 1;
+  var NAME = me.getAttribute('data-name') || '', ALT = me.getAttribute('data-alt') || '', PROJ = me.getAttribute('data-proj') || '';
+  if (me.getAttribute('data-pageno') === '1') {
+    var st = document.createElement('style'); st.id = 'mm-pageno';
+    st.textContent = '@page{@bottom-center{content:counter(page) " / " counter(pages);font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;font-size:8pt;color:#555;vertical-align:top;padding-top:5mm}}';
+    document.head.appendChild(st);
+  }
+  var KEY = /공사\s*\(?현장\)?\s*명|공사명|현장명|용역명|프로젝트명|사업명|건물명|건축물명/;
+  function label(e) {
+    var t = (e.placeholder || '') + ' ' + (e.getAttribute('aria-label') || '') + ' ' + (e.labels && e.labels[0] ? e.labels[0].innerText : '');
+    var p = e.parentElement;
+    for (var k = 0; k < 3 && p; k++, p = p.parentElement) {
+      var x = Array.prototype.filter.call(p.childNodes, function (n) { return n !== e && (n.nodeType === 3 || !n.querySelector || !n.querySelector('input,select,textarea')); })
+        .map(function (n) { return n.textContent; }).join(' ').trim();
+      if (x) { t += ' ' + x.slice(0, 40); break; }
+    }
+    return t;
+  }
+  function proj() {
+    var list = PROJ ? document.querySelectorAll(PROJ) : Array.prototype.filter.call(document.querySelectorAll('input[type=text],input:not([type])'), function (e) { return KEY.test(label(e)); });
+    var vis = null, any = null;
+    Array.prototype.forEach.call(list, function (e) { var v = (e.value || '').trim(); if (!v) return; if (!any) any = v; if (!vis && e.getClientRects().length) vis = v; });
+    return vis || any || fromText();
+  }
+  /* 입력 탭이 인쇄 때 화면에서 빠지는 도구(소방 펌프 등) — 계산서 본문의 「공사명 : 값」 또는 「공사명」 칸 다음 칸에서 읽음 */
+  var LBL = /^(공사\s*\(?현장\)?\s*명|공\s*사\s*명|현장명|용역명|프로젝트명|사업명)\s*[:：]?\s*/;
+  function fromText() {
+    var els = document.querySelectorAll('td,th,dt,dd,div,span,b,strong,p,li,label'), v = '';
+    for (var i = 0; i < els.length && !v; i++) {
+      var e = els[i], t = (e.textContent || '').replace(/\s+/g, ' ').trim(); if (!t || t.length > 70 || !LBL.test(t) || e.children.length > 3) continue;
+      var rest = t.replace(LBL, '').split(/\s*(설계자|작성자|작성일|발주처|대지위치|위치|날짜|일자|용도)\s*[:：]/)[0].trim();
+      if (!rest && e.nextElementSibling) rest = (e.nextElementSibling.textContent || '').replace(/\s+/g, ' ').trim();
+      if (rest && rest.length <= 60 && !/^(\(미입력\)|미입력|[-—–·]+)$/.test(rest) && !/^[·\/|(]/.test(rest) && !/작성자|설계자|입력|카드|선택|예\)|예:/.test(rest)) v = rest;
+    }
+    return v;
+  }
+  function ymd() { var d = new Date(), z = function (n) { return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate()); }
+  var old = null, stamp = null; /* 이름이 없으면 제목 비우기(§20-15 ③ R26 통합). 끝날 때는 제목이 아직 이 모듈이 붙인 값일 때만 되돌림 */
+  addEventListener('beforeprint', function () {
+    var n = NAME;
+    ALT.split(';').forEach(function (kv) { var i = kv.lastIndexOf('='); if (i > 0) { try { if (document.querySelector(kv.slice(0, i))) n = kv.slice(i + 1); } catch (e) {} } });
+    if (old === null) old = document.title;
+    stamp = document.title = !n ? ' ' : [n, proj(), ymd()].filter(Boolean).map(function (s) { return s.replace(/[\\\/:*?"<>|]/g, '').replace(/\s+/g, ''); }).join('_');
+  });
+  addEventListener('afterprint', function () { if (old !== null && document.title === stamp) document.title = old; old = stamp = null; });
+})();
+
+/* ③ 인쇄 선명화 v1 */
+(function () {
+  if (window.__mmCrisp) return; window.__mmCrisp = 1;
+  var SANS = ['Pretendard Variable', 'Pretendard', 'Noto Sans KR', 'Noto Sans KR Local'],
+      MONO = ['JetBrains Mono', 'DM Mono', 'Noto Sans Mono', 'Source Code Pro', 'D2Coding'];
+  var MONO_RE = /^["']?(JetBrains Mono|DM Mono|Noto Sans Mono|Source Code Pro|D2Coding|Consolas|monospace)["']?$/i;
+  function face(fam, src, w, met) { return "@font-face{font-family:'" + fam + "';src:" + src + ";font-weight:" + w + ";" + met + "}"; }
+  var css = '', MS = "ascent-override:95.2%;descent-override:24.1%;line-gap-override:0%", MM = "ascent-override:102%;descent-override:30%;line-gap-override:0%";
+  /* 굵기마다 따로 정의 — 웹글꼴도 굵기별 @font-face 라서, 설명이 같으면 뒤에 정의된 쪽이 쓰임(500 이하 보통체 · 600 이상 굵은체) */
+  [100, 200, 300, 400, 500, 600, 700, 800, 900].forEach(function (w) {
+    var bold = w >= 600;
+    SANS.forEach(function (f) { css += face(f, bold ? "local('Malgun Gothic Bold'),local('MalgunGothic-Bold')" : "local('Malgun Gothic'),local('MalgunGothic')", w, MS); });
+    MONO.forEach(function (f) { css += face(f, bold ? "local('Consolas Bold'),local('Consolas-Bold')" : "local('Consolas')", w, MM); });
+  });
+  var ff = null;   /* 인쇄 중에만 붙이는 글꼴 바꿔 끼우기(뒤에 정의된 @font-face 가 같은 이름의 웹글꼴보다 우선) */
+  function rgb(s) { var m = /rgba?\(([^)]+)\)/.exec(s || ''); if (!m) return null; var p = m[1].split(/[\s,\/]+/).filter(Boolean).map(parseFloat); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; }
+  function lum(c) { return (0.299 * c.r + 0.587 * c.g + 0.114 * c.b) / 255; }
+  function sat(c) { return (Math.max(c.r, c.g, c.b) - Math.min(c.r, c.g, c.b)) / 255; }
+  function to(c, t) { var k = t / lum(c); return 'rgb(' + Math.round(c.r * k) + ',' + Math.round(c.g * k) + ',' + Math.round(c.b * k) + ')'; }
+  /* 되돌림: 내가 넣은 값이 모두 그대로면 원래 style 글자 그대로, 다른 처리(도구 자체 인쇄 복원 등)가 먼저 바꿨으면 그 속성은 건드리지 않음 */
+  var recs = new Map();
+  function set(el, p, v) {
+    var r = recs.get(el); if (!r) { r = { a: el.getAttribute('style'), p: [] }; recs.set(el, r); }
+    var old = [p, el.style.getPropertyValue(p), el.style.getPropertyPriority(p)];
+    el.style.setProperty(p, v, 'important'); old.push(el.style.getPropertyValue(p)); r.p.push(old);
+  }
+  function run() {
+    if (window.MM_CRISP_OFF) return;
+    ff = document.createElement('style'); ff.id = 'mm-print-crisp-ff'; ff.textContent = css; document.head.appendChild(ff);
+    var bgs = new Map();
+    function bgL(el) {   /* 글자 · 선 뒤 실제 바탕 밝기(가장 가까운 불투명 바탕) */
+      if (!el || el.nodeType !== 1) return 1; if (bgs.has(el)) return bgs.get(el);
+      var b = rgb(getComputedStyle(el).backgroundColor), v = b && b.a > 0.5 ? lum(b) : bgL(el.parentElement); bgs.set(el, v); return v;
+    }
+    document.body.querySelectorAll('*').forEach(function (el) {
+      var tag = el.tagName; if (tag === 'SCRIPT' || tag === 'STYLE' || el instanceof SVGElement) return;
+      var cs = getComputedStyle(el); if (cs.display === 'none') return;
+      if (cs.fontWeight === '600' && MONO_RE.test(cs.fontFamily.split(',')[0])) set(el, 'font-weight', '400');   /* 고정폭 숫자 굵기 600 → 400(공통원본 v1.0) */
+      var light = bgL(el) > 0.75, c = rgb(cs.color);
+      if (c && c.a > 0.3 && light && el.firstChild) {
+        var l = lum(c), s = sat(c);
+        if (s < 0.22 && l > 0.52) set(el, 'color', '#4B5563');
+        else if (s >= 0.22 && l > 0.60) set(el, 'color', to(c, 0.48));
+      }
+      ['top', 'right', 'bottom', 'left'].forEach(function (sd) {
+        var w = parseFloat(cs['border-' + sd + '-width']), sty = cs['border-' + sd + '-style'];
+        if (!w || sty === 'none' || sty === 'hidden') return;
+        var bc = rgb(cs['border-' + sd + '-color']);
+        if (bc && bc.a > 0 && lum(bc) > 0.85 && light) set(el, 'border-' + sd + '-color', to(bc, 0.72));
+        if (w < 0.66) set(el, 'border-' + sd + '-width', '0.5pt');
+      });
+    });
+  }
+  function undo() {
+    if (ff) { ff.remove(); ff = null; }
+    recs.forEach(function (r, e) {
+      if (r.p.every(function (x) { return e.style.getPropertyValue(x[0]) === x[3]; })) { if (r.a === null) e.removeAttribute('style'); else e.setAttribute('style', r.a); return; }
+      for (var i = r.p.length - 1; i >= 0; i--) { var x = r.p[i]; if (e.style.getPropertyValue(x[0]) !== x[3]) continue; if (x[1] === '') e.style.removeProperty(x[0]); else e.style.setProperty(x[0], x[1], x[2]); }
+    });
+    recs = new Map();
+  }
+  /* 되돌림은 지금 등록(단색 모듈은 load 때 등록하므로 그보다 먼저 실행), 적용은 load 뒤 등록(단색 모듈 다음 실행) */
+  addEventListener('afterprint', undo);
+  function arm() { addEventListener('beforeprint', function () { undo(); run(); }); }
+  if (document.readyState === 'complete') setTimeout(arm, 0); else addEventListener('load', function () { setTimeout(arm, 0); });
+  window.__mmCrispRun = run; window.__mmCrispUndo = undo;
+})();
+</script>
+<!-- MM-PRINT:END -->
+</body>
+</html>
