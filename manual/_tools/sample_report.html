@@ -1,0 +1,51 @@
+<!doctype html>
+<!-- 매뉴얼 · 연습용 「지반조사 보고서(예시)」 원본 — make_sample_pdf.py 가 A4 PDF(manual/assets/sample_soil_report.pdf)로 인쇄
+     값은 모두 가상(실제 현장 아님). 시추주상도 2쪽(BH-1 · BH-2, 공별 지하수위 다름) + 표준관입시험 결과표 1쪽 + 표지 -->
+<html lang="ko"><head><meta charset="utf-8"><title>지반조사 보고서 (예시)</title>
+<style>
+@page{size:A4;margin:14mm}
+body{font-family:'Malgun Gothic','맑은 고딕',sans-serif;color:#111;font-size:11px;margin:0}
+.pg{page-break-after:always;position:relative}
+.pg:last-child{page-break-after:auto}
+.cover{text-align:center;padding-top:200px}
+.cover h1{font-size:34px;letter-spacing:8px;margin:0 0 30px}
+.cover .pj{font-size:20px;margin-bottom:260px}
+.cover .co{font-size:18px}
+.cover .ex{margin-top:40px;color:#b91c1c;font-size:13px}
+h2{text-align:center;font-size:22px;letter-spacing:14px;margin:0}
+.sub{text-align:center;font-size:13px;margin:2px 0 12px}
+table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #333;padding:3px 4px;vertical-align:top}
+th{background:#f1f5f9;font-weight:700}
+.hd td{height:20px}
+.log td{height:34px}
+.c{text-align:center}
+.r{text-align:right}
+.mark{position:absolute;right:0;top:0;color:#b91c1c;font-size:11px;border:1px solid #b91c1c;padding:2px 6px}
+</style></head><body>
+
+<div class="pg cover">
+  <h1>지반조사 보고서</h1>
+  <div class="pj">만민 근린생활시설 신축공사</div>
+  <div class="co">2026. 11.</div>
+  <div class="co">MANMIN 지반 (예시)</div>
+  <div class="ex">※ 사용자 매뉴얼 연습용 가상 자료입니다. 실제 현장 값이 아닙니다.</div>
+</div>
+
+<div class="pg">
+  <div class="mark">예시 자료</div>
+  <p><b>6.4 현장시험 결과</b></p>
+  <p>6.4.1 표준관입시험 결과</p>
+  <p>시추조사와 병행하여 표준관입시험을 수행하였으며 결과는 다음과 같다.</p>
+  <p class="c">&lt; 표준관입시험 결과 &gt;</p>
+  <table>
+    <tr><th>심도</th><th>(m)</th><th>시추공번</th><th>1.5</th><th>3.0</th><th>4.5</th><th>6.0</th><th>7.5</th><th>9.0</th><th>10.5</th></tr>
+    <tr><td colspan="3" class="c">BH-1</td><td>8/30</td><td>6/30</td><td>14/30</td><td>21/30</td><td>33/30</td><td>50/18</td><td>50/8</td></tr>
+    <tr><td colspan="3" class="c">BH-2</td><td>10/30</td><td>12/30</td><td>18/30</td><td>26/30</td><td>41/30</td><td>50/15</td><td>-</td></tr>
+  </table>
+  <p>공내 지하수위는 BH-1 GL-3.5 m, BH-2 GL-2.8 m 로 측정되었다.</p>
+</div>
+
+<!--LOG:BH-1-->
+<!--LOG:BH-2-->
+</body></html>

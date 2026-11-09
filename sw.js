@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════
-   지내력 — N값 지내력 환산 시스템  MANMIN Ver-1.0
+   지내력 — N값 지내력 환산 시스템  MANMIN Ver-1.1
+   v1.1.0 (2026-11-10) 📄 지반조사 보고서 PDF 불러오기 — pdf.js 3.11.174 (cdnjs) 프리캐시 → 오프라인에서도 PDF 읽기
    v1.0.1 (2026-11-09) 📘 매뉴얼 단추(/manual/ 은 캐시 안 함)
    v1.0.0 (2026-11-09) 신규 — 옹벽 v5.1.10 SW 구조(R25 자기 접두어 · Network-first 문서 · allSettled 프리캐시) 그대로, 접두어 sbc-
    Service Worker — 오프라인 캐시 + 버전 업데이트
@@ -21,7 +22,7 @@ const mmMatch = (req, opt) => caches.keys()
   .then((ks) => ks.reduce((p, k) => p.then((r) => r || caches.open(k).then((c) => c.match(req, opt))), Promise.resolve(undefined)))
   .then((r) => (r && r.type === 'opaque' && req && req.mode === 'cors') ? undefined : r);
 
-const CACHE  = 'sbc-v1.0.1';   /* v1.0.1 : 📘 매뉴얼 단추 · v1.0.0 : 신규 */
+const CACHE  = 'sbc-v1.1.0';   /* v1.1.0 : 📄 PDF 불러오기 · v1.0.1 : 📘 매뉴얼 단추 · v1.0.0 : 신규 */
 const ORPHAN = [];
 const ASSETS = [
   './',
@@ -40,7 +41,9 @@ const ASSETS = [
   './assets/fonts/NotoSansKR-var.woff2',
   'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css',
   'https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;600;700&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
 ];
 
 self.addEventListener('install', e => {
