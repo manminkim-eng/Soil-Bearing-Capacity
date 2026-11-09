@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>N값 지내력 환산 시스템 사용자 매뉴얼 Ver-1.0 · MANMIN</title>
+<meta name="description" content="N값 지내력 환산 시스템 MANMIN Ver-1.0 사용자 매뉴얼 — KDS 41 19 00 · KDS 11 50 05 기준 SPT N값 허용지지력 환산 해설">
+<meta name="author" content="김만민 건축사 · ㈜대성건축사사무소">
+<meta name="theme-color" content="#134e4a"><meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="./assets/fonts/manmin-fonts.css">
+<style>:root{--mh-a:#042f2e;--mh-b:#134e4a;--mh-c:#0f766e;--mh-accent:#99f6e4;--mh-shadow:rgba(15,118,110,.35);--mh-btn-ink:#0f766e;--mh-veil:0.0;--mh-bp:50%}
+
+:root{
+  --navy:#2D3A8C;--navy-d:#1F2A6B;--navy-l:#E9ECF8;--accent:#F4A261;--accent-d:#C97A3A;--accent-l:#FDF1E7;
+  --bg:#F8F9FA;--card:#FFFFFF;--text:#1A1A2E;--text2:#4A4F66;--line:#DDE1EA;--ok:#0F766E;--ng:#B42318;
+  --r:12px;--pad:24px;--shadow:0 4px 20px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:16px;line-height:1.75;word-break:keep-all;overflow-wrap:anywhere}
+a{color:var(--navy)}a:hover{color:var(--accent-d)}
+code,kbd,.mono{font-family:var(--font-mono);font-size:.9em}
+code{background:var(--navy-l);color:var(--navy-d);padding:1px 6px;border-radius:5px}
+kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 6px;background:#fff}
+/* 상단 */
+.top{position:relative;background:linear-gradient(135deg,var(--mh-a),var(--mh-b) var(--mh-bp),var(--mh-c));color:#fff;box-shadow:0 2px 20px var(--mh-shadow)}
+.top::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--mh-veil));pointer-events:none}
+.top-in{position:relative;max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;padding:40px 24px 32px}
+.eyebrow{font-family:var(--font-brand);font-weight:700;font-size:12px;letter-spacing:.18em;color:var(--mh-accent)}
+.top h1{font-size:28px;font-weight:900;margin:8px 0 6px;line-height:1.35}
+.top .sub{opacity:.9;margin:0}
+.mh-main{flex:1 1 640px;min-width:0}
+.mh-eb{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mh-ver{font:700 11px var(--font-brand);background:var(--mh-accent);color:#1A1A2E;border-radius:999px;padding:1px 10px}
+.mh-meta{margin:12px 0 0;font-size:13px;color:rgba(255,255,255,.9)}
+.mh-act{display:flex;gap:10px;flex-wrap:wrap}
+.mh-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:10px;font-size:15px;text-decoration:none}
+.mh-btn.pri{background:#fff;color:var(--mh-btn-ink);font-weight:700}
+.mh-btn.sec{border:1px solid rgba(255,255,255,.45);color:#fff}
+.mh-btn.pri:hover{background:var(--mh-accent);color:#1A1A2E}.mh-btn.sec:hover{background:rgba(255,255,255,.12);color:#fff}
+.mh-btn:focus-visible{outline:3px solid var(--mh-accent);outline-offset:2px}
+.mh-prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:50;pointer-events:none}
+.mh-prog i{display:block;height:100%;width:0;background:var(--mh-accent)}
+.toc-sum{display:none}
+/* 레이아웃 */
+.wrap{max-width:1240px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px}
+nav.toc{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 16px;font-size:14px}
+nav.toc h2{font-size:13px;letter-spacing:.12em;color:var(--text2);margin:0 0 8px}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc li a{display:block;padding:5px 8px;border-radius:8px;text-decoration:none;color:var(--text)}
+nav.toc li a:hover,nav.toc li a.on{background:var(--navy-l);color:var(--navy)}
+nav.toc li.sub a{padding-left:20px;font-size:13px;color:var(--text2)}
+main{min-width:0}
+section.ch{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:var(--pad) calc(var(--pad) + 8px);margin-bottom:28px}
+section.ch>h2{font-size:24px;font-weight:700;color:var(--navy);margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+section.ch>h2 .n{font-family:var(--font-brand);font-weight:700;font-size:14px;color:#fff;background:var(--navy);border-radius:8px;padding:2px 9px}
+section.ch>.lead{color:var(--text2);margin:0 0 18px}
+h3{font-size:19px;color:var(--navy-d);margin:34px 0 10px;padding-top:6px;border-top:1px solid var(--line)}
+h3:first-of-type{border-top:0}
+h4{font-size:16px;margin:22px 0 8px}
+p{margin:8px 0}
+ul,ol{padding-left:22px}
+.note,.tip,.warn{border-radius:10px;padding:12px 16px;margin:14px 0;font-size:15px}
+.note{background:var(--navy-l);border-left:4px solid var(--navy)}
+.tip{background:var(--accent-l);border-left:4px solid var(--accent)}
+.warn{background:#FEF3F2;border-left:4px solid var(--ng)}
+.note b:first-child,.tip b:first-child,.warn b:first-child{margin-right:6px}
+/* 표 */
+.tbl{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14px;background:#fff}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--navy-l);color:var(--navy-d);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--font-mono);white-space:nowrap}
+.ok{color:var(--ok);font-weight:700}.ng{color:var(--ng);font-weight:700}
+/* 그림 */
+figure.shot{margin:18px 0 26px}
+figure.shot .frame{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;cursor:zoom-in}
+figure.shot img{display:block;width:100%;height:auto}
+figure.narrow{max-width:420px}
+.pin{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:var(--accent);color:#1A1A2E;font:700 13px/26px var(--font-mono);text-align:center;box-shadow:0 0 0 3px #fff,0 2px 8px rgba(0,0,0,.35);pointer-events:none}
+figcaption{font-size:14px;color:var(--text2);margin-top:8px}
+.fno{font-family:var(--font-mono);font-size:11px;background:var(--navy);color:#fff;border-radius:6px;padding:1px 7px;margin-right:8px}
+ol.legend{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 16px;font-size:14px}
+ol.legend li{display:flex;gap:8px;align-items:flex-start}
+ol.legend b{flex:0 0 22px;height:22px;border-radius:50%;background:var(--accent);font:700 12px/22px var(--font-mono);text-align:center}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+/* 단계 */
+.steps{counter-reset:st;list-style:none;padding:0;margin:16px 0}
+.steps>li{counter-increment:st;position:relative;padding:4px 0 18px 54px;border-left:2px solid var(--line);margin-left:18px}
+.steps>li:last-child{border-left-color:transparent}
+.steps>li::before{content:counter(st);position:absolute;left:-19px;top:0;width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;font:700 15px/36px var(--font-mono);text-align:center;box-shadow:0 0 0 4px var(--bg)}
+.steps>li>b.t{display:block;font-size:17px;color:var(--navy-d);margin-bottom:2px}
+/* 수식 */
+.eq{font-family:var(--font-mono);background:#0F1630;color:#E8ECFF;border-radius:10px;padding:14px 18px;margin:12px 0;overflow-x:auto;font-size:14px;line-height:1.9;white-space:pre}
+.eq .c{color:#9AA6D6}
+.svgbox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:14px 0;overflow-x:auto}
+.svgbox svg{display:block;width:100%;min-width:640px;height:auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:14px 0}
+.card{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:#fff}
+.card h5{margin:0 0 4px;font-size:15px;color:var(--navy)}
+.card p{margin:0;font-size:14px;color:var(--text2)}
+footer.foot{max-width:1240px;margin:0 auto;padding:0 24px 40px;color:var(--text2);font-size:13px}
+/* 라이트박스 */
+#lb{position:fixed;inset:0;background:rgba(10,14,30,.88);display:none;align-items:center;justify-content:center;z-index:99;cursor:zoom-out;padding:16px}
+#lb.open{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;background:#fff}
+.totop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;border:0;font-size:18px;box-shadow:var(--shadow);cursor:pointer}
+/* 반응형 5단계 */
+@media (max-width:1240px){.wrap{grid-template-columns:230px minmax(0,1fr);gap:24px}}
+@media (max-width:1024px){.wrap{grid-template-columns:1fr}nav.toc{position:static;max-height:none}nav.toc ol{columns:2}}
+@media (max-width:760px){.pair{grid-template-columns:1fr}section.ch{padding:20px 18px}.top h1{font-size:24px}}
+@media (max-width:640px){nav.toc ol{columns:1}body{font-size:15px}}
+@media (max-width:480px){.wrap,.top-in{padding-left:16px;padding-right:16px}.pin{width:22px;height:22px;font-size:11px;line-height:22px}}
+@media (max-width:400px){section.ch>h2{font-size:20px}}
+/* v-mh1 D4 접이식 목차 · D9 터치 44px (≤1024px) */
+@media (max-width:1024px){
+  nav.toc{padding:0 16px}
+  nav.toc .toc-sum{display:flex;align-items:center;justify-content:space-between;min-height:48px;font-weight:700;font-size:14px;color:var(--navy);cursor:pointer;list-style:none}
+  nav.toc .toc-sum::-webkit-details-marker{display:none}
+  nav.toc details:not([open]) ol,nav.toc details:not([open]) h2{display:none}
+  nav.toc details[open]{padding-bottom:12px}
+  nav.toc li a{display:flex;align-items:center;min-height:44px;padding:0 8px}
+}
+/* v-mh1 D5 좁은 화면 헤드 */
+@media (max-width:640px){
+  .top-in{padding:28px 16px 24px;gap:16px}.top h1{font-size:22px}.top .sub{font-size:13px}.mh-meta{font-size:12px}
+  .mh-act{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.mh-btn{padding:0 8px;font-size:14px}
+}
+@media (max-width:480px){.eyebrow{letter-spacing:.04em}.mh-eb{gap:8px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* A4 인쇄 */
+@page{size:A4;margin:14mm 12mm 14mm}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;font-size:10.5pt}
+  nav.toc,.totop,#lb{display:none!important}
+  .wrap{display:block;padding:0}
+  section.ch{box-shadow:none;padding:0 0 8mm;margin:0;break-before:page}
+  main{padding-bottom:8mm}
+  section.ch:first-of-type{break-before:auto}
+  figure.shot,.tbl,.eq,.svgbox,.note,.tip,.warn,.steps>li{break-inside:avoid}
+  h3,h4{break-after:avoid}
+  .top{border-radius:0;box-shadow:none}
+  .mh-prog,.mh-act{display:none!important}
+  .mh-meta{color:#fff}
+  .pfoot{position:fixed;bottom:0;left:0;right:0;height:6mm;background:#fff;font-size:8pt;color:#666;border-top:1px solid #ccc;padding-top:1.5mm;display:flex;justify-content:space-between}
+}
+.pfoot{display:none}
+@media print{.pfoot{display:flex}}
+/* ── 좁은 화면 대응(r1 · 2026-10-12) : 화면 전용 — 인쇄·PDF에는 영향 없음 ── */
+@media screen and (max-width:640px){
+  .k1 td:first-child,.k1 th:first-child{white-space:normal}
+  /* 글 표(숫자 칸 없는 표) → 행마다 카드로 쌓기 */
+  .tbl.stack{border:0;border-radius:0;overflow:visible}
+  .tbl.stack table,.tbl.stack tbody,.tbl.stack tr,.tbl.stack td{display:block;width:auto}
+  .tbl.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tbl.stack table{background:transparent}
+  .tbl.stack tr{border:1px solid var(--line);border-radius:10px;background:#fff;margin:0 0 10px;overflow:hidden}
+  .tbl.stack td{border-bottom:1px solid var(--line);padding:8px 12px}
+  .tbl.stack tr td:last-child{border-bottom:0}
+  .tbl.stack td:first-child{background:var(--navy-l);color:var(--navy-d);font-weight:700}
+  .tbl.stack td[data-th]:not(:first-child)::before{content:attr(data-th);display:block;font-size:12px;font-weight:700;color:var(--text2);margin-bottom:2px}
+  .tbl.stack.c2 td[data-th]:not(:first-child)::before{display:none}
+  .tbl.stack td:empty{display:none}
+  /* 숫자 표 → 표 모양 유지, 글자·여백 축소, 넘치면 좌우로 밀기(오른쪽 그림자로 표시) */
+  .tbl:not(.stack){background:linear-gradient(to right,#fff 30%,rgba(255,255,255,0)) left/40px 100% no-repeat local,linear-gradient(to left,#fff 30%,rgba(255,255,255,0)) right/40px 100% no-repeat local,radial-gradient(farthest-side at 100% 50%,rgba(26,26,46,.22),transparent) right/12px 100% no-repeat scroll,#fff}
+  .tbl:not(.stack) table{font-size:13px;background:transparent}
+  .tbl:not(.stack) th,.tbl:not(.stack) td{padding:7px 8px}
+  /* 수식 → 줄바꿈 허용 */
+  .eq{white-space:pre-wrap;word-break:keep-all;font-size:13px;line-height:1.75;padding:12px 14px}
+  .eq .c{display:block;padding-left:1em}
+  .svgbox{position:relative}
+  .svgbox::after{content:"← 좌우로 밀어서 보기 →";display:block;text-align:center;font-size:12px;color:var(--text2);margin-top:6px;position:sticky;left:0}
+  ol.legend{grid-template-columns:1fr}
+  .steps>li{padding-left:34px;margin-left:14px}
+}
+.rev{white-space:nowrap}
+@media print{.rev{display:none}}
+/* v-mh1 D6 다크 모드(화면 전용 · 헤드 색 불변 · 그림과 흐름도는 흰 바탕 유지) */
+@media screen and (prefers-color-scheme:dark){
+  :root{--bg:#0F1420;--card:#171D2C;--text:#E6E8EF;--text2:#A9AFC3;--line:#2A3245;--navy-l:#232B45;--accent-l:#33281D;--shadow:0 4px 20px rgba(0,0,0,.35)}
+  a,section.ch>h2,h3,.steps>li>b.t,.card h5,nav.toc li a.on,nav.toc .toc-sum{color:#AEB8F5}
+  a:hover{color:#F4A261}
+  code{background:var(--navy-l);color:#C9D0FA}
+  kbd{background:var(--card);color:var(--text)}
+  table,.card,nav.toc,section.ch{background:var(--card)}
+  th{background:var(--navy-l);color:#C9D0FA}
+  .note{border-left-color:#7F8CE0}
+  .warn{background:#3A1F22}
+  .ok{color:#5EEAD4}.ng{color:#FDA29B}
+  figure.shot .frame,.svgbox{background:#fff;border-color:var(--line)}
+  .tbl.stack tr{background:var(--card)}
+  .tbl.stack td:first-child{color:#C9D0FA}
+  .tbl:not(.stack){background:var(--card)}
+}
+@media screen and (prefers-color-scheme:dark) and (max-width:640px){
+  .tbl:not(.stack){background:linear-gradient(to right,var(--card) 30%,rgba(23,29,44,0)) left/40px 100% no-repeat local,linear-gradient(to left,var(--card) 30%,rgba(23,29,44,0)) right/40px 100% no-repeat local,radial-gradient(farthest-side at 100% 50%,rgba(0,0,0,.5),transparent) right/12px 100% no-repeat scroll,var(--card)}
+}
+</style>
+</head><body>
+<div class="mh-prog" aria-hidden="true"><i></i></div>
+<header class="top"><div class="top-in">
+<div class="mh-main">
+<div class="mh-eb"><span class="eyebrow">MANMIN ENGINEERING · USER MANUAL</span><span class="mh-ver">Ver-1.0</span></div>
+<h1>N값 지내력 환산 시스템 사용자 매뉴얼</h1>
+<p class="sub">N값 표 → 보정 · φ / cu 환산 → 극한지지력 · 침하 → 채택 허용지지력 → A4 계산서</p>
+<p class="mh-meta">2026-11-09 · 김만민 건축사 · ㈜대성건축사사무소 · KDS 41 19 00 · KDS 11 50 05</p>
+</div>
+<div class="mh-act"><a class="mh-btn pri" href="../index.html" aria-label="환산 시스템 열기">▶ 환산 시스템 열기</a><a class="mh-btn sec" href="N값지내력환산시스템_사용자매뉴얼_Ver-1.0.pdf" download>⤓ PDF (A4)</a></div>
+</div></header>
+<div class="wrap"><nav class="toc" aria-label="목차"><details open><summary class="toc-sum">목차 <span aria-hidden="true">▾</span></summary><h2>목차</h2><ol><li><a href="#ch0">0. 이 매뉴얼에 대하여</a></li><li><a href="#ch1">1. 한눈에 보기</a></li><li class="sub"><a href="#s1-1">화면 구성</a></li><li class="sub"><a href="#s1-2">계산 흐름</a></li><li><a href="#ch2">2. 1분 따라하기</a></li><li><a href="#ch3">3. 화면별 기능</a></li><li class="sub"><a href="#s3-1">머리 · 매뉴얼</a></li><li class="sub"><a href="#s3-2">STEP 1 기본 정보</a></li><li class="sub"><a href="#s3-3">STEP 2 N값 표</a></li><li class="sub"><a href="#s3-4">STEP 3 기초 · 지하수위</a></li><li class="sub"><a href="#s3-5">STEP 4 보정 · 환산식</a></li><li class="sub"><a href="#s3-6">STEP 5 시험값 · 입증자료</a></li><li class="sub"><a href="#s3-7">결과 요약</a></li><li class="sub"><a href="#s3-8">심도 - N 분포 · φ 비교 · 보정표</a></li><li class="sub"><a href="#s3-9">사례 — 입증자료 없음</a></li><li class="sub"><a href="#s3-10">사례 — 시추공 2개</a></li><li class="sub"><a href="#s3-11">사례 — 점성토 줄기초</a></li><li class="sub"><a href="#s3-12">사례 — 평판재하시험</a></li><li class="sub"><a href="#s3-13">A4 계산서</a></li><li class="sub"><a href="#s3-14">도움말</a></li><li class="sub"><a href="#s3-15">휴대전화 화면</a></li><li class="sub"><a href="#s3-16">건물개요 저장·불러오기</a></li><li><a href="#ch4">4. 기준 해설</a></li><li class="sub"><a href="#s4-1">근거 체계</a></li><li class="sub"><a href="#s4-2">표 4.2-1 · 식 (4.2-1)</a></li><li class="sub"><a href="#s4-3">N값 보정</a></li><li class="sub"><a href="#s4-4">φ · cu 환산</a></li><li class="sub"><a href="#s4-5">극한지지력 (Meyerhof)</a></li><li class="sub"><a href="#s4-6">침하 기준 허용지지력</a></li><li class="sub"><a href="#s4-7">영향 깊이 · 대표 N</a></li><li class="sub"><a href="#s4-8">채택 순서</a></li><li class="sub"><a href="#s4-9">이 도구가 하지 않는 것</a></li><li><a href="#ch5">5. 실무 작업 방법</a></li><li class="sub"><a href="#s5-1">검토 절차</a></li><li class="sub"><a href="#s5-2">문제 해결 · FAQ</a></li><li><a href="#ch6">부록</a></li><li class="sub"><a href="#a1">버전 변경 내역</a></li><li class="sub"><a href="#a2">예제 입력값</a></li><li class="sub"><a href="#a3">용어</a></li></ol></details></nav><main><style>
+#fig-s19_help_law,#fig-s20_help_formula{max-width:640px}
+#fig-s18_a4page{max-width:600px}
+#fig-s03_basic,#fig-s04_table,#fig-s05_found,#fig-s06_corr,#fig-s07_test{max-width:460px}
+#fig-s09_chart{max-width:640px}
+.k1 td:first-child,.k1 th:first-child{white-space:nowrap}
+.pair>div{min-width:0}
+.tri{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;align-items:start}
+@media (max-width:760px){.tri{grid-template-columns:1fr}}
+@media print{
+  figure.shot{max-width:none!important}
+  figure.shot .frame{width:fit-content;max-width:100%}
+  figure.shot img{width:auto;height:auto;max-width:100%;max-height:118mm}
+  figure.narrow img{max-height:105mm}
+  #fig-s18_a4page img{max-height:225mm}
+  .pair{grid-template-columns:1fr 1fr}.tri{grid-template-columns:repeat(2,1fr)}
+  .brk .tbl{break-inside:auto}.brk tr{break-inside:avoid}.brk thead{display:table-header-group}
+}
+</style><section class="ch" id="ch0"><h2><span class="n">00</span>이 매뉴얼에 대하여</h2>
+<p class="lead">N값 지내력 환산 시스템은 지반조사 보고서의 표준관입시험 N값 표를 붙여 넣으면 N값을 보정하고, 사질토는 내부마찰각 φ · 점성토는 점착력 cu 로 환산해 Meyerhof 극한지지력과 침하 기준 지지력을 구한 뒤, KDS 41 19 00 식 (4.2-1)과 표 4.2-1 에 맞춰 허용지지력(지내력)을 정리하는 웹도구입니다.</p>
+<div class="k1"><div class="tbl"><table><thead><tr><th class="">항목</th><th class="">내용</th></tr></thead><tbody><tr><td class="">대상 프로그램</td><td class="">N값 지내력 환산 시스템 <b>MANMIN Ver-1.0</b>(v1.0.1)</td></tr><tr><td class="">접속 주소</td><td class=""><a href="https://manminkim-eng.github.io/Soil-Bearing-Capacity/" target="_blank" rel="noopener">manminkim-eng.github.io/Soil-Bearing-Capacity</a></td></tr><tr><td class="">매뉴얼 판</td><td class=""><b>Ver-1.0</b> (화면 표기와 같은 판 번호, 초판) · 2026-11-09 · 작성 김만민 건축사(㈜대성건축사사무소)</td></tr><tr><td class="">내려받기</td><td class=""><a href="N값지내력환산시스템_사용자매뉴얼_Ver-1.0.pdf" download>PDF(A4)</a> · <a href="../index.html">환산 시스템 열기</a></td></tr><tr><td class="">근거</td><td class="">KDS 41 19 00 건축물 기초구조 설계기준 (2022. 10. 11.) · KDS 11 50 05 얕은기초 설계기준(일반설계법) (2025. 12. 24.) — 공식 원문 대조(2026-11-09)</td></tr><tr><td class="">범위</td><td class="">얕은기초(독립 · 줄 · 전면)의 지표 부근 흙 지반 허용지지력 참고 추정 — 암반 지지력 · 압밀침하 · 층상지반 · 말뚝 · 내진 지반분류는 따로 검토합니다</td></tr></tbody></table></div></div>
+<div class="note"><b>표기</b>그림 위 주황색 번호(①②…)는 그림 아래 범례 번호와 같습니다. 그림을 누르면 크게 볼 수 있습니다.</div>
+<div class="warn"><b>참고용 산정 도구</b>현행 KDS 에는 N값 → 허용지지력 환산식이 없습니다. 이 도구의 값은 <b>문헌식에 따른 참고 추정값</b>입니다. 우선순위는 평판재하시험 · 실내시험 값 &gt; 지반조사 보고서 제시 허용지지력 &gt; 이 도구의 환산값이며, 기초 설계 책임은 설계자 · 구조기술사에게 있습니다.</div>
+</section>
+<section class="ch" id="ch1"><h2><span class="n">01</span>한눈에 보기</h2>
+<p class="lead">설치 없이 브라우저에서 바로 열리는 단일 페이지(PWA)입니다. 입력값은 브라우저 안에서만 계산하고 서버로 보내지 않습니다. 입력하면 0.3초 뒤 자동으로 다시 계산합니다.</p>
+<h3 id="s1-1">1-1. 화면 구성</h3>
+<figure class="shot" id="fig-s01_overview"><div class="frame"><img src="images/s01_overview.webp" width="1440" height="900" loading="lazy" alt="첫 화면 — 왼쪽 입력 · 오른쪽 결과(예제 ① 계산 후)"><span class="pin" style="left:6.93%;top:13.93%">1</span><span class="pin" style="left:87.77%;top:13.93%">2</span><span class="pin" style="left:5.26%;top:19.93%">3</span><span class="pin" style="left:2.76%;top:24.60%">4</span><span class="pin" style="left:2.76%;top:36.86%">5</span><span class="pin" style="left:34.29%;top:36.86%">6</span></div><figcaption><span class="fno">S01</span>첫 화면 — 왼쪽 입력 · 오른쪽 결과(예제 ① 계산 후)</figcaption><ol class="legend"><li><b>1</b><span>탭 — 입력 · 계산 / A4 계산서</span></li><li><b>2</b><span>📘 매뉴얼</span></li><li><b>3</b><span>요약 바</span></li><li><b>4</b><span>참고용 안내</span></li><li><b>5</b><span>입력(STEP 1 ~ 5)</span></li><li><b>6</b><span>결과</span></li></ol></figure>
+<h3 id="s1-2">1-2. 계산 흐름</h3>
+<div class="brk"><div class="k1"><div class="tbl"><table><thead><tr><th class="">단계</th><th class="">내용</th></tr></thead><tbody><tr><td class="">1. 읽기</td><td class="">N값 표(공번 · 심도 · N · 토질) — 관입 불능 50/x 환산 · 토질 이름 / USCS 기호 인식</td></tr><tr><td class="">2. 보정</td><td class="">N₆₀ = N × ER/60 × C<sub>R</sub> (상한 50) · 유효상재압 σv′ · (N₁)₆₀ = C<sub>N</sub>·N₆₀</td></tr><tr><td class="">3. 영향 깊이</td><td class="">기초 저면 Df ~ Df + B(2 − 0.5B/L) 의 N값 평균(또는 최솟값)을 대표 N 으로</td></tr><tr><td class="">4. 환산</td><td class="">사질토 φ(Dunham 등 4식) · 점성토 cu = 6.25·N₆₀ · 암은 환산하지 않음</td></tr><tr><td class="">5. 지지력</td><td class="">Meyerhof 극한지지력 qu → 식 (4.2-1) qa = (qu − qo)/SF + qo</td></tr><tr><td class="">6. 침하</td><td class="">사질토 Meyerhof · Bowles 식(Se 25 mm) → qa = min(지지력, 침하)</td></tr><tr><td class="">7. 채택</td><td class="">시추공별 최솟값 → 평판재하 &gt; 암 표 값 &gt; 입증자료 유무에 따라 산정값 또는 표 4.2-1 상한</td></tr></tbody></table></div></div></div>
+</section>
+<section class="ch" id="ch2"><h2><span class="n">02</span>1분 따라하기</h2>
+<p class="lead">예제 ① — 만민 근린생활시설 신축공사 독립기초(입력값은 예시).</p>
+<ol class="steps">
+<li><b class="t">① 기본 정보</b>사업명 · 작성자 · 위치 · 작성일, 지반조사 보고서 이름(선택).</li>
+<li><b class="t">② N값 표</b>보고서의 시추주상도 N값을 「공번 심도 N 토질」로 붙여 넣기 — 여기서는 「예제 ① 사질토」 단추.</li>
+<li><b class="t">③ 기초 · 지하수위</b>독립기초 정방형 B = 2.0 m · Df = 1.5 m · 지하수위 GL−10 m · 설계 접지압 150 kN/㎡.</li>
+<li><b class="t">④ 결과</b>대표 N₆₀ 11.8 → φ 26.9° → 지지력 기준 238.1 · 침하 기준 235.2 → <b>채택 qa 235.2 kN/㎡ · 접지압 OK</b>.</li>
+<li><b class="t">⑤ 입증자료 확인</b>STEP 5 「입증 · 승인」을 끄면 표 4.2-1 모래 100 kN/㎡ 가 상한 → 접지압 150 은 NG.</li>
+<li><b class="t">⑥ A4 계산서</b>「📄 A4 계산서」 탭 → 「인쇄 / PDF 저장」 또는 「JPG 저장」.</li>
+</ol>
+</section>
+<section class="ch" id="ch3"><h2><span class="n">03</span>화면별 기능</h2>
+<h3 id="s3-1">3-1. 머리 · 매뉴얼</h3>
+<figure class="shot" id="fig-s02_header"><div class="frame"><img src="images/s02_header.webp" width="1440" height="182" loading="lazy" alt="머리 · 탭 막대"><span class="pin" style="left:6.84%;top:26.05%">1</span><span class="pin" style="left:80.27%;top:13.98%">2</span><span class="pin" style="left:5.19%;top:65.68%">3</span><span class="pin" style="left:86.57%;top:67.87%">4</span></div><figcaption><span class="fno">S02</span>머리 · 탭 막대</figcaption><ol class="legend"><li><b>1</b><span>도구 이름 · Ver-1.0</span></li><li><b>2</b><span>KDS 41 19 00 · KDS 11 50 05</span></li><li><b>3</b><span>탭</span></li><li><b>4</b><span>📘 매뉴얼 — 탭 막대 끝</span></li></ol></figure>
+<p>탭 막대 오른쪽 끝의 「📘 매뉴얼」은 이 문서를 새 창으로 엽니다(온라인 전용). 오른쪽 근거 블록은 적용 기준과 식 (4.2-1)입니다.</p>
+<h3 id="s3-2">3-2. STEP 1 기본 정보</h3>
+<div class="pair"><div><figure class="shot" id="fig-s03_basic"><div class="frame"><img src="images/s03_basic.webp" width="460" height="289" loading="lazy" alt="기본 정보"><span class="pin" style="left:5.83%;top:28.26%">1</span><span class="pin" style="left:51.38%;top:28.26%">2</span><span class="pin" style="left:5.83%;top:51.44%">3</span><span class="pin" style="left:51.38%;top:51.44%">4</span><span class="pin" style="left:5.83%;top:74.63%">5</span></div><figcaption><span class="fno">S03</span>기본 정보</figcaption><ol class="legend"><li><b>1</b><span>사업명</span></li><li><b>2</b><span>작성자</span></li><li><b>3</b><span>위치</span></li><li><b>4</b><span>작성일</span></li><li><b>5</b><span>보고서 이름(계산서에 표기)</span></li></ol></figure></div><div><div class="k1"><div class="tbl"><table><thead><tr><th class="">칸</th><th class="">쓰임</th></tr></thead><tbody><tr><td class="">사업명 · 작성자 · 위치</td><td class="">A4 계산서 머리 — 「🏢 건물개요」로 다른 도구와 공유</td></tr><tr><td class="">작성일</td><td class="">계산서 날짜</td></tr><tr><td class="">지반조사 보고서</td><td class="">보고서 이름 · 날짜 — 계산서 「자료」 줄에 표기</td></tr></tbody></table></div></div></div></div>
+<h3 id="s3-3">3-3. STEP 2 N값 표</h3>
+<div class="pair"><div><figure class="shot" id="fig-s04_table"><div class="frame"><img src="images/s04_table.webp" width="460" height="425" loading="lazy" alt="표준관입시험 N값 표"><span class="pin" style="left:5.83%;top:20.18%">1</span><span class="pin" style="left:5.83%;top:67.24%">2</span><span class="pin" style="left:5.83%;top:88.56%">3</span></div><figcaption><span class="fno">S04</span>표준관입시험 N값 표</figcaption><ol class="legend"><li><b>1</b><span>공번 · 심도 · N · 토질 붙여 넣기</span></li><li><b>2</b><span>관입 불능 50/x · 토질 인식</span></li><li><b>3</b><span>예제 ① ② ③</span></li></ol></figure></div><div><div class="k1"><div class="tbl"><table><thead><tr><th class="">항목</th><th class="">규칙</th></tr></thead><tbody><tr><td class="">형식</td><td class="">한 줄에 공번 · 심도(m) · N · 토질 — 탭 · 쉼표 · 공백 구분, 엑셀 표를 그대로 붙여 넣어도 됨</td></tr><tr><td class="">공번</td><td class="">빼면 BH-1 — 공번이 여러 개면 시추공별로 계산해 가장 작은 값을 채택</td></tr><tr><td class="">관입 불능</td><td class="">50/12 → 50 × 30/12 = 125 로 환산 후 N 상한(50) 적용</td></tr><tr><td class="">토질</td><td class="">모래 · 실트질 모래 · 자갈 · 점토 · 실트 · 풍화토 · 풍화암 · 연암 · 경암, USCS 기호(SM · CL …) — 괄호 안 기호도 인식</td></tr><tr><td class="">풍화토</td><td class="">사질토로 계산(KDS 41 19 00 표 4.2-1 에는 풍화토 항목이 없음 — 모래 100 적용)</td></tr></tbody></table></div></div></div></div>
+<h3 id="s3-4">3-4. STEP 3 기초 · 지하수위</h3>
+<div class="pair"><div><figure class="shot" id="fig-s05_found"><div class="frame"><img src="images/s05_found.webp" width="460" height="415" loading="lazy" alt="기초 · 지하수위"><span class="pin" style="left:5.83%;top:18.39%">1</span><span class="pin" style="left:51.38%;top:18.39%">2</span><span class="pin" style="left:5.83%;top:34.53%">3</span><span class="pin" style="left:51.38%;top:34.53%">4</span><span class="pin" style="left:5.83%;top:62.73%">5</span><span class="pin" style="left:51.38%;top:62.73%">6</span><span class="pin" style="left:5.83%;top:78.87%">7</span><span class="pin" style="left:51.38%;top:78.87%">8</span></div><figcaption><span class="fno">S05</span>기초 · 지하수위</figcaption><ol class="legend"><li><b>1</b><span>기초 형식</span></li><li><b>2</b><span>근입깊이 Df</span></li><li><b>3</b><span>폭 B(짧은 변)</span></li><li><b>4</b><span>길이 L</span></li><li><b>5</b><span>지하수위</span></li><li><b>6</b><span>γt</span></li><li><b>7</b><span>γsat</span></li><li><b>8</b><span>설계 접지압 — 판정</span></li></ol></figure></div><div><div class="k1"><div class="tbl"><table><thead><tr><th class="">칸</th><th class="">쓰임</th></tr></thead><tbody><tr><td class="">기초 형식</td><td class="">독립(정방형 · 장방형) · 연속(줄기초, L = ∞) · 전면 — 형상계수 · 영향 깊이에 반영</td></tr><tr><td class="">Df · B · L</td><td class="">근입깊이 · 짧은 변 · 긴 변 — B · Df 0.3 m 미만이면 경고(KDS 41 19 00 4.4.4)</td></tr><tr><td class="">지하수위</td><td class="">유효상재압 · 지지력 γ 항 · 침하식 Cw 에 반영 — 보고서의 측정 수위(우기 고려)</td></tr><tr><td class="">γt · γsat</td><td class="">습윤 · 포화 단위중량 — 보고서 값, 없으면 18 · 19 kN/m³</td></tr><tr><td class="">설계 접지압</td><td class="">구조계산의 기초 접지압 — 넣으면 채택 qa 와 비교해 OK / NG</td></tr></tbody></table></div></div></div></div>
+<h3 id="s3-5">3-5. STEP 4 보정 · 환산식</h3>
+<div class="pair"><div><figure class="shot" id="fig-s06_corr"><div class="frame"><img src="images/s06_corr.webp" width="460" height="496" loading="lazy" alt="N값 보정 · 환산식"><span class="pin" style="left:5.83%;top:15.52%">1</span><span class="pin" style="left:51.38%;top:15.52%">2</span><span class="pin" style="left:5.83%;top:29.03%">3</span><span class="pin" style="left:51.38%;top:29.03%">4</span><span class="pin" style="left:5.83%;top:41.32%">5</span><span class="pin" style="left:51.38%;top:41.32%">6</span><span class="pin" style="left:5.83%;top:53.62%">7</span><span class="pin" style="left:51.38%;top:53.62%">8</span><span class="pin" style="left:5.83%;top:67.13%">9</span><span class="pin" style="left:5.83%;top:76.56%">10</span><span class="pin" style="left:5.83%;top:82.20%">11</span><span class="pin" style="left:5.83%;top:90.97%">12</span></div><figcaption><span class="fno">S06</span>N값 보정 · 환산식</figcaption><ol class="legend"><li><b>1</b><span>ER (기본 60 %)</span></li><li><b>2</b><span>평균 / 최솟값</span></li><li><b>3</b><span>N 상한 50</span></li><li><b>4</b><span>φ 상한 40°</span></li><li><b>5</b><span>φ 환산식</span></li><li><b>6</b><span>Dunham 계수</span></li><li><b>7</b><span>SF ≥ 3</span></li><li><b>8</b><span>Se 25 mm</span></li><li><b>9</b><span>CR 보정</span></li><li><b>10</b><span>Cw 보정</span></li><li><b>11</b><span>세립 모래 보정</span></li><li><b>12</b><span>깊이계수</span></li></ol></figure></div><div><div class="k1"><div class="tbl"><table><thead><tr><th class="">칸</th><th class="">쓰임</th></tr></thead><tbody><tr><td class="">ER</td><td class="">해머 에너지 효율 — 보고서에 측정값이 있으면 입력, 없으면 60 % (KDS 11 50 05 4.1.5②)</td></tr><tr><td class="">대표 N값</td><td class="">영향 깊이 평균(기본) 또는 최솟값</td></tr><tr><td class="">N · φ 상한</td><td class="">N 50 · φ 40° (보수) — 60 · 45° 선택 가능</td></tr><tr><td class="">φ 환산식</td><td class="">Dunham(기본) · 오사키 · Peck · Hatanaka·Uchida — 결과에서 4식 비교</td></tr><tr><td class="">SF · Se</td><td class="">안전계수 3 이상(식 4.2-1) · 허용 침하량 25 mm(사질토 침하식)</td></tr><tr><td class="">보정 선택</td><td class="">CR 롯드 길이(켬) · Cw 지하수위(켬) · 세립 모래(끔) · 깊이계수(끔 — 보수)</td></tr></tbody></table></div></div></div></div>
+<h3 id="s3-6">3-6. STEP 5 시험값 · 입증자료</h3>
+<div class="pair"><div><figure class="shot" id="fig-s07_test"><div class="frame"><img src="images/s07_test.webp" width="460" height="272" loading="lazy" alt="시험값 · 입증자료 (선택)"><span class="pin" style="left:5.83%;top:29.89%">1</span><span class="pin" style="left:51.38%;top:29.89%">2</span><span class="pin" style="left:5.83%;top:54.57%">3</span><span class="pin" style="left:5.83%;top:75.94%">4</span></div><figcaption><span class="fno">S07</span>시험값 · 입증자료 (선택)</figcaption><ol class="legend"><li><b>1</b><span>평판재하 qy</span></li><li><b>2</b><span>평판재하 qult</span></li><li><b>3</b><span>cu 시험값</span></li><li><b>4</b><span>입증자료 · 승인</span></li></ol></figure></div><div><div class="k1"><div class="tbl"><table><thead><tr><th class="">칸</th><th class="">쓰임</th></tr></thead><tbody><tr><td class="">평판재하 qy · qult</td><td class="">KS F 2444 시험의 항복 · 극한하중 — 넣으면 min(qy/2, qult/3) 을 최우선 채택</td></tr><tr><td class="">cu 시험값</td><td class="">일축(qu/2) · 삼축 · 베인 — 넣으면 N 환산 cu 대신 사용</td></tr><tr><td class="">입증 · 승인</td><td class="">켬: 산정값 채택(4.2.2 입증 전제) · 끔: 표 4.2-1 값을 상한으로 채택</td></tr></tbody></table></div></div></div></div>
+<h3 id="s3-7">3-7. 결과 요약</h3>
+<figure class="shot" id="fig-s08_hero"><div class="frame"><img src="images/s08_hero.webp" width="938" height="356" loading="lazy" alt="결과 요약 — 예제 ①"><span class="pin" style="left:3.39%;top:12.87%">1</span><span class="pin" style="left:41.76%;top:32.52%">2</span><span class="pin" style="left:1.50%;top:50.45%">3</span><span class="pin" style="left:34.34%;top:50.45%">4</span><span class="pin" style="left:1.50%;top:74.20%">5</span><span class="pin" style="left:34.34%;top:74.20%">6</span><span class="pin" style="left:67.21%;top:74.20%">7</span></div><figcaption><span class="fno">S08</span>결과 요약 — 예제 ①</figcaption><ol class="legend"><li><b>1</b><span>채택 qa</span></li><li><b>2</b><span>접지압 판정</span></li><li><b>3</b><span>대표 N₆₀</span></li><li><b>4</b><span>φ</span></li><li><b>5</b><span>지지력 기준 qa</span></li><li><b>6</b><span>침하 기준 qa</span></li><li><b>7</b><span>표 4.2-1</span></li></ol></figure>
+<p>위 상자는 채택 허용지지력과 그 근거(산정값 / 표 4.2-1 / 평판재하), tf/㎡ 환산, 접지압 판정입니다. 아래 여섯 칸은 대표 N₆₀ · φ(또는 cu) · 극한지지력 · 지지력 기준 qa · 침하 기준 qa · 표 4.2-1 값입니다. 예제 ①은 산정값 235.2 이 표 값 100 을 넘어 표 칸이 빨갛게 「입증자료」를 알립니다.</p>
+<h3 id="s3-8">3-8. 심도 - N 분포 · φ 비교 · 보정표</h3>
+<figure class="shot" id="fig-s09_chart"><div class="frame"><img src="images/s09_chart.webp" width="938" height="391" loading="lazy" alt="심도 - N 분포 — ○ 기록 N · ◆ N₆₀ · 영향 깊이 음영"></div><figcaption><span class="fno">S09</span>심도 - N 분포 — ○ 기록 N · ◆ N₆₀ · 영향 깊이 음영</figcaption></figure>
+<figure class="shot" id="fig-s10_phi"><div class="frame"><img src="images/s10_phi.webp" width="938" height="258" loading="lazy" alt="φ 환산식 비교 — 적용식 강조"></div><figcaption><span class="fno">S10</span>φ 환산식 비교 — 적용식 강조</figcaption></figure>
+<p>같은 N 이라도 식마다 φ 가 26.9° ~ 38.1° 로 차이가 큽니다. 보고서 제시값 · 시험값과 비교해 식을 고르십시오(KDS 11 50 05 4.1.3(1) 설계자 판단).</p>
+<figure class="shot" id="fig-s11_rows"><div class="frame"><img src="images/s11_rows.webp" width="938" height="301" loading="lazy" alt="N값 보정표 — ● 영향 깊이 안의 줄"></div><figcaption><span class="fno">S11</span>N값 보정표 — ● 영향 깊이 안의 줄</figcaption></figure>
+<h3 id="s3-9">3-9. 사례 — 입증자료 없음</h3>
+<figure class="shot" id="fig-s12_noevid"><div class="frame"><img src="images/s12_noevid.webp" width="938" height="356" loading="lazy" alt="예제 ① · 입증 · 승인 끔 — 표 4.2-1 상한 채택"><span class="pin" style="left:3.39%;top:8.66%">1</span><span class="pin" style="left:41.76%;top:32.52%">2</span><span class="pin" style="left:67.21%;top:74.20%">3</span></div><figcaption><span class="fno">S12</span>예제 ① · 입증 · 승인 끔 — 표 4.2-1 상한 채택</figcaption><ol class="legend"><li><b>1</b><span>표 4.2-1 값 채택</span></li><li><b>2</b><span>접지압 150 > 100 — NG</span></li><li><b>3</b><span>표 4.2-1 모래 100</span></li></ol></figure>
+<figure class="shot" id="fig-s12b_note"><div class="frame"><img src="images/s12b_note.webp" width="938" height="79" loading="lazy" alt="KDS 41 19 00 4.2.2 안내"></div><figcaption><span class="fno">S12</span>KDS 41 19 00 4.2.2 안내</figcaption></figure>
+<p>입증자료 없이는 표 4.2-1 값을 넘을 수 없습니다(4.2.2). 산정값이 235.2 이어도 채택은 모래 100 kN/㎡ 이고, 접지압 150 은 NG 입니다.</p>
+<h3 id="s3-10">3-10. 사례 — 시추공 2개</h3>
+<figure class="shot" id="fig-s13_holes"><div class="frame"><img src="images/s13_holes.webp" width="938" height="201" loading="lazy" alt="예제 ③ — 시추공별 결과, 최솟값 공 ★ 채택"></div><figcaption><span class="fno">S13</span>예제 ③ — 시추공별 결과, 최솟값 공 ★ 채택</figcaption></figure>
+<p>BH-1 253.0 · BH-2 189.2 kN/㎡ 중 작은 BH-2 값을 채택합니다. 시추공 사이 지층이 다르면 기초 위치별로 나눠 검토하십시오.</p>
+<h3 id="s3-11">3-11. 사례 — 점성토 줄기초</h3>
+<figure class="shot" id="fig-s14_clay"><div class="frame"><img src="images/s14_clay.webp" width="938" height="356" loading="lazy" alt="예제 ② — 점성토 · 줄기초 B 1.2 m"><span class="pin" style="left:3.39%;top:12.87%">1</span><span class="pin" style="left:34.34%;top:50.45%">2</span><span class="pin" style="left:34.34%;top:74.20%">3</span></div><figcaption><span class="fno">S14</span>예제 ② — 점성토 · 줄기초 B 1.2 m</figcaption><ol class="legend"><li><b>1</b><span>채택 qa</span></li><li><b>2</b><span>점착력 cu</span></li><li><b>3</b><span>침하 기준 — 점성토 없음</span></li></ol></figure>
+<figure class="shot" id="fig-s15_clay_warn"><div class="frame"><img src="images/s15_clay_warn.webp" width="938" height="103" loading="lazy" alt="확인 사항 — 압밀침하 · cu 시험값"></div><figcaption><span class="fno">S15</span>확인 사항 — 압밀침하 · cu 시험값</figcaption></figure>
+<p>점성토는 φ = 0 으로 보고 cu = 6.25·N₆₀ = 32.8 kPa 로 Meyerhof 지지력을 구합니다. 침하 기준식은 사질토 전용이라 점성토는 압밀침하를 따로 검토해야 합니다(KDS 11 50 05 4.2.4).</p>
+<h3 id="s3-12">3-12. 사례 — 평판재하시험</h3>
+<figure class="shot" id="fig-s16_plate"><div class="frame"><img src="images/s16_plate.webp" width="938" height="356" loading="lazy" alt="예제 ① + 평판재하 qy 300 · qult 500"><span class="pin" style="left:3.39%;top:8.66%">1</span><span class="pin" style="left:3.39%;top:12.87%">2</span></div><figcaption><span class="fno">S16</span>예제 ① + 평판재하 qy 300 · qult 500</figcaption><ol class="legend"><li><b>1</b><span>평판재하시험 채택</span></li><li><b>2</b><span>min(qy/2, qult/3)</span></li></ol></figure>
+<p>평판재하시험 값이 있으면 min(300/2, 500/3) = 150 kN/㎡ 를 최우선 채택합니다. 재하판 크기 효과(기초 폭이 크면 영향 깊이가 깊어짐)는 따로 확인하십시오.</p>
+<h3 id="s3-13">3-13. A4 계산서</h3>
+<figure class="shot" id="fig-s17_a4bar"><div class="frame"><img src="images/s17_a4bar.webp" width="1440" height="900" loading="lazy" alt="A4 계산서 탭 — 출력 단추"><span class="pin" style="left:8.52%;top:25.82%">1</span><span class="pin" style="left:17.97%;top:25.82%">2</span><span class="pin" style="left:22.83%;top:37.02%">3</span></div><figcaption><span class="fno">S17</span>A4 계산서 탭 — 출력 단추</figcaption><ol class="legend"><li><b>1</b><span>인쇄 · PDF</span></li><li><b>2</b><span>JPG 저장</span></li><li><b>3</b><span>A4 계산서</span></li></ol></figure>
+<div class="tri"><div><figure class="shot" id="fig-s18_a4page"><div class="frame"><img src="images/s18_a4page.webp" width="814" height="1786" loading="lazy" alt="A4 계산서 — 예제 ①"></div><figcaption><span class="fno">S18</span>A4 계산서 — 예제 ①</figcaption></figure></div><div><div class="k1"><div class="tbl"><table><thead><tr><th class="">구역</th><th class="">내용</th></tr></thead><tbody><tr><td class="">①</td><td class="">기본 정보 · 자료</td></tr><tr><td class="">②</td><td class="">입력 조건 — 기초 · 지하수위 · 보정 · 환산식</td></tr><tr><td class="">③</td><td class="">시추공별 결과 · 심도 - N 그래프</td></tr><tr><td class="">④</td><td class="">산출 근거 — 기호 · 항목 · 수치 · 단위 · 산출근거</td></tr><tr><td class="">⑤</td><td class="">채택 · 판정</td></tr><tr><td class="">적용 기준</td><td class="">KDS 조항 표 · 주의사항</td></tr></tbody></table></div></div><p class="small">인쇄는 A4 2쪽 · 단색 인쇄 모듈 · 쪽 번호 · PDF 이름 「N값지내력환산계산서_사업명_날짜」.</p></div></div>
+<h3 id="s3-14">3-14. 도움말</h3>
+<div class="tri"><div><figure class="shot" id="fig-s19_help_law"><div class="frame"><img src="images/s19_help_law.webp" width="800" height="493" loading="lazy" alt="관련 기준"></div><figcaption><span class="fno">S19</span>관련 기준</figcaption></figure></div><div><figure class="shot" id="fig-s20_help_formula"><div class="frame"><img src="images/s20_help_formula.webp" width="800" height="566" loading="lazy" alt="계산식"></div><figcaption><span class="fno">S20</span>계산식</figcaption></figure></div></div>
+<p>오른쪽 아래 「설계기준」 버튼으로 엽니다.</p>
+<h3 id="s3-15">3-15. 휴대전화 화면</h3>
+<div class="tri"><div><figure class="shot narrow" id="fig-s21_mobile_main"><div class="frame"><img src="images/s21_mobile_main.webp" width="390" height="844" loading="lazy" alt="첫 화면"></div><figcaption><span class="fno">S21</span>첫 화면</figcaption></figure></div><div><figure class="shot narrow" id="fig-s22_mobile_result"><div class="frame"><img src="images/s22_mobile_result.webp" width="390" height="844" loading="lazy" alt="결과"></div><figcaption><span class="fno">S22</span>결과</figcaption></figure></div></div>
+<h3 id="s3-16">3-16. 건물개요 저장·불러오기</h3>
+<div class="pair"><div><figure class="shot" id="fig-s23_proj_menu"><div class="frame"><img src="images/s23_proj_menu.webp" width="1440" height="900" loading="lazy" alt="「🏢 건물개요」 메뉴"><span class="pin" style="left:93.40%;top:76.87%">1</span><span class="pin" style="left:86.44%;top:60.91%">2</span><span class="pin" style="left:86.44%;top:64.58%">3</span><span class="pin" style="left:86.44%;top:68.24%">4</span><span class="pin" style="left:86.44%;top:71.91%">5</span></div><figcaption><span class="fno">S23</span>「🏢 건물개요」 메뉴</figcaption><ol class="legend"><li><b>1</b><span>「🏢 건물개요」 단추(오른쪽 아래)</span></li><li><b>2</b><span>저장 — 지금 값 담기</span></li><li><b>3</b><span>불러오기</span></li><li><b>4</b><span>파일로 내보내기(.json)</span></li><li><b>5</b><span>파일 가져오기</span></li></ol></figure></div><div><figure class="shot" id="fig-s24_proj_load"><div class="frame"><img src="images/s24_proj_load.webp" width="560" height="254" loading="lazy" alt="불러오기 창 — 채울 값 먼저 확인"><span class="pin" style="left:1.83%;top:49.18%">1</span><span class="pin" style="left:62.82%;top:70.33%">2</span><span class="pin" style="left:86.16%;top:83.86%">3</span></div><figcaption><span class="fno">S24</span>불러오기 창 — 채울 값 먼저 확인</figcaption><ol class="legend"><li><b>1</b><span>체크한 항목만 채움(빈 칸은 체크된 채로)</span></li><li><b>2</b><span>이미 입력된 칸 — 직접 체크해야 덮어씀</span></li><li><b>3</b><span>채우기</span></li></ol></figure></div></div>
+<p>화면 오른쪽 아래 「🏢 건물개요」 단추로 같은 현장의 표지 정보를 다른 MANMIN 도구와 나눠 씁니다. 이 도구에서 나눠 쓰는 칸은 사업명 · 위치 · 작성자입니다. 「저장」은 지금 값을 이 기기 브라우저에 담고(이 도구에 없는 항목은 저장돼 있던 값을 그대로 둠), 「불러오기」를 누르면 채울 값이 목록으로 먼저 나옵니다. 비어 있는 칸은 체크된 채로, 이미 입력된 칸은 체크가 꺼진 채로 나오므로 덮어쓸 항목만 직접 체크한 뒤 「채우기」를 누릅니다. PC와 태블릿 사이는 「파일로 내보내기(.json)」 → 「파일 가져오기」로 옮깁니다. 단추와 창은 인쇄 · PDF에 나오지 않습니다.</p>
+</section>
+<section class="ch" id="ch4"><h2><span class="n">04</span>기준 해설</h2>
+<h3 id="s4-1">4-1. 근거 체계</h3>
+<div class="k1"><div class="tbl"><table><thead><tr><th class="">기준</th><th class="">이 도구에서 쓰는 조항</th></tr></thead><tbody><tr><td class="">KDS 41 19 00 건축물 기초구조</td><td class="">2022. 10. 11. — 표 4.2-1 추정 지지력 · 4.2.2 입증 · 4.2.4.1 식 (4.2-1) · 4.4.4 최소 크기</td></tr><tr><td class="">KDS 11 50 05 얕은기초(일반설계법)</td><td class="">2025. 12. 24. — 4.1.2 허용지지력 · 4.1.4 경험적 지지력 · 4.1.5② N값 에너지 보정 · 1.8(2) 측면저항 · 1.3.2 평판재하 KS F 2444</td></tr><tr><td class="">KDS 11 30 05 연약지반</td><td class="">2025. 12. 24. — 표 1.6-1 연약지반 판정(점성토 N ≤ 4 · 6, 사질토 N ≤ 10)</td></tr><tr><td class="">출처</td><td class="">KDS 41 19 00 공식 원문(hwpx) · 국가건설기준센터 kcsc.re.kr 원문 대조(2026-11-09)</td></tr></tbody></table></div></div>
+<h3 id="s4-2">4-2. 표 4.2-1 · 식 (4.2-1)</h3>
+<div class="brk"><div class="k1"><div class="tbl"><table><thead><tr><th class="">지반분류 (원문)</th><th class="">kN/㎡</th><th class="">도구 대응</th></tr></thead><tbody><tr><td class="">1. 결정질 기반암</td><td class="">580</td><td class="">경암</td></tr><tr><td class="">2. 퇴적암 및 엽리성암</td><td class="">190</td><td class="">풍화암 · 연암</td></tr><tr><td class="">3. 모래질 자갈 / 자갈 (GW · GP)</td><td class="">140</td><td class="">자갈</td></tr><tr><td class="">4. 모래 · 실트질 모래 · 점토질 모래 · 실트질 자갈 · 점토질 자갈 (SW · SP · SM · SC · GM · GC)</td><td class="">100</td><td class="">모래 · 풍화토</td></tr><tr><td class="">5. 점토 · 모래질 점토 · 실트질 점토 · 점토질 실트 · 실트 · 모래질 실트 (CL · ML · MH · CH)</td><td class="">70</td><td class="">점토 · 실트</td></tr></tbody></table></div></div></div>
+<p class="small">KDS 41 19 00 표 4.2-1 수직 지지력 열 — 토질 대응(풍화토 → 4, 풍화암 · 연암 → 2)은 이 도구의 분류이며 기준 문구가 아닙니다. 4.2.2(2) 진흙 · 유기질 실트 · 유기질 점토 · 토탄 · 검증되지 않은 매립토는 입증자료 없이 추정 지지력을 쓸 수 없습니다.</p>
+<div class="eq">qa = (qu − qo) / SF + qo
+SF ≥ 3 ,  qu ≤ 3,000 kPa
+qo = γs′ · Df (기초 저면 위 원지반 유효중량)</div>
+<p>4.2.2 — 지표면 부근 지반의 설계지지력은 더 큰 값을 입증하는 자료를 제출해 승인받지 않는 한 표 4.2-1 값을 넘을 수 없습니다. 4.2.4.1 — 극한지지력 qu 는 3,000 kPa 를 넘을 수 없습니다(원문 확인 — 제한은 극한값에 걸림).</p>
+<h3 id="s4-3">4-3. N값 보정</h3>
+<div class="eq">N₆₀ = N × ER/60 × C<sub>R</sub>   (N ≤ 50)
+관입 불능 50/x → 50 × 30/x
+C<sub>R</sub> = 0.75 (&lt; 4 m) · 0.85 (4 ~ 6)
+     0.95 (6 ~ 10) · 1.0 (≥ 10)  Skempton
+σv′ = Σγh − u
+C<sub>N</sub> = √(98.1/σv′) ≤ 2
+(N₁)₆₀ = C<sub>N</sub> · N₆₀</div>
+<p>KDS 11 50 05 4.1.5② — 표준관입시험 N값은 에너지 효율로 보정해 쓰고, 롯드 길이 · 시추공 지름 · 상재압 보정을 할 수 있습니다. 지하수위 아래 실트질 세립 모래는 N &gt; 15 일 때 N′ = 15 + ½(N − 15) (Terzaghi·Peck, 선택).</p>
+<h3 id="s4-4">4-4. φ · cu 환산</h3>
+<div class="brk"><div class="k1"><div class="tbl"><table><thead><tr><th class="">식</th><th class="">내용</th><th class="">비고</th></tr></thead><tbody><tr><td class="">Dunham (1954)</td><td class="">φ = √(12N) + 15 · 20 · 25</td><td class="">입자 · 입도에 따라 계수 — 기본 +15(보수)</td></tr><tr><td class="">오사키 (大崎)</td><td class="">φ = √(20N) + 15</td><td class="">일본 건축 기준에서 널리 씀</td></tr><tr><td class="">Peck 등 (1974) · Wolff</td><td class="">φ = 27.1 + 0.3N − 0.00054N²</td><td class="">미국 문헌</td></tr><tr><td class="">Hatanaka · Uchida (1996)</td><td class="">φ = √(20·(N₁)₆₀) + 20</td><td class="">상재압 보정 N 사용 — 큰 값이 나오기 쉬움</td></tr><tr><td class="">점성토 cu</td><td class="">cu = 6.25·N₆₀ kPa</td><td class="">Terzaghi·Peck qu ≈ N/8 kgf/㎠ — 분산이 커서 시험값 우선</td></tr></tbody></table></div></div></div>
+<p>KDS 11 50 05 4.1.4 — 경험식은 적용 조건(기초 폭 2B 깊이까지 균질 · 수평 지층 등)을 확인하고, 외국 식은 국내 지반 적용성을 확인한 뒤 씁니다.</p>
+<h3 id="s4-5">4-5. 극한지지력 (Meyerhof 1963)</h3>
+<div class="eq">qu = c·Nc·sc·dc + q·Nq·sq·dq
+     + ½·γ·B·Nγ·sγ·dγ
+Nq = e^(π tanφ) · tan²(45 + φ/2)
+Nc = (Nq − 1) cotφ  (φ = 0 → 5.14)
+Nγ = (Nq − 1) tan(1.4φ)
+Kp = tan²(45 + φ/2)
+sc = 1 + 0.2·Kp·B/L
+sq = sγ = 1 + 0.1·Kp·B/L  (φ &gt; 10°)</div>
+<p>깊이계수 d 는 기본 끔(1.0)입니다 — KDS 11 50 05 1.8(2) 는 Df/B &lt; 1.0 이면 근입부 측면저항을 무시하도록 합니다. 지하수위가 기초 저면 위면 q 와 γ 에 수중단위중량 γ′, 저면 아래 B 이내면 γ 를 보간합니다.</p>
+<h3 id="s4-6">4-6. 침하 기준 허용지지력 (사질토)</h3>
+<div class="eq">B ≤ 1.2 m :
+  qa = 19.16 · N₆₀ · Fd · (Se/25)
+B &gt; 1.2 m :
+  qa = 11.98 · N₆₀ · ((3.28B + 1)/3.28B)²
+       · Fd · (Se/25)
+Fd = 1 + 0.33·Df/B ≤ 1.33
+Cw (지하수위) = 0.5 ~ 1.0
+— Meyerhof 1965 · Bowles 1996</div>
+<p>KDS 11 50 05 4.1.2 — 허용지지력은 극한지지력을 안전율로 나눈 값과 허용변위량으로 정한 값 중 작은 값입니다. 예제 ①은 지지력 238.1 · 침하 235.2 → 235.2 kN/㎡.</p>
+<h3 id="s4-7">4-7. 영향 깊이 · 대표 N</h3>
+<div class="eq">영향 깊이 = Df ~ Df + B·(2 − 0.5·B/L)
+(정방형 1.5B · 줄기초 2B)</div>
+<p>영향 깊이 안의 N₆₀ 평균(또는 최솟값)을 대표값으로 씁니다. 그 안에 사질토 · 점성토 · 암이 섞이면 층상지반 경고를 냅니다(KDS 11 50 05 4.1.3(4) — 층상 영향 별도 검토).</p>
+<h3 id="s4-8">4-8. 채택 순서</h3>
+<div class="brk"><div class="k1"><div class="tbl"><table><thead><tr><th class="">순위</th><th class="">경우</th><th class="">채택값</th></tr></thead><tbody><tr><td class="">1</td><td class="">평판재하시험 값</td><td class="">min(qy/2, qult/3) — KS F 2444</td></tr><tr><td class="">2</td><td class="">암(풍화암 · 연암 · 경암)</td><td class="">N 환산 없이 표 4.2-1 값(퇴적암 190 · 기반암 580) — 암반 지지력은 KDS 11 50 05 4.1.6</td></tr><tr><td class="">3</td><td class="">흙 — 입증자료 있음</td><td class="">산정값(시추공별 최솟값)</td></tr><tr><td class="">4</td><td class="">흙 — 입증자료 없음</td><td class="">min(산정값, 표 4.2-1 값)</td></tr></tbody></table></div></div></div>
+<h3 id="s4-9">4-9. 이 도구가 하지 않는 것</h3>
+<div class="k1"><div class="tbl"><table><thead><tr><th class="">항목</th><th class="">안내</th></tr></thead><tbody><tr><td class="">압밀침하</td><td class="">점성토 · 연약지반은 압밀시험 값으로 별도 산정(KDS 11 50 05 4.2.4)</td></tr><tr><td class="">층상지반</td><td class="">두 층 이상 지지력 · 펀칭 파괴 — 별도 해석</td></tr><tr><td class="">암반 지지력</td><td class="">일축압축강도 · RQD · 불연속면으로 산정(4.1.6)</td></tr><tr><td class="">내진 지반분류</td><td class="">S1 ~ S6 는 기반암 깊이 · 전단파속도로 분류(KDS 41 17 00 · 17 10 00) — N값 기준이 아님</td></tr><tr><td class="">액상화</td><td class="">사질토 N ≤ 10 · 지하수위 얕음이면 액상화 평가 여부 확인</td></tr><tr><td class="">깊은기초</td><td class="">말뚝 지지력은 KDS 11 50 15</td></tr></tbody></table></div></div>
+</section>
+<section class="ch" id="ch5"><h2><span class="n">05</span>실무 작업 방법</h2>
+<h3 id="s5-1">5-1. 검토 절차</h3>
+<ol class="steps">
+<li><b class="t">① 보고서 확인</b>지반조사 보고서에 허용지지력 제시값 · 평판재하 · 실내시험 값이 있으면 그것이 우선 — 이 도구는 대조 · 검산용.</li>
+<li><b class="t">② N값 입력</b>기초 위치에 가까운 시추공의 N값 표를 붙여 넣고 토질 인식 결과(보정표)를 확인.</li>
+<li><b class="t">③ 기초 조건</b>기초 형식 · B · L · Df · 지하수위(우기 최고 수위) 입력.</li>
+<li><b class="t">④ 결과 판단</b>φ 4식 비교 · 지지력 / 침하 중 지배값 · 표 4.2-1 초과 여부 · 경고 확인.</li>
+<li><b class="t">⑤ 별도 검토</b>점성토 압밀 · 층상 · 암반 · 액상화(<a href="#s4-9">4-9</a>).</li>
+<li><b class="t">⑥ 기록</b>A4 계산서를 구조계산서 · 검토 자료에 첨부, 채택값 근거(입증자료)를 함께 정리.</li>
+</ol>
+<h3 id="s5-2">5-2. 문제 해결 · FAQ</h3>
+<div class="k1"><div class="tbl"><table><thead><tr><th class="">증상</th><th class="">해결</th></tr></thead><tbody><tr><td class="">보고서 값과 크게 달라요</td><td class="">보고서 제시값이 우선입니다. ER · 지하수위 · φ 식 · 영향 깊이를 보고서 가정과 맞춰 비교하십시오</td></tr><tr><td class="">토질이 다르게 인식돼요</td><td class="">보정표의 토질 열을 확인 — 「모래(SM)」처럼 이름과 USCS 기호를 함께 쓰면 정확합니다</td></tr><tr><td class="">풍화암인데 지지력이 190 이에요</td><td class="">암은 N 환산을 하지 않고 표 4.2-1 퇴적암 값을 씁니다 — 보고서의 암반 지지력을 확인하십시오</td></tr><tr><td class="">산정값보다 작은 값이 채택됐어요</td><td class="">STEP 5 「입증 · 승인」이 꺼져 있으면 표 4.2-1 값이 상한입니다(4.2.2)</td></tr><tr><td class="">50/10 을 넣었는데 N 이 50 이에요</td><td class="">50 × 30/10 = 150 으로 환산한 뒤 상한 50 을 적용합니다</td></tr><tr><td class="">화면이 예전 판이에요</td><td class="">새로 고침(Ctrl+F5) — 캐시 이름 sbc-v1.0.1</td></tr></tbody></table></div></div>
+</section>
+<section class="ch" id="ch6"><h2><span class="n">부록</span></h2>
+<h3 id="a1">A1. 버전 변경 내역</h3>
+<div class="k1"><div class="tbl"><table><thead><tr><th class="">버전</th><th class="">내용</th></tr></thead><tbody><tr><td class="">Ver-1.0 · v1.0.1 (2026-11-09)</td><td class="">탭 막대 「📘 매뉴얼」 단추 · 사용자 매뉴얼 신설 · sw sbc-v1.0.1 (계산 변경 없음)</td></tr><tr><td class="">Ver-1.0 · v1.0.0 (2026-11-09)</td><td class="">신규 — KDS 41 19 00 (2022) 식 (4.2-1) · 표 4.2-1 · KDS 11 50 05 (2025. 12. 24.) 원문 대조 엔진 SBENG · 옹벽 v5.1.10 공통 틀(토목 #0f766e) · MM-PROJECT v1.2 · MM-PRINT v1.0</td></tr></tbody></table></div></div>
+<h3 id="a2">A2. 예제 입력값</h3>
+<div class="brk"><div class="k1"><div class="tbl"><table><thead><tr><th class="">예제</th><th class="">N값</th><th class="">기초 · 지하수위</th><th class="">채택 qa (kN/㎡)</th></tr></thead><tbody><tr><td class="">① 사질토</td><td class="">BH-1 1.5 ~ 9.0 m · N 12 · 15 · 18 · 20 · 26 · 50/12</td><td class="">정방형 B 2.0 · Df 1.5 · GL−10</td><td class="">235.2 (접지압 150 OK)</td></tr><tr><td class="">① 입증 없음</td><td class="">예제 ① + 「입증 · 승인」 끔</td><td class="">같음</td><td class="">100 (NG)</td></tr><tr><td class="">② 점성토</td><td class="">BH-1 N 6 · 8 · 9 · 30</td><td class="">줄기초 B 1.2 · Df 1.0 · GL−1.5</td><td class="">74.2 (접지압 70 OK)</td></tr><tr><td class="">③ 시추공 2개</td><td class="">BH-1 · BH-2 각 4점</td><td class="">장방형 2.0 × 3.0 · Df 1.5 · GL−4.0</td><td class="">189.2 (BH-2)</td></tr><tr><td class="">평판재하</td><td class="">예제 ① + qy 300 · qult 500</td><td class="">같음</td><td class="">150</td></tr></tbody></table></div></div></div>
+<h3 id="a3">A3. 용어</h3>
+<div class="brk"><div class="k1"><div class="tbl"><table><thead><tr><th class="">용어</th><th class="">뜻</th></tr></thead><tbody><tr><td class="">N값</td><td class="">표준관입시험(KS F 2307)에서 샘플러를 30 cm 관입시키는 타격 횟수</td></tr><tr><td class="">N₆₀</td><td class="">해머 에너지 효율 60 % 로 보정한 N</td></tr><tr><td class="">(N₁)₆₀</td><td class="">N₆₀ 를 유효상재압 100 kPa 기준으로 다시 보정한 값</td></tr><tr><td class="">허용지지력 qa</td><td class="">극한지지력을 안전율로 나눈 값과 침하로 정한 값 중 작은 값 — 흔히 「지내력」</td></tr><tr><td class="">유효상재압 qo</td><td class="">기초 저면 위 흙의 무게(지하수위 아래는 수중단위중량)</td></tr><tr><td class="">영향 깊이</td><td class="">기초 하중이 지반에 주로 전달되는 깊이 — 이 도구는 B(2 − 0.5B/L)</td></tr></tbody></table></div></div></div>
+</section></main></div>
+<footer class="foot">© 2026 김만민 건축사 · ㈜대성건축사사무소 · N값 지내력 환산 시스템 사용자 매뉴얼 Ver-1.0 · KDS 41 19 00 (2022) · KDS 11 50 05 (2025. 12. 24.) <span class="rev">· 화면 대응 개정 2026-11-09</span> <span class="rev">· 디자인 개정 2026-10-26</span></footer>
+<div class="pfoot"><span>N값 지내력 환산 시스템 사용자 매뉴얼 Ver-1.0</span><span>2026-11-09</span></div>
+<div id="lb" role="dialog" aria-label="그림 확대"><img alt=""></div>
+<button class="totop" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),li=lb.querySelector('img');
+  document.querySelectorAll('figure.shot .frame').forEach(function(f){f.addEventListener('click',function(){li.src=f.querySelector('img').src;li.alt=f.querySelector('img').alt;lb.classList.add('open');});});
+  lb.addEventListener('click',function(){lb.classList.remove('open');li.removeAttribute('src');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open');});
+  document.querySelector('.totop').addEventListener('click',function(){window.scrollTo(0,0);});
+  var links=[].slice.call(document.querySelectorAll('nav.toc a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});}});},{rootMargin:'0px 0px -70% 0px'});
+    document.querySelectorAll('section.ch,h3[id]').forEach(function(s){io.observe(s);});
+  }
+})();
+/* 좁은 화면 표 쌓기 준비: 숫자 칸이 없는 표에 stack 표시, 각 칸에 머리글(data-th) 복사 */
+(function(){document.querySelectorAll('.tbl').forEach(function(t){var tb=t.querySelector('table');if(!tb||!tb.tHead)return;
+ if(tb.querySelector('td.num,th.num'))return;var hs=[].map.call(tb.tHead.rows[0].cells,function(c){return c.textContent.trim()});
+ [].forEach.call(tb.tBodies[0].rows,function(r){[].forEach.call(r.cells,function(c,i){if(hs[i])c.setAttribute('data-th',hs[i])})});t.classList.add('stack');if(hs.length===2)t.classList.add('c2')})})();
+/* v-mh1 D3 읽기 진행 막대 · D4 좁은 화면 목차 접힘 */
+(function(){var b=document.querySelector('.mh-prog i');if(b){var f=function(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?h.scrollTop/m*100:0)+'%';};addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();}
+ var d=document.querySelector('nav.toc details'),mq=matchMedia('(max-width:1024px)');if(d){var s=function(){d.open=!mq.matches;};s();(mq.addEventListener?mq.addEventListener('change',s):mq.addListener(s));
+ d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){if(mq.matches)d.open=false;});});}})();
+</script>
+</body></html>
