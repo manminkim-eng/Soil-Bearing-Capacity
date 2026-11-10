@@ -1560,11 +1560,17 @@ document.addEventListener('DOMContentLoaded', function(){
    · 1순위 : 시추주상도(DRILL LOG) — 같은 쪽의 심도 열과 N치(타격수/관입량)를 행 높이(y)로 짝지음 · 지층(심도 a~b · 지층명 · 토질) · 공내 지하수위
    · 2순위 : 「표준관입시험 결과」 표 — 심도 머리행 순서대로 공별 N치 배정(토질 없음 → 미리보기에서 확인)
    · 글자가 없는 스캔 PDF 는 읽지 않고 직접 입력 안내(OCR 미지원)
+   지내력 v1.1.1 (2026-11-10) — 업체 11곳 · 전체수집 164건 보고서 점검 반영(계산 엔진은 그대로)
+   · 한글 글꼴을 넣지 않은 PDF 용 글자표(cMap, jsdelivr pdfjs-dist 3.11.174) · 조각난 지층 구간 「◎매립층(0.0 / ~ / 0.3m)」 · 「-지층 : a~bm」 · 묶음 제목 구간 버림
+   · 「38/」+「30」 분리 N값 · 「(GL-)」 · 「지하공내수위」 옆 칸 수위 · 「모래 / 섞인 점토」 → 점토 · 설명이 비는 심도는 지층명 칸으로
+   · 결과표 머리 「심도 · 공번」 · 결과표 아래 다른 표에서 멈춤(가짜 불일치 경고 해소) · N = 0 · 관입량 0 · 스캔 주상도 안내
+   · 사업명을 못 찾으면 안내하고, 표에 넣을 때 STEP 1 예제 사업명은 지움(직접 적은 사업명은 그대로)
    · 표본 : 특장차 종합지원센터 지반조사 보고서(지오건설품질연구원 2024. 03.) 주상도 57행 = 결과표 100 % 일치
 ════════════════════════════════════════════ */
 var SBPDF = (function(){
   var LIB = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
   var WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  var CMAP = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/';
   var reNs = /^\s*(\d{1,2})\s*\/\s*(\d{1,2})\s*$/;            // 11/30 · 50/12
   var reZ = /^\s*\d{1,2}\.\d{1,2}\s*$/;                       // 1.0 · 12.5
   var reHole = /^\s*((?:BH|NX|TB|DH|B|H)\s*-?\s*\d{1,3})\s*$/i;
@@ -1581,7 +1587,8 @@ var SBPDF = (function(){
   }
 
   function readPages(buf, onProg){
-    return loadLib().then(function(lib){ return lib.getDocument({data: buf}).promise; }).then(function(pdf){
+    /* 글꼴을 넣지 않은 한글 PDF(HYGoThic · Identity-H 등)는 글자표(cMap)가 있어야 글자가 읽힘 — cdnjs 에는 없어 jsdelivr(같은 3.11.174) */
+    return loadLib().then(function(lib){ return lib.getDocument({data: buf, cMapUrl: CMAP, cMapPacked: true}).promise; }).then(function(pdf){
       var pages = [], i = 0;
       function next(){
         i++; if(i > pdf.numPages) return Promise.resolve(pages);
@@ -1610,7 +1617,7 @@ var SBPDF = (function(){
   var USCS = /^(GW|GP|GM|GC|SW|SP|SM|SC|ML|CL|OL|MH|CH|OH|PT|CL-ML|SM-SC|SP-SM|SW-SM|GP-GM|WR)$/;
   function ns(s){ return String(s).replace(/\s/g, ''); }
   function soilWord(t){
-    t = ns(t).replace(/^[-·•]+/, '').replace(/\(.*?\)/g, '').replace(/[.,]$/, '');
+    t = ns(t).replace(/^[-·•]+/, '').replace(/\(.*?\)/g, '').replace(/[.,]$/, '').replace(/(이)?혼재된?|이섞인/g, '섞인');   // 「모래 혼재된 점토」 = 모래 섞인 점토
     if(t.indexOf('섞인') >= 0) t = t.slice(t.lastIndexOf('섞인') + 2);
     var m = /([가-힣]{0,4}(?:모래|점토|실트|자갈))$/.exec(t);
     return m && m[1].length <= 8 ? m[1] : '';
@@ -1629,22 +1636,43 @@ var SBPDF = (function(){
     return title && water;
   }
   /* ①② 글로 적힌 지층 구간 */
-  function layersText(it){
+  function layersText(it0){
+    /* 「◎매립층(0.0」 「~」 「0.3m)」 처럼 한 구간이 여러 글자 조각으로 나뉜 서식은 「)」 까지 이어 붙인다(최대 4조각) */
+    var it = [];
+    for(var q = 0; q < it0.length; q++){
+      var s0 = it0[q].s, t0 = ns(s0);
+      if(/[가-힣]\(?\s*[\d.]*$/.test(t0) && t0.indexOf(')') < 0 && /[가-힣]\(/.test(t0 + (it0[q + 1] ? ns(it0[q + 1].s) : ''))){
+        var acc = s0, k2 = q + 1;
+        while(k2 < it0.length && k2 <= q + 4 && ns(acc).indexOf(')') < 0){ acc += ' ' + it0[k2].s; k2++; }
+        if(/^[◎▷▶►]?[가-힣]+\([\d.]+[~∼-][\d.]+m?\)$/.test(ns(acc))){ it.push({s: acc, x: it0[q].x, y: it0[q].y}); q = k2 - 1; continue; }
+      }
+      it.push(it0[q]);
+    }
     var out = [], strat = null, mark = false, cur = null, after = 0;
-    it.forEach(function(x){
+    it.forEach(function(x, xi){
       var t = ns(x.s), m;
+      /* 「-사질점토층 : 0.0~5.7m 모래 혼재된 점토」 (2017 어양동 서식) */
+      m = /^[-*▷▶►◎·]?([가-힣]{2,8}층?)[:：]([\d.]+)[~∼-]([\d.]+)m/.exec(t);
+      if(m && !/심도|구간|심도별/.test(m[1])){ cur = {a: +m[2], b: +m[3], strat: m[1], soil: soilWord(t.replace(m[0], '').replace(/[.,].*$/, '')), y: x.y}; out.push(cur); after = 0; return; }
       if(/^[*▶►◎■●]$/.test(t)){ mark = true; return; }
       m = /^[*▶►]([가-힣]+)$/.exec(t);
       if(m){ strat = m[1]; mark = false; return; }
       if(mark && /^[가-힣]+$/.test(t)){ strat = t; mark = false; return; }
       mark = false;
-      m = /^◎?([가-힣]+)\(([\d.]+)[~∼-]([\d.]+)m?\)$/.exec(t);
+      m = /^[◎▷▶►]?([가-힣]+)\(([\d.]+)[~∼-]([\d.]+)m?\)$/.exec(t);
       if(m){ cur = {a: +m[2], b: +m[3], strat: m[1], soil: '', y: x.y}; out.push(cur); after = 0; return; }
       m = /심도[:：]([\d.]+)[~∼-]([\d.]+)/.exec(t);
       if(m){ cur = {a: +m[1], b: +m[2], strat: strat, soil: '', y: x.y}; out.push(cur); after = 0; return; }
-      if(cur && !cur.soil && after < 8){ after++; var w = soilWord(x.s); if(w) cur.soil = w; }
+      if(cur && !cur.soil && after < 8){
+        after++;
+        /* 「- 모래」 + 「섞인 실트질 점토」 처럼 꾸밈말이 다음 조각으로 넘어가면 이어서 판정(→ 실트질점토) */
+        var nx = it[xi + 1] ? ns(it[xi + 1].s) : '', src = x.s;
+        if(/^(섞인|혼재된?|함유|질|이섞인)/.test(nx)) src = x.s + ' ' + it[xi + 1].s;
+        var w = soilWord(src); if(w) cur.soil = w;
+      }
     });
-    return out;
+    /* 「*기반암풍화대 : 5.7~20.0m」 처럼 아래 지층들을 묶는 제목 구간은 버림(안에 다른 구간이 있으면) */
+    return out.filter(function(L){ return !out.some(function(o){ return o !== L && o.a >= L.a - 1e-6 && o.b <= L.b + 1e-6 && (o.b - o.a) < (L.b - L.a) - 1e-6; }); });
   }
   /* ③ 지층명 열 + Depth 열 — 층마다 {b: 하단 심도 | null(다음 쪽으로 이어짐), strat, code, yTop, yBot} */
   function layersCol(it){
@@ -1673,9 +1701,24 @@ var SBPDF = (function(){
       var T = joinTxt(it), F = flat(T);
       if(!isLogPage(F)) return;
       var Ns = it.filter(function(x){ return /^\d{1,2}\/\d{1,2}$/.test(ns(x.s)); });
+      /* 분자 · 분모가 따로 적힌 서식 「38/」 + 오른쪽 「30」(같은 높이) → 「38/30」 (2011 수창개발 서식) */
+      it.forEach(function(x){
+        if(!/^\d{1,2}\/$/.test(ns(x.s))) return;
+        var d = null, dx = 1e9;
+        it.forEach(function(e){ var v = e.x - x.x; if(/^\d{1,2}$/.test(ns(e.s)) && Math.abs(e.y - x.y) <= 3 && v > 0 && v <= 25 && v < dx){ dx = v; d = e; } });
+        if(d) Ns.push({s: ns(x.s) + ns(d.s), x: x.x, y: x.y});
+      });
       if(!Ns.length) return;
       var hole = holeOf(it) || ('BH-' + (order.length + 1));
       var gw = /\(GL-?\)([\d.]+)/i.exec(F) || /지하수위[^\d]{0,30}?(\d{1,2}\.\d{1,2})/.exec(F);
+      if(!gw){   /* 「(GL-)」 · 「지하(공내)수위」 칸과 같은 높이 오른쪽에 수위 숫자만 따로 있는 서식(「6.0」 · 「-4.6m」) */
+        it.forEach(function(x){
+          var lb = ns(x.s).toUpperCase();
+          if(gw || !/^(\(GL-?\)|지하수위|지하공내수위|공내수위|GROUNDWATER)$/.test(lb)) return;
+          var c = it.filter(function(e){ return /^-?\d{1,2}\.\d{1,2}M?$/i.test(ns(e.s)) && Math.abs(e.y - x.y) <= 3 && e.x > x.x && e.x - x.x <= 200; }).sort(function(p, q){ return p.x - q.x; })[0];
+          if(c) gw = [null, ns(c.s).replace(/^-|m$/gi, '')];
+        });
+      }
       var Ds = it.filter(function(x){ return /^\d{1,2}\.\d{1,2}$/.test(ns(x.s)); });
       if(!Ds.length) return;
       /* N값 시료 심도 열 = N 과 같은 높이에 가장 많이 짝지어지는 x 띠(±12) */
@@ -1729,7 +1772,7 @@ var SBPDF = (function(){
       var toks = it.map(function(x){ return x.s.trim(); });
       /* 표 머리 「심도 (m) · 시추공번」 부터 읽는다(같은 쪽의 지하수위 표 공번과 섞이지 않게) */
       var st = 0;
-      for(var j = 0; j < toks.length; j++){ if(/^심\s*도/.test(toks[j]) && toks.slice(j, j + 4).join('').replace(/\s/g, '').indexOf('시추공번') >= 0){ st = j; break; } }
+      for(var j = 0; j < toks.length; j++){ if(/^심\s*도/.test(toks[j]) && /(시추)?공번/.test(toks.slice(j, j + 4).join('').replace(/\s/g, ''))){ st = j; break; } }
       var firstHole = -1;
       for(var i = st; i < toks.length; i++){ if(reHole.test(toks[i])){ firstHole = i; break; } }
       if(firstHole < 0) return;
@@ -1739,14 +1782,20 @@ var SBPDF = (function(){
       while(depths.length && depths[depths.length - 1] === null) depths.pop();
       if(depths.filter(function(d){ return d !== null; }).length < 3) return;
       /* 이 쪽에서 읽은 공만 따로 모은 뒤, 값이 있고 앞 쪽에서 아직 못 읽은 공만 더한다(목차 · 요약 쪽 공번에 막히지 않게) */
-      var cur = null, here = [];
+      /* 표 아래에 다른 표(「<표.4-4> 지층분포에 따른 …」 처럼 N값 범위를 적은 표)가 이어지면 거기서 멈춘다 */
+      var cur = null, here = [], stop = false, prev = '';
       toks.slice(firstHole).forEach(function(t){
+        if(stop) return;
+        if(/^[<\[(]\s*표/.test(t) || (t === '표' && /^[<\[(]$/.test(prev))){ stop = true; return; }
+        prev = t;
+        if(cur && /^[∼~]$/.test(t)){ cur.range = true; return; }
         if(reHole.test(t)){ var hn = holeName(reHole.exec(t)[1]); if(here.some(function(o){ return o.hole === hn; })){ cur = null; return; } cur = {hole: hn, gw: null, rows: {}, layers: [], pages: [pi + 1], vals: []}; here.push(cur); return; }
         if(!cur) return;
         t.split(/\s+/).forEach(function(w){ if(reNs.test(w) || /^-$/.test(w)) cur.vals.push(w); });
       });
       var got = 0;
       here.forEach(function(h){
+        if(h.range){ h.vals = []; delete h.range; }   // 「14/30 ∼ 19/30」 범위 행은 심도별 값이 아님
         h.vals.forEach(function(v, k){ if(k < depths.length && depths[k] !== null && v !== '-') h.rows[zKey(depths[k])] = v; }); delete h.vals;
         if(Object.keys(h.rows).length && !out.some(function(o){ return o.hole === h.hole; })){ out.push(h); got++; }
       });
@@ -1827,6 +1876,9 @@ var SBPDF = (function(){
   function soilAt(h, z){
     /* 시료는 심도 z 부터 아래로 채취 → 층 경계 심도의 시료는 아래 층(a ≤ z < b), 맨 아래 층만 z = b 포함 */
     for(var i = 0; i < h.layers.length; i++){ var L = h.layers[i], last = i === h.layers.length - 1; if(z > L.a - 1e-9 && (z < L.b - 1e-9 || (last && z <= L.b + 1e-9))) return L.soil ? ((L.strat || '') + ' ' + L.soil + (L.code ? ' (' + L.code + ')' : '')).trim() : ((L.strat || '') + ' ' + (L.code || '')).trim(); }
+    /* 지층 설명 구간이 비는 심도(보고서 설명 · 지층명 칸이 서로 다른 경우)는 지층명 · 통일분류 칸으로 */
+    var C = h.colLayers || [];
+    for(var j = 0; j < C.length; j++){ var o = C[j], lastC = j === C.length - 1; if(z > o.a - 1e-9 && (z < o.b - 1e-9 || (lastC && z <= o.b + 1e-9))) return ((o.strat || '') + ' ' + (o.code || '')).trim(); }
     return '';
   }
 
@@ -1837,7 +1889,12 @@ var SBPDF = (function(){
     var A = drillLogs(pages), B = sptTable(pages);
     if(A.holes.length){ R.method = '시추주상도'; R.holes = A.holes; R.pages = A.pages; }
     else if(B.holes.length){ R.method = '표준관입시험 결과표'; R.holes = B.holes; R.pages = B.pages; R.warn.push('주상도를 찾지 못해 결과표에서 읽었습니다 — 토질이 비어 있으니 N값 표 미리보기에서 채워 주십시오.'); }
-    else { R.warn.push('시추주상도 · 표준관입시험 결과표를 찾지 못했습니다 — 보고서 서식이 달라 자동으로 읽을 수 없습니다. N값 표를 직접 입력해 주십시오.'); }
+    else {
+      /* 본문은 글자인데 부록(주상도)만 스캔 이미지로 붙은 보고서 — 서식 탓이 아님을 알린다 */
+      var img = []; pages.forEach(function(it, pi){ if(it.reduce(function(a, x){ return a + ns(x.s).length; }, 0) < 20) img.push(pi + 1); });
+      if(img.length >= 2) R.warn.push('시추주상도를 글자로 찾지 못했습니다 — 글자가 없는 쪽(스캔 이미지)이 ' + img.length + '쪽 있습니다(p.' + img.slice(0, 8).join(', ') + (img.length > 8 ? ' …' : '') + '). 주상도가 스캔본이면 자동으로 읽을 수 없으니 N값 표를 직접 입력해 주십시오.');
+      else R.warn.push('시추주상도 · 표준관입시험 결과표를 찾지 못했습니다 — 보고서 서식이 달라 자동으로 읽을 수 없습니다. N값 표를 직접 입력해 주십시오.');
+    }
     /* 주상도 ↔ 결과표 교차 확인 */
     if(A.holes.length && B.holes.length){
       var diff = [], nCmp = 0;
@@ -1857,6 +1914,10 @@ var SBPDF = (function(){
       var zs = Object.keys(h.rows).map(Number).sort(function(a, b){ return a - b; });
       h.lines = zs.map(function(z){ return {z: z, n: h.rows[z], soil: soilAt(h, z)}; });
       if(h.gw == null) R.warn.push(h.hole + ' 지하수위를 찾지 못했습니다.');
+      var zero = h.lines.filter(function(l){ return /\/0$/.test(l.n); });
+      var n0 = h.lines.filter(function(l){ return /^0\//.test(l.n); });
+      if(n0.length) R.warn.push(h.hole + ' ' + n0.map(function(l){ return l.z; }).join(' · ') + ' m 는 N = 0(자중 관입) — 그 심도의 허용지지력이 0 으로 나옵니다. 연약층 처리 · 기초 심도를 따로 검토해 주십시오.');
+      if(zero.length) R.warn.push(h.hole + ' ' + zero.map(function(l){ return l.z; }).join(' · ') + ' m 는 관입량 0(' + zero[0].n + ') — 환산할 수 없어 계산에서 빠집니다. 주상도의 비고(L/S 등)를 확인해 주십시오.');
       if(h.lines.some(function(l){ return !l.soil; })) R.warn.push(h.hole + ' 일부 심도의 토질을 찾지 못했습니다 — 비우면 사질토로 계산합니다.');
       var odd = h.layers.filter(function(L){ if(!L.soil || !L.code) return false; var c = L.code.charAt(0), w = L.soil;
         return (/(모래|자갈)$/.test(w) && /^[CMO]/.test(L.code)) || (/(점토|실트)$/.test(w) && /^[SG]/.test(L.code)); });
@@ -1867,6 +1928,7 @@ var SBPDF = (function(){
     var ci = coverInfo(pages, fileName);
     var strong = ci.proj.length >= 8 && /(신축|증축|개축|건립|공사|사업|용역)/.test(ci.proj);
     R.proj = strong ? ci.proj : (projFromLog(pages, R.pages) || ci.proj); R.report = ci.report;
+    if(R.holes.length && !R.proj) R.warn.push('사업명을 보고서에서 찾지 못했습니다 — 아래 사업명 칸에 직접 적어 주십시오(비워 두면 STEP 1 의 예제 사업명은 지웁니다).');
     R.notes = bearingNotes(pages);
     return R;
   }
@@ -1916,7 +1978,7 @@ function sbPdfRender(){
     });
     h += '</tbody></table></div>';
     h += '<div class="sbp-lbl">N값 표 미리보기 — 고칠 곳이 있으면 여기서 고친 뒤 넣으십시오</div><textarea class="sb-ta" id="sbp-ta" spellcheck="false" style="min-height:160px;">' + esc(SBPDF.toTable(R)) + '</textarea>';
-    h += '<div class="frow"><div class="fgrp"><label class="sb-chk"><input type="checkbox" id="sbp-useProj"' + (R.proj ? ' checked' : '') + '/><span>사업명</span></label><input class="finput" id="sbp-proj" value="' + esc(R.proj) + '"/></div>';
+    h += '<div class="frow"><div class="fgrp"><label class="sb-chk"><input type="checkbox" id="sbp-useProj" checked/><span>사업명</span></label><input class="finput" id="sbp-proj" value="' + esc(R.proj) + '"' + (R.proj ? '' : ' placeholder="보고서에서 찾지 못함 — 직접 입력"') + '/></div>';
     h += '<div class="fgrp"><label class="sb-chk"><input type="checkbox" id="sbp-useRep" checked/><span>지반조사 보고서</span></label><input class="finput" id="sbp-rep" value="' + esc(R.report) + '"/></div></div>';
   }
   if(R.notes.length) h += '<div class="nb blue"><div class="nb-tit">📘 보고서에 적힌 허용지지력 · 지내력</div><div class="nb-txt">' + R.notes.map(function(n){ return 'p.' + n.page + ' — ' + esc(n.txt); }).join('<br/>') + '<br/><b>보고서 제시값이 이 도구의 환산값보다 우선합니다.</b></div></div>';
@@ -1933,11 +1995,15 @@ function sbPdfApply(){
   document.getElementById('p-table').value = document.getElementById('sbp-ta').value;
   document.getElementById('p-DwH').value = gws.map(function(g){ return g.hole + ' ' + g.dw; }).join(', ');
   if(gws.length) document.getElementById('p-Dw').value = Math.min.apply(null, gws.map(function(g){ return g.dw; }));
-  if(document.getElementById('sbp-useProj').checked && document.getElementById('sbp-proj').value.trim()) document.getElementById('p-projname').value = document.getElementById('sbp-proj').value.trim();
+  var pjIn = document.getElementById('p-projname'), pjNew = document.getElementById('sbp-proj').value.trim(), pjCleared = false;
+  if(document.getElementById('sbp-useProj').checked){
+    if(pjNew) pjIn.value = pjNew;
+    else if(pjIn.value === pjIn.defaultValue){ pjIn.value = ''; pjCleared = true; }   // 예제 사업명이 다른 보고서 계산서에 찍히지 않게(직접 적은 사업명은 그대로)
+  }
   if(document.getElementById('sbp-useRep').checked && document.getElementById('sbp-rep').value.trim()) document.getElementById('p-report').value = document.getElementById('sbp-rep').value.trim();
   sbPdfClose();
   calcAll();
-  showToast('✅ PDF 에서 ' + R.holes.length + '개 공 · ' + R.holes.reduce(function(s, o){ return s + o.lines.length; }, 0) + '행을 넣었습니다 — 기초 조건을 확인하세요');
+  showToast('✅ PDF 에서 ' + R.holes.length + '개 공 · ' + R.holes.reduce(function(s, o){ return s + o.lines.length; }, 0) + '행을 넣었습니다 — ' + (pjCleared ? '사업명을 적고 ' : '') + '기초 조건을 확인하세요');
 }
 </script>
 
