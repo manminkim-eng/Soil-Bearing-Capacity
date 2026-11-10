@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════
    지내력 — N값 지내력 환산 시스템  MANMIN Ver-1.1
+   v1.1.2 (2026-11-10) PDF 불러오기 — 보고서 조사 위치를 STEP 1 위치 칸에 자동 기입
    v1.1.1 (2026-11-10) PDF 불러오기 서식 보강(보고서 164건 점검) · 한글 cMap 3개 프리캐시(jsdelivr)
    v1.1.0 (2026-11-10) 📄 지반조사 보고서 PDF 불러오기 — pdf.js 3.11.174 (cdnjs) 프리캐시 → 오프라인에서도 PDF 읽기
    v1.0.1 (2026-11-09) 📘 매뉴얼 단추(/manual/ 은 캐시 안 함)
@@ -23,7 +24,7 @@ const mmMatch = (req, opt) => caches.keys()
   .then((ks) => ks.reduce((p, k) => p.then((r) => r || caches.open(k).then((c) => c.match(req, opt))), Promise.resolve(undefined)))
   .then((r) => (r && r.type === 'opaque' && req && req.mode === 'cors') ? undefined : r);
 
-const CACHE  = 'sbc-v1.1.1';   /* v1.1.1 : PDF 서식 보강 · v1.1.0 : 📄 PDF 불러오기 · v1.0.1 : 📘 매뉴얼 단추 · v1.0.0 : 신규 */
+const CACHE  = 'sbc-v1.1.2';   /* v1.1.2 : PDF 위치 자동 기입 · v1.1.1 : PDF 서식 보강 · v1.1.0 : 📄 PDF 불러오기 · v1.0.1 : 📘 매뉴얼 단추 · v1.0.0 : 신규 */
 const ORPHAN = [];
 const ASSETS = [
   './',

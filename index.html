@@ -1566,6 +1566,9 @@ document.addEventListener('DOMContentLoaded', function(){
    · 결과표 머리 「심도 · 공번」 · 결과표 아래 다른 표에서 멈춤(가짜 불일치 경고 해소) · N = 0 · 관입량 0 · 스캔 주상도 안내
    · 사업명을 못 찾으면 안내하고, 표에 넣을 때 STEP 1 예제 사업명은 지움(직접 적은 사업명은 그대로)
    · 표본 : 특장차 종합지원센터 지반조사 보고서(지오건설품질연구원 2024. 03.) 주상도 57행 = 결과표 100 % 일치
+   지내력 v1.1.2 (2026-11-10) — 보고서의 조사 위치를 STEP 1 「위치」 칸에 자동 기입(미리보기에서 고치거나 끌 수 있음)
+   · 본문 「조사지역(…번지 일원)」 · 「조사 위치 : …」 → 없으면 주상도 「위 치」 칸 · 업체 주소(주소 · TEL 뒤)는 읽지 않음
+   · 보고서 66건 시험 : 20건 읽음 · 잘못 읽은 것 0 (나머지는 주소가 없거나 「위치도에 표시」)
 ════════════════════════════════════════════ */
 var SBPDF = (function(){
   var LIB = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
@@ -1872,6 +1875,50 @@ var SBPDF = (function(){
     }
     return '';
   }
+  /* ── 조사 위치 (v1.1.2) : 칸 이름 바로 뒤 주소 — 시 · 군 + 읍 · 면 · 동 · 가 + (번지 또는 도 · 구) ── */
+  var reAddr = /((?:서울특별시|서울시|서울|부산광역시|부산시|부산|대구광역시|대구시|대구|인천광역시|인천시|인천|광주광역시|대전광역시|대전시|대전|울산광역시|울산시|울산|세종특별자치시|세종시|세종|경기도|경기|강원특별자치도|강원도|강원|충청북도|충북|충청남도|충남|전북특별자치도|전라북도|전북|전라남도|전남|경상북도|경북|경상남도|경남|제주특별자치도|제주도|제주))?\s*([가-힣]{1,4}(?:시|군))\s*([가-힣]{1,4}구)?\s*([가-힣0-9]{1,6}(?:읍|면|동|가)(?:\s*\d{1,2}\s*가)?)\s*([가-힣0-9]{1,5}리)?\s*((?:산\s*)?\d{1,5}(?:-\d{1,5})?(?:\s*[,·]\s*\d{1,5}(?:-\d{1,5})?)*\s*(?:번지)?)?\s*((?:외\s*\d+\s*필지)|일원|일대)?/;
+  var reLocLab = /(조\s*사\s*지\s*역|조\s*사\s*위\s*치|조\s*사\s*장\s*소|대\s*지\s*위\s*치|공\s*사\s*위\s*치|사\s*업\s*위\s*치|현\s*장\s*위\s*치|과\s*업\s*위\s*치|소\s*재\s*지|위\s*치|LOCATION)/g;
+  function siteInfo(pages, used){
+    function txt(p){ return p.slice().sort(function(a, b){ return (b.y - a.y) || (a.x - b.x); }).map(function(x){ return x.s; }).join(' ').replace(/\s+/g, ' '); }
+    function fmt(m){
+      var g = m.slice(1).map(function(s){ return s ? s.replace(/\s+/g, '') : ''; });
+      if(g[5] && g[5].indexOf(',') > 0 && !/번지$/.test(g[5])) g[5] = g[5].split(',')[0];   // 「654, 10,515.1 ㎡」 같은 면적 목록은 첫 번지만
+      if(g[5]) g[5] = g[5].replace(/^산/, '산 ').replace(/,/g, ', ');
+      return g.filter(Boolean).join(' ');
+    }
+    // 「어양동 3차 제일」처럼 이름에 붙은 숫자는 번지가 아님
+    function numOk(a, rest){ return !a[6] || /번지/.test(a[6]) || /\s$/.test(a[0]) || !/^[가-힣]/.test(rest) || /^(일원|일대|외)/.test(rest); }
+    function byLabel(T){
+      var m, best = ''; reLocLab.lastIndex = 0;
+      while((m = reLocLab.exec(T))){
+        var tail = T.slice(m.index + m[0].length, m.index + m[0].length + 90);
+        if(/^\s*(도|평면도|측량|선정|및|좌표|\(좌표)/.test(tail)) continue;
+        var a = reAddr.exec(tail);
+        if(!a || a.index > 14) continue;
+        if(/(주\s*소|TEL|전화|FAX)/i.test(tail.slice(0, a.index))) continue;
+        if(!numOk(a, tail.slice(a.index + a[0].length))) a[6] = '';
+        if(!a[4] || (!a[6] && !a[1] && !a[3])) continue;
+        var s = fmt(a); if(s.length > best.length) best = s;
+      }
+      return best;
+    }
+    function inLog(T){   // 주상도 「위 치」 칸 — 칸 이름과 떨어져 있어도 번지까지 있는 주소
+      var re = new RegExp(reAddr.source, 'g'), a, best = '';
+      while((a = re.exec(T))){
+        if(a[0].length < 4){ re.lastIndex = a.index + 1; continue; }
+        if(!a[2] || !a[4] || !a[6] || !numOk(a, T.slice(a.index + a[0].length))) continue;
+        if(/(주\s*소|TEL|전화|FAX)\s*[:：]?\s*$/i.test(T.slice(Math.max(0, a.index - 12), a.index))) continue;
+        var s = fmt(a); if(s.length > best.length) best = s;
+      }
+      return best;
+    }
+    for(var i = 0; i < Math.min(15, pages.length); i++){ var s = byLabel(txt(pages[i])); if(s) return {site: s, page: i + 1}; }
+    for(var j = 0; j < (used || []).length; j++){
+      var T = txt(pages[used[j] - 1]), s2 = byLabel(T) || inLog(T.replace(/(\d) (?=\d)/g, '$1'));   // 주상도 칸 글자가 「산 4 4-12」처럼 쪼개짐
+      if(s2) return {site: s2, page: used[j]};
+    }
+    return {site: '', page: 0};
+  }
 
   function soilAt(h, z){
     /* 시료는 심도 z 부터 아래로 채취 → 층 경계 심도의 시료는 아래 층(a ≤ z < b), 맨 아래 층만 z = b 포함 */
@@ -1928,6 +1975,7 @@ var SBPDF = (function(){
     var ci = coverInfo(pages, fileName);
     var strong = ci.proj.length >= 8 && /(신축|증축|개축|건립|공사|사업|용역)/.test(ci.proj);
     R.proj = strong ? ci.proj : (projFromLog(pages, R.pages) || ci.proj); R.report = ci.report;
+    var si = siteInfo(pages, R.pages); R.site = si.site; R.sitePage = si.page;
     if(R.holes.length && !R.proj) R.warn.push('사업명을 보고서에서 찾지 못했습니다 — 아래 사업명 칸에 직접 적어 주십시오(비워 두면 STEP 1 의 예제 사업명은 지웁니다).');
     R.notes = bearingNotes(pages);
     return R;
@@ -1980,6 +2028,7 @@ function sbPdfRender(){
     h += '<div class="sbp-lbl">N값 표 미리보기 — 고칠 곳이 있으면 여기서 고친 뒤 넣으십시오</div><textarea class="sb-ta" id="sbp-ta" spellcheck="false" style="min-height:160px;">' + esc(SBPDF.toTable(R)) + '</textarea>';
     h += '<div class="frow"><div class="fgrp"><label class="sb-chk"><input type="checkbox" id="sbp-useProj" checked/><span>사업명</span></label><input class="finput" id="sbp-proj" value="' + esc(R.proj) + '"' + (R.proj ? '' : ' placeholder="보고서에서 찾지 못함 — 직접 입력"') + '/></div>';
     h += '<div class="fgrp"><label class="sb-chk"><input type="checkbox" id="sbp-useRep" checked/><span>지반조사 보고서</span></label><input class="finput" id="sbp-rep" value="' + esc(R.report) + '"/></div></div>';
+    h += '<div class="frow"><div class="fgrp"><label class="sb-chk"><input type="checkbox" id="sbp-useSite"' + (R.site ? ' checked' : '') + '/><span>위치</span></label><input class="finput" id="sbp-site" value="' + esc(R.site) + '"' + (R.site ? '' : ' placeholder="보고서에서 찾지 못함 — 직접 입력"') + '/>' + (R.site ? '<div class="sbp-note" style="margin-top:4px;">보고서 p.' + R.sitePage + ' 에서 읽음 — 맞는지 확인해 주십시오</div>' : '') + '</div></div>';
   }
   if(R.notes.length) h += '<div class="nb blue"><div class="nb-tit">📘 보고서에 적힌 허용지지력 · 지내력</div><div class="nb-txt">' + R.notes.map(function(n){ return 'p.' + n.page + ' — ' + esc(n.txt); }).join('<br/>') + '<br/><b>보고서 제시값이 이 도구의 환산값보다 우선합니다.</b></div></div>';
   else if(R.holes.length) h += '<div class="sbp-note">보고서에서 허용지지력 · 지내력 제시값을 찾지 못했습니다.</div>';
@@ -2000,6 +2049,8 @@ function sbPdfApply(){
     if(pjNew) pjIn.value = pjNew;
     else if(pjIn.value === pjIn.defaultValue){ pjIn.value = ''; pjCleared = true; }   // 예제 사업명이 다른 보고서 계산서에 찍히지 않게(직접 적은 사업명은 그대로)
   }
+  var stNew = document.getElementById('sbp-site').value.trim();
+  if(document.getElementById('sbp-useSite').checked && stNew) document.getElementById('p-site').value = stNew;   // 비어 있으면 STEP 1 위치는 그대로
   if(document.getElementById('sbp-useRep').checked && document.getElementById('sbp-rep').value.trim()) document.getElementById('p-report').value = document.getElementById('sbp-rep').value.trim();
   sbPdfClose();
   calcAll();
