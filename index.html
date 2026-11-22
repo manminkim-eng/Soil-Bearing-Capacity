@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>N값 지내력 환산 시스템 · MANMIN Ver-1.1</title>
+<title>N값 지내력 환산 시스템 · MANMIN Ver-6.1</title>
 <!-- 링크 미리보기(네이버 · 카카오 · SNS) — 2026-11-09 -->
 <link rel="canonical" href="https://manminkim-eng.github.io/Soil-Bearing-Capacity/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MANMIN ENGINEERING">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="N값 지내력 환산 시스템 · MANMIN Ver-1.1">
+<meta property="og:title" content="N값 지내력 환산 시스템 · MANMIN Ver-6.1">
 <meta property="og:description" content="지반조사 보고서 표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00(2022) · KDS 11 50 05(2025. 12. 24.) — CIVIL ENGINEER KIM MANMIN">
 <meta property="og:url" content="https://manminkim-eng.github.io/Soil-Bearing-Capacity/">
 <meta property="og:image" content="https://manminkim-eng.github.io/Soil-Bearing-Capacity/og-card.jpg">
@@ -17,9 +17,9 @@
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="N값 지내력 환산 시스템 · MANMIN Ver-1.1">
+<meta property="og:image:alt" content="N값 지내력 환산 시스템 · MANMIN Ver-6.1">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="N값 지내력 환산 시스템 · MANMIN Ver-1.1">
+<meta name="twitter:title" content="N값 지내력 환산 시스템 · MANMIN Ver-6.1">
 <meta name="twitter:description" content="지반조사 보고서 표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00(2022) · KDS 11 50 05(2025. 12. 24.) — CIVIL ENGINEER KIM MANMIN">
 <meta name="twitter:image" content="https://manminkim-eng.github.io/Soil-Bearing-Capacity/og-card.jpg">
 <meta name="description" content="지반조사 보고서 표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00(2022) · KDS 11 50 05(2025. 12. 24.) — CIVIL ENGINEER KIM MANMIN"/>
@@ -168,7 +168,7 @@ input[type="number"]{-moz-appearance:textfield;}
 /*══════════════════════════════════════
   FORM
 ══════════════════════════════════════*/
-.flbl{font-size:11px;font-weight:700;color:#546e7a;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;display:block;}
+.flbl{font-size:11px;font-weight:700;color:#546e7a;letter-spacing:.07em;margin-bottom:4px;display:block;}
 .finput{width:100%;padding:8px 11px;background:#f8fafd;border:1.5px solid #dde3ed;border-radius:8px;color:#0d1f3c;font-size:12.5px;font-weight:600;font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s;height:38px;box-sizing:border-box;}
 .finput:focus{border-color:#1ea596;box-shadow:0 0 0 3px rgba(30,165,150,.1);background:#fff;}
 @media(max-width:768px){.finput{font-size:16px;padding:9px 11px;}.fselect{font-size:16px;padding:9px 26px 9px 10px;}}
@@ -354,7 +354,7 @@ table tr:nth-child(even) td{background:#f8fafd;}
 .a4iso-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:10px;}
 .a4iso-grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:10px;}
 .a4iso-cell{background:#f8fafd;border:1px solid #e2e8f0;border-radius:5px;padding:6px 9px;}
-.a4iso-cell-k{font-size:8px;font-weight:700;color:#78909c;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px;}
+.a4iso-cell-k{font-size:8px;font-weight:700;color:#78909c;letter-spacing:.06em;display:block;margin-bottom:2px;}
 .a4iso-cell-v{font-size:12px;font-weight:900;color:#0d1f3c;font-family:'JetBrains Mono',monospace!important;display:block;}
 /* 푸터 3분할 (§3-4). 인쇄에서는 flex 가 어긋나므로 table-cell 33.33% 로 고정한다. */
 .a4-footer{border-top:1px solid #e2e8f0;padding-top:8px;font-size:9px;color:#9ca3af;
@@ -676,7 +676,7 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
         <h1 class="hdr-h1">N값 지내력 환산 시스템</h1>
         <div class="hdr-sub">
           지반조사 보고서 표준관입시험 N값 → 내부마찰각 · 점착력 → 허용지지력 자동 산정
-          <span class="hdr-manmin">MANMIN · Ver-1.1</span>
+          <span class="hdr-manmin">MANMIN · Ver-6.1</span>
         </div>
       </div>
     </div>
@@ -885,7 +885,7 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
       <div class="master-modal-head">
         <div>
           <div class="master-modal-tit">📐 N값 지내력 환산 도움말</div>
-          <div class="master-modal-sub">KDS 41 19 00 (2022) · KDS 11 50 05 (2025. 12. 24.) · MANMIN Ver-1.1</div>
+          <div class="master-modal-sub">KDS 41 19 00 (2022) · KDS 11 50 05 (2025. 12. 24.) · MANMIN Ver-6.1</div>
         </div>
         <button class="master-modal-cls" onclick="toggleHelp()">✕</button>
       </div>
@@ -900,7 +900,7 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
         <div class="help-item"><div class="help-step"><div class="help-num">1</div><div class="help-txt"><b>N값 표 붙여 넣기</b>: 지반조사 보고서의 시추주상도 · N값 표를 「공번 심도 N 토질」 순서로 붙여 넣습니다. 관입 불능은 50/10 처럼 넣습니다.</div></div></div>
         <div class="help-item"><div class="help-step"><div class="help-num">2</div><div class="help-txt"><b>기초 · 지하수위</b>: 기초 형식 · 폭 B · 길이 L · 근입깊이 Df, 보고서의 지하수위와 단위중량을 넣습니다.</div></div></div>
         <div class="help-item"><div class="help-step"><div class="help-num">3</div><div class="help-txt"><b>보정 · 환산식</b>: 보고서에 해머 효율이 있으면 ER 을 고칩니다(없으면 60 % = 보정 없음). φ 환산식 · 상한을 고릅니다.</div></div></div>
-        <div class="help-item"><div class="help-step"><div class="help-num">4</div><div class="help-txt"><b>시험값</b>: 평판재하시험 · 일축압축시험 값이 있으면 넣습니다. 평판재하 값이 있으면 그 값을 먼저 채택합니다.</div></div></div>
+        <div class="help-item"><div class="help-step"><div class="help-num">4</div><div class="help-txt"><b>시험값</b>: 평판재하시험 · 일축압축시험 값이 있으면 넣습니다. 평판재하 값이 있으면 그 값을 먼저 채택합니다(min(qy/2, qult/3) — KDS 에 명시된 비율이 아닌 실무 관행값, 기초 크기효과는 따로 검토).</div></div></div>
         <div class="help-item"><div class="help-step"><div class="help-num">5</div><div class="help-txt"><b>결과</b>: 입력하면 바로 계산합니다. 시추공별 허용지지력 중 가장 작은 공을 채택하고, KDS 41 19 00 표 4.2-1 값과 대조합니다.</div></div></div>
         <div class="help-item"><div class="help-step"><div class="help-num">6</div><div class="help-txt"><b>📄 A4 계산서</b>: 환산 과정 · 근거식 · 기준 조항이 담긴 계산서를 인쇄 / PDF · JPG 로 저장합니다. 사업명 · 작성자는 우측 하단 「건물개요」 단추로 다른 도구와 주고받습니다.</div></div></div>
       </div>
@@ -924,7 +924,7 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
         <div class="law-item"><div class="law-code">극한지지력 (Meyerhof 1963)</div><div class="law-desc">qu = c·Nc·sc·dc + q·Nq·sq·dq + ½·γ·B·Nγ·sγ·dγ · Nq = e^(π tanφ)·tan²(45°+φ/2) · Nc = (Nq−1)cotφ (φ=0 → 5.14) · Nγ = (Nq−1)tan(1.4φ) · sc = 1 + 0.2Kp·B/L · sq = sγ = 1 + 0.1Kp·B/L (φ &gt; 10°)</div></div>
         <div class="law-item"><div class="law-code">지하수위</div><div class="law-desc">q = qo = γt·Dw + γ′(Df − Dw) (Dw &lt; Df) · Nγ 항 γ : Dw ≤ Df → γ′ / Df &lt; Dw &lt; Df+B → 보간 / 그 아래 → γt</div></div>
         <div class="law-item"><div class="law-code">침하 기준 (사질토, Meyerhof 1965 · Bowles 1996)</div><div class="law-desc">B ≤ 1.2 m : qa = 19.16·N₆₀·Fd·(Se/25) · B &gt; 1.2 m : qa = 11.98·N₆₀·((3.28B+1)/3.28B)²·Fd·(Se/25) · Fd = 1 + 0.33Df/B ≤ 1.33 · C<sub>w</sub> = 0.5 ~ 1.0</div></div>
-        <div class="law-item"><div class="law-code">허용지지력 · 채택</div><div class="law-desc">qa(지지력) = (qu − qo)/SF + qo (KDS 41 19 00 식 4.2-1) · qa = min(지지력, 침하) · 시추공 최솟값 · 평판재하 min(qy/2, qult/3) 우선 · 입증자료 없으면 표 4.2-1 상한</div></div>
+        <div class="law-item"><div class="law-code">허용지지력 · 채택</div><div class="law-desc">qa(지지력) = (qu − qo)/SF + qo (KDS 41 19 00 식 4.2-1) · qa = min(지지력, 침하) · 시추공 최솟값 · 평판재하 min(qy/2, qult/3) 우선(실무 관행값 · 크기효과는 KDS 11 50 05 4.1.5① 별도 검토) · 입증자료 없으면 표 4.2-1 상한</div></div>
       </div>
     </div>
   </div>
@@ -942,7 +942,7 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
   </div>
 </div>
 <script>
-/* SBENG v1.1.0 (2026-11-10 공별 지하수위 p.DwH) — N값 지내력 환산 순수 엔진 (DOM 무관)
+/* SBENG v1.2.0 (2026-11-22 영향 깊이 안 연약 점성토층 경고 · 평판재하 관행값 · 크기효과 안내) · v1.1.0 (2026-11-10 공별 지하수위 p.DwH) — N값 지내력 환산 순수 엔진 (DOM 무관)
    근거 (kcsc.re.kr · standard.go.kr 원문 대조 2026-11-09)
    - KDS 41 19 00:2022 건축물 기초구조 설계기준 (2022.10.11) 4.2.2 · 표 4.2-1 추정 지지력 · 4.2.4.1 식(4.2-1) qa = (qu − qo)/SF + qo, qu ≤ 3,000 kPa, SF ≥ 3
    - KDS 11 50 05:2025 얕은기초 설계기준(일반설계법) (2025.12.24) 4.1.2 허용지지력 = min(극한/안전율, 허용변위 지지력) · 4.1.4 경험적 지지력 · 4.1.5② SPT 에너지 보정 N
@@ -1087,6 +1087,8 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
     var grps = {}; inZ.forEach(function(r){ grps[SOIL[r.soil].grp] = 1; });
     if(Object.keys(grps).length > 1) out.warn.push('영향 깊이 안에 사질토 · 점성토 · 암이 섞여 있습니다 — 층상지반은 KDS 11 50 05 4.1.3(4) 에 따라 층상 영향을 따로 검토하십시오. (대표 토질 ' + SOIL[soil].nm + ' 적용)');
     var zs = inZ.filter(function(r){ return r.soil === soil; });
+    /* v6.1.0 — 대표 토질에 묻힌 연약 점성토층(N ≤ 4, KDS 11 30 05 표 1.6-1) : 계산값은 그대로, 경고만 (교차검증 2026-11-22 F6) */
+    inZ.forEach(function(r){ if(r.soil !== soil && SOIL[r.soil].grp === 'f' && r.n0 <= 4) out.warn.push('영향 깊이 안 GL−' + r.z + ' m ' + (r.soilTxt || SOIL[r.soil].nm) + ' N ' + r.raw + ' — 대표 토질(' + SOIL[soil].nm + ')에 묻힌 연약층입니다(KDS 11 30 05 표 1.6-1 점성토 N ≤ 4). 이 도구의 값은 대표 토질 기준이므로, 그 층을 기준으로 지지력 · 압밀침하를 따로 검토하십시오(KDS 11 50 05 4.1.3(4)).'); });
     var avg = function(k){ return zs.reduce(function(s, r){ return s + r[k]; }, 0) / zs.length; };
     var mn = function(k){ return Math.min.apply(null, zs.map(function(r){ return r[k]; })); };
     var useMin = p.rep === 'min';
@@ -1172,7 +1174,8 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
     /* 채택 순서: 평판재하시험 > 산정값(입증자료 있음) / 표 4.2-1 상한(입증자료 없음) */
     if(p.plY > 0 || p.plU > 0){
       var c1 = p.plY > 0 ? p.plY / 2 : Infinity, c2 = p.plU > 0 ? p.plU / 3 : Infinity;
-      R.qaPlate = Math.min(c1, c2); R.adopt = R.qaPlate; R.adoptSrc = '평판재하시험 (KS F 2444) — min(항복/2, 극한/3)';
+      R.qaPlate = Math.min(c1, c2); R.adopt = R.qaPlate; R.adoptSrc = '평판재하시험 (KS F 2444) — min(항복/2, 극한/3) 실무 관행값 · 크기효과 별도 검토(KDS 11 50 05 4.1.5①)';
+      R.warn.push('평판재하 값을 채택했습니다 — min(항복/2, 극한/3)은 KDS 에 명시된 비율이 아닌 실무 관행값입니다. 재하판과 실제 기초의 크기 차이(크기효과)는 KDS 11 50 05 4.1.5① 에 따라 따로 검토하십시오.');
     } else if(gov.rock){
       R.adopt = R.tblQ; R.adoptSrc = 'KDS 41 19 00 표 4.2-1 (' + gov.soilNm + ')';
     } else if(p.evid){
@@ -1184,7 +1187,7 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
     return R;
   }
 
-  root.SBENG = {version: '1.1.0', TBL421: TBL421, SOIL: SOIL, PHI: PHI, soilOf: soilOf, parseN: parseN, parseTable: parseTable,
+  root.SBENG = {version: '1.2.0', TBL421: TBL421, SOIL: SOIL, PHI: PHI, soilOf: soilOf, parseN: parseN, parseTable: parseTable,
     sigv: sigv, cRod: cRod, nqf: nqf, meyerhof: meyerhof, settleQa: settleQa, zoneDepth: zoneDepth, prep: prep, hole: hole, run: run};
 })(typeof window !== 'undefined' ? window : globalThis);
 </script>
@@ -1404,7 +1407,7 @@ function renderA4Iso(R){
     html += row('qa', '산정 허용지지력', f2(g.qaCalc), 'kN/㎡', isFinite(g.qaSet) ? 'min(qa₁, qa₂) — ' + g.gov + ' 지배 (KDS 11 50 05 4.1.2)' : '전단파괴 기준 (압밀침하 별도)');
   }
   html += row('q<sub>t</sub>', 'KDS 41 19 00 표 4.2-1 추정 지지력', R.tblQ, 'kN/㎡', g.tblNm);
-  if(R.qaPlate > 0) html += row('q<sub>p</sub>', '평판재하시험 허용지지력', f2(R.qaPlate), 'kN/㎡', 'min(qy/2, qult/3) — qy ' + (p.plY || '-') + ' · qult ' + (p.plU || '-'));
+  if(R.qaPlate > 0) html += row('q<sub>p</sub>', '평판재하시험 허용지지력', f2(R.qaPlate), 'kN/㎡', 'min(qy/2, qult/3) 실무 관행값 · 크기효과 별도 검토 — qy ' + (p.plY || '-') + ' · qult ' + (p.plU || '-'));
   html += row('qa', '<b>채택 허용지지력</b>', '<b>' + f2(R.adopt) + '</b>', 'kN/㎡', esc(R.adoptSrc));
   if(R.qd) html += row('q<sub>d</sub>', '설계 접지압 판정', f2(R.qd), 'kN/㎡', R.pass ? '≤ qa → ✓ OK' : '&gt; qa → ✗ NG');
   html += '</tbody></table>';
@@ -1566,6 +1569,10 @@ document.addEventListener('DOMContentLoaded', function(){
    · 결과표 머리 「심도 · 공번」 · 결과표 아래 다른 표에서 멈춤(가짜 불일치 경고 해소) · N = 0 · 관입량 0 · 스캔 주상도 안내
    · 사업명을 못 찾으면 안내하고, 표에 넣을 때 STEP 1 예제 사업명은 지움(직접 적은 사업명은 그대로)
    · 표본 : 특장차 종합지원센터 지반조사 보고서(지오건설품질연구원 2024. 03.) 주상도 57행 = 결과표 100 % 일치
+   지내력 v6.1.0 (2026-11-22) — Claude × Gemini 교차검증 반영(보고서 52\참고자료\교차검증_보고서_2026-11-22.html)
+   · F2 A4 계산서 칸 이름(.a4iso-cell-k) · 입력 칸 이름(.flbl) 대문자 변환 삭제 — Df · γt · φ · qy 기호 보존
+   · F6 영향 깊이 안 연약 점성토층(N ≤ 4)이 대표 토질에 묻히면 경고(계산값 그대로) — SBENG 1.2.0
+   · F1 평판재하 min(qy/2, qult/3) = 실무 관행값 표기 · 크기효과(KDS 11 50 05 4.1.5①) 별도 검토 안내
    지내력 v1.1.2 (2026-11-10) — 보고서의 조사 위치를 STEP 1 「위치」 칸에 자동 기입(미리보기에서 고치거나 끌 수 있음)
    · 본문 「조사지역(…번지 일원)」 · 「조사 위치 : …」 → 없으면 주상도 「위 치」 칸 · 업체 주소(주소 · TEL 뒤)는 읽지 않음
    · 보고서 66건 시험 : 20건 읽음 · 잘못 읽은 것 0 (나머지는 주소가 없거나 「위치도에 표시」)
@@ -2412,7 +2419,7 @@ window.exportA4Jpg = function(){
 <footer class="mm-foot no-print">
   <div class="foot-inner">
     <div>
-      <div class="foot-nm">MANMIN Ver-1.1</div>
+      <div class="foot-nm">MANMIN Ver-6.1</div>
       <div class="foot-desc">N값 지내력 환산 시스템 | KDS 41 19 00 · KDS 11 50 05</div>
     </div>
     <div class="foot-copy">ARCHITECT KIM MANMIN © 2026</div>

@@ -1,7 +1,7 @@
 {
   "name": "MANMIN 지내력",
   "short_name": "지내력",
-  "description": "표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00 · KDS 11 50 05 | CIVIL ENGINEER KIM MANMIN",
+  "description": "표준관입시험 N값 → 허용지지력 환산 · KDS 41 19 00 · KDS 11 50 05 — MANMIN Ver-6.1",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
