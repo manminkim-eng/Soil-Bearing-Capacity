@@ -7,8 +7,12 @@ import os, sys, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from manual_engine import fig, T, render, B, MARKS
 
-VER, REL, DATE = 'Ver-1.1', 'v1.1.0', '2026-11-10'
-PDF = 'N값지내력환산시스템_사용자매뉴얼_Ver-1.1.pdf'
+import re as _re
+VER = 'Ver-6.1'   # 매뉴얼 판 = 도구 판 6.1.x 의 이름(2026-11-25 표기 통일, 종전 Ver-1.1)
+_SW = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'sw.js')   # 대상 프로그램 판은 저장소 sw.js 캐시명에서 읽음
+REL = 'v' + _re.search(r"CACHE\s*=\s*'sbc-v(\d+\.\d+\.\d+)'", open(_SW, encoding='utf-8').read()).group(1)
+DATE = '2026-11-25'   # 매뉴얼 작성(개정)일
+PDF = 'N값지내력환산시스템_사용자매뉴얼_Ver-6.1.pdf'
 SAMPLE = 'assets/sample_soil_report.pdf'   # 연습용 지반조사 보고서(예시) — _tools/make_sample_pdf.py
 APP_URL = 'https://manminkim-eng.github.io/Soil-Bearing-Capacity/'
 APP = 'N값 지내력 환산 시스템'
@@ -59,9 +63,9 @@ S_ = []
 S_.append(f"""{EXTRA_CSS}<section class="ch" id="ch0"><h2><span class="n">00</span>이 매뉴얼에 대하여</h2>
 <p class="lead">{APP}은 지반조사 보고서의 표준관입시험 N값 표를 붙여 넣으면 N값을 보정하고, 사질토는 내부마찰각 φ · 점성토는 점착력 cu 로 환산해 Meyerhof 극한지지력과 침하 기준 지지력을 구한 뒤, KDS 41 19 00 식 (4.2-1)과 표 4.2-1 에 맞춰 허용지지력(지내력)을 정리하는 웹도구입니다.</p>
 {K(T([
- ['대상 프로그램', f'{APP} <b>MANMIN Ver-6.1</b>(v6.1.0)'],
+ ['대상 프로그램', f'{APP} <b>MANMIN {VER}</b>({REL})'],
  ['접속 주소', f'<a href="{APP_URL}" target="_blank" rel="noopener">manminkim-eng.github.io/Soil-Bearing-Capacity</a>'],
- ['매뉴얼 판', f'<b>{VER}</b> (개정 1 — 보고서 PDF 불러오기 · 공별 지하수위 · 개정 2 — 2026-11-22 교차검증 반영, 프로그램은 판 6.1 체계로 Ver-6.1) · {DATE} · 작성 김만민 건축사(㈜대성건축사사무소)'],
+ ['매뉴얼 판', f'<b>{VER}</b> (화면 표기와 같은 판 번호 — 종전 매뉴얼 판 Ver-1.0 초판 2026-11-09 · Ver-1.1 2026-11-10 · 개정 2 2026-11-22 교차검증 반영) · Ver-6.1 표기 통일 {DATE} · 작성 김만민 건축사(㈜대성건축사사무소)'],
  ['내려받기', f'<a href="{PDF}" download>PDF(A4)</a> · <a href="../index.html">환산 시스템 열기</a> · <a href="{SAMPLE}" download>연습용 지반조사 보고서 PDF(예시)</a>'],
  ['근거', LAW + ' — 공식 원문 대조(2026-11-09)'],
  ['범위', '얕은기초(독립 · 줄 · 전면)의 지표 부근 흙 지반 허용지지력 참고 추정 — 암반 지지력 · 압밀침하 · 층상지반 · 말뚝 · 내진 지반분류는 따로 검토합니다'],
@@ -295,14 +299,15 @@ S_.append(f"""<section class="ch" id="ch5"><h2><span class="n">05</span>실무 �
  ['50/10 을 넣었는데 N 이 50 이에요', '50 × 30/10 = 150 으로 환산한 뒤 상한 50 을 적용합니다'],
  ['PDF 를 읽지 못해요', '스캔(그림) PDF 는 글자가 없어 읽을 수 없습니다 — N값 표를 직접 입력하십시오. 처음 쓸 때는 PDF 읽기 도구를 내려받으므로 인터넷 연결이 필요합니다'],
  ['PDF 에서 토질이 지층명만 나와요', '지층 설명이 문장형인 보고서입니다 — 미리보기 표에서 토질(모래 · 점토 등)을 고쳐 넣으십시오'],
- ['화면이 예전 판이에요', '새로 고침(Ctrl+F5) — 캐시 이름 sbc-v1.1.0'],
+ ['화면이 예전 판이에요', f'새로 고침(Ctrl+F5) — 캐시 이름 sbc-{REL}'],
 ], ['증상', '해결']))}
 </section>""")
 S_.append(f"""<section class="ch" id="ch6"><h2><span class="n">부록</span></h2>
 <h3 id="a1">A1. 버전 변경 내역</h3>
 {K(T([
+ [f'Ver-6.1 · {REL} ({DATE})', 'Ver-6.1 표기 통일 — A4 계산서 꼬리말 [MANMIN-Ver1.1] → [MANMIN-Ver6.1] · JPG 파일 이름 MANMIN-Ver6.1 · sw sbc-v6.1.1(계산 · 예제 값 변경 없음), 매뉴얼 판 · 제목 · PDF 이름 Ver-1.1 → Ver-6.1 · 그림 전부 현행 화면으로 다시 캡처(v6.1.0 칸 이름 기호 Df · γt · φ · 평판재하 관행값 표기 반영)'],
  ['Ver-1.1 개정 2 · v6.1.0 (2026-11-22)', 'Claude × Gemini 교차검증 반영 — 입력 칸 · A4 계산서 칸 이름의 대문자 변환 삭제(Df · γt · φ · qy 기호 그대로) · 영향 깊이 안 「묻힌 연약층」(점성토 N ≤ 4) 경고 · 평판재하 min(qy/2, qult/3) 「실무 관행값 · 크기효과 별도 검토」 표기 · 판 6.1 체계(화면 Ver-6.1 · sw sbc-v6.1.0, 매뉴얼 판 · PDF 이름은 Ver-1.1 그대로) · 예제 값 변경 없음'],
- [f'Ver-1.1 · v1.1.0 ({DATE})', '「📄 지반조사 보고서 PDF 불러오기」(시추주상도 · 결과표 교차 확인 · 이 기기 안에서만 읽음) · STEP 3 「공별 지하수위」 공마다 계산 · 그래프 · 시추공별 결과 · A4 에 공별 지하수위 · 매뉴얼 3-3-1 신설 · sw sbc-v1.1.0 (지하수위가 하나면 계산 변경 없음)'],
+ ['Ver-1.1 · v1.1.0 (2026-11-10)', '「📄 지반조사 보고서 PDF 불러오기」(시추주상도 · 결과표 교차 확인 · 이 기기 안에서만 읽음) · STEP 3 「공별 지하수위」 공마다 계산 · 그래프 · 시추공별 결과 · A4 에 공별 지하수위 · 매뉴얼 3-3-1 신설 · sw sbc-v1.1.0 (지하수위가 하나면 계산 변경 없음)'],
  ['Ver-1.0 · v1.0.1 (2026-11-09)', '탭 막대 「📘 매뉴얼」 단추 · 사용자 매뉴얼 신설 · sw sbc-v1.0.1 (계산 변경 없음)'],
  ['Ver-1.0 · v1.0.0 (2026-11-09)', '신규 — KDS 41 19 00 (2022) 식 (4.2-1) · 표 4.2-1 · KDS 11 50 05 (2025. 12. 24.) 원문 대조 엔진 SBENG · 옹벽 v5.1.10 공통 틀(토목 #0f766e) · MM-PROJECT v1.2 · MM-PRINT v1.0'],
 ], ['버전', '내용']))}

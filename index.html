@@ -582,7 +582,7 @@ table tr:nth-child(even) td{background:#f8fafd;}
   @page{size:A4 portrait;margin:14mm 12mm 22mm 14mm;}
 }
 </style>
-<style id="mm-r1">/* R1 (2026-09-04 · 지시서 §20-1 · S10 소급) — 인쇄 PDF 하단 각인 MANMIN · Ver 비표시. 버전은 A4 푸터 [MANMIN-Ver5.0] 이 담당 */
+<style id="mm-r1">/* R1 (2026-09-04 · 지시서 §20-1 · S10 소급) — 인쇄 PDF 하단 각인 MANMIN · Ver 비표시. 버전은 A4 푸터 [MANMIN-Ver6.1] 이 담당 */
 #dev-stamp,#dev-stamp-print,.dev-stamp{display:none!important;}
 @media print{#dev-stamp,#dev-stamp-print,.dev-stamp{display:none!important;}}</style>
 <style id="mm-r24">/* R24 ③ (2026-09-04 · 지시서 §20-17 ③) — 원본 전역 table tr:last-child td{border-bottom:none} 이 A4 표에 새어 마지막 행 아래선이 사라진다 */
@@ -666,7 +666,7 @@ body.sbp-open .mm-proj-btn,body.sbp-open .mm-proj-menu{display:none!important}  
 <div id="root-app">
 
 <!-- ══════ HEADER ══════ -->
-<!-- 지내력 v1.0.1 (매뉴얼 단추) · v1.0.0 : 옹벽 v5.1.10 공통 틀 · 토목 토큰 (#0f766e) -->
+<!-- 지내력 v6.1.1 (2026-11-25 판 표기 통일 — A4 꼬리말 [MANMIN-Ver6.1] · JPG 파일 이름 MANMIN-Ver6.1, 계산 불변) · v1.0.1 (매뉴얼 단추) · v1.0.0 : 옹벽 v5.1.10 공통 틀 · 토목 토큰 (#0f766e) -->
 <div class="hdr-shell">
 <header class="app-header">
   <div class="header-inner">
@@ -1429,7 +1429,7 @@ function renderA4Iso(R){
   html += '② 평판재하시험 · 실내시험 값 &gt; 지반조사 보고서 제시 허용지지력 &gt; 이 계산서 순으로 우선합니다. 경험식은 영향 깊이(2B)까지 거의 균질 · 수평 지층일 때 적용합니다(KDS 11 50 05 4.1.4).<br/>';
   html += '③ 점성토 압밀침하 · 액상화 · 경사지 · 편심 · 경사하중 · 층상지반 · 암반 지지력은 별도 검토 대상입니다.';
   html += '</div>';
-  html += '<div class="a4-footer"><span>N값 지내력 환산 시스템 [MANMIN-Ver1.1]</span><span>KDS 41 19 00 (2022) · KDS 11 50 05 (2025. 12. 24.)</span><span>작성일: ' + ymd + '</span></div>';
+  html += '<div class="a4-footer"><span>N값 지내력 환산 시스템 [MANMIN-Ver6.1]</span><span>KDS 41 19 00 (2022) · KDS 11 50 05 (2025. 12. 24.)</span><span>작성일: ' + ymd + '</span></div>';
   el.innerHTML = html;
   if(typeof markLongTables === 'function') markLongTables(el);
 }
@@ -2379,7 +2379,7 @@ window.exportA4Jpg = function(){
     var now = new Date();
     var ts = now.getFullYear()+''+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')
       +'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0');
-    var base = 'N값지내력환산_MANMIN-Ver1.1_'+ts;
+    var base = 'N값지내력환산_MANMIN-Ver6.1_'+ts;
     if(!segs || !segs.length){
       mmDownload(canvas.toDataURL('image/jpeg',0.95), base+'.jpg');
       showToast('✅ JPG 저장 완료!'); return;

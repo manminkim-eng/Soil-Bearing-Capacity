@@ -27,7 +27,7 @@ window.__help=t=>{if(!_helpOpen)toggleHelp();switchHelpTab(t);};`;
 const GA="__exA();window.scrollTo(0,0)";
 const SHOTS=[
  {id:'s01_overview',pre:GA,clip:'viewport',m:[['nth:.tb|0','탭 — 입력 · 계산 / A4 계산서'],['#mm-manual-btn','📘 매뉴얼'],['.sum-bar','요약 바'],['nth:#panel-calc .nb|0','참고용 안내'],['card:기본 정보','입력(STEP 1 ~ 5)'],['#sb-result .result-hero','결과']]},
- {id:'s02_header',clip:'.hdr-shell',m:[['.hdr-h1','도구 이름 · Ver-1.1'],['.hdr-right','KDS 41 19 00 · KDS 11 50 05'],['.tab-bar-inner','탭'],['#mm-manual-btn','📘 매뉴얼 — 탭 막대 끝']]},
+ {id:'s02_header',clip:'.hdr-shell',m:[['.hdr-h1','도구 이름 · Ver-6.1'],['.hdr-right','KDS 41 19 00 · KDS 11 50 05'],['.tab-bar-inner','탭'],['#mm-manual-btn','📘 매뉴얼 — 탭 막대 끝']]},
  {id:'s03_basic',clip:'card:기본 정보',m:[['fg:사업명','사업명'],['fg:작성자','작성자'],['fg:위치','위치'],['fg:작성일','작성일'],['fg:지반조사 보고서','보고서 이름(계산서에 표기)']]},
  {id:'s04_table',clip:'card:표준관입시험',m:[['.sb-pdf','📄 보고서 PDF 불러오기'],['#p-table','공번 · 심도 · N · 토질 붙여 넣기'],['.sb-hint','관입 불능 50/x · 토질 인식'],['.sb-btnrow','예제 ① ② ③']]},
  {id:'s05_found',clip:'card:기초 · 지하수위',m:[['fg:기초 형식','기초 형식'],['fg:근입깊이','근입깊이 Df'],['fg:기초 폭 B','폭 B(짧은 변)'],['fg:기초 길이 L','길이 L'],['fg:지하수위','지하수위'],['fg:공별 지하수위','공별 지하수위(선택)'],['fg:습윤 단위중량','γt'],['fg:포화 단위중량','γsat'],['fg:설계 접지압','설계 접지압 — 판정']]},

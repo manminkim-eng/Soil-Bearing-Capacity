@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════
    지내력 — N값 지내력 환산 시스템  MANMIN Ver-6.1
+   v6.1.1 (2026-11-25) 판 표기 통일 — A4 꼬리말 · JPG 파일 이름 MANMIN-Ver6.1(종전 Ver1.1), 계산 불변
    v6.1.0 (2026-11-22) 교차검증 반영 — 기호 대문자 변환 삭제 · 연약층 경고 · 평판재하 관행값 표기
    v1.1.2 (2026-11-10) PDF 불러오기 — 보고서 조사 위치를 STEP 1 위치 칸에 자동 기입
    v1.1.1 (2026-11-10) PDF 불러오기 서식 보강(보고서 164건 점검) · 한글 cMap 3개 프리캐시(jsdelivr)
@@ -25,7 +26,7 @@ const mmMatch = (req, opt) => caches.keys()
   .then((ks) => ks.reduce((p, k) => p.then((r) => r || caches.open(k).then((c) => c.match(req, opt))), Promise.resolve(undefined)))
   .then((r) => (r && r.type === 'opaque' && req && req.mode === 'cors') ? undefined : r);
 
-const CACHE  = 'sbc-v6.1.0';   /* v6.1.0 : 교차검증 반영 · v1.1.2 : PDF 위치 자동 기입 · v1.1.1 : PDF 서식 보강 · v1.1.0 : 📄 PDF 불러오기 · v1.0.1 : 📘 매뉴얼 단추 · v1.0.0 : 신규 */
+const CACHE  = 'sbc-v6.1.1';   /* v6.1.1 : 판 표기 통일 · v6.1.0 : 교차검증 반영 · v1.1.2 : PDF 위치 자동 기입 · v1.1.1 : PDF 서식 보강 · v1.1.0 : 📄 PDF 불러오기 · v1.0.1 : 📘 매뉴얼 단추 · v1.0.0 : 신규 */
 const ORPHAN = [];
 const ASSETS = [
   './',
