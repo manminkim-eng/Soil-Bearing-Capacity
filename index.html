@@ -2766,7 +2766,7 @@ window.MM_WARN_CFG={all:true,report:'#a4iso-content',rules:[
 {sel:'#p-ER',empty:'60',neg:'음수 → 30 % 로 계산',extra:function(el,n){return n<30?'30 % 미만 → 30 으로 계산':(n>100?'100 % 초과 → 100 으로 계산':null);}},
 {sel:'#p-SF',empty:'3',neg:'음수 → 1 로 계산',extra:function(el,n){return n<1?'1 미만 → 1 로 계산':null;}},
 {sel:'#p-Se',empty:'25',neg:true},
-{sel:'#p-DwH',check:function(el){var tb=(document.getElementById('p-table')||{}).value||'',bad=[];el.value.split(/[,;\n]+/).forEach(function(s){s=s.trim();if(!s)return;var m=/^\s*(\S+?)\s*[:=\s]\s*([\d.]+)\s*$/.exec(s);if(!m||!isFinite(parseFloat(m[2]))||tb.indexOf(m[1])<0)bad.push(s);});return bad.length?'「'+bad.join(' · ')+'」 읽지 못함 → 전역 지하수위 적용':null;}},
+{sel:'#p-DwH',check:function(el){var K=function(h){return String(h).toUpperCase().replace(/\s/g,'');},hs={},bad=[];try{SBENG.parseTable((document.getElementById('p-table')||{}).value||'','BH-1').rows.forEach(function(r){hs[K(r.hole)]=1;});}catch(e){}el.value.split(/[,;\n]+/).forEach(function(s){s=s.trim();if(!s)return;var m=/^\s*(\S+?)\s*[:=\s]\s*([\d.]+)\s*$/.exec(s);if(!m||!isFinite(parseFloat(m[2]))||!hs[K(m[1])])bad.push(s);});return bad.length?'「'+bad.join(' · ')+'」 읽지 못함 → 전역 지하수위 적용':null;}},
 {sel:'#p-qd',neg:true},{sel:'#p-plY',neg:true},{sel:'#p-plU',neg:true},{sel:'#p-cu',neg:true}]};
 </script>
 <script id="mm-warn-js">
