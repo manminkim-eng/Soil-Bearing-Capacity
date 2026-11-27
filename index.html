@@ -2763,9 +2763,10 @@ window.MM_WARN_CFG={all:true,report:'#a4iso-content',rules:[
 {sel:'#p-Df',empty:'1.5',neg:'음수 입력 — 0 으로 계산'},
 {sel:'#p-Dw',empty:'10',neg:'음수 입력 — 0 으로 계산'},
 {sel:'#p-gt',empty:'18',neg:true},{sel:'#p-gsat',empty:'19',neg:true},
-{sel:'#p-ER',empty:'60',neg:true,extra:function(el,n){return n<30?'30 % 미만 → 30 으로 계산':(n>100?'100 % 초과 → 100 으로 계산':null);}},
-{sel:'#p-SF',empty:'3',neg:true,extra:function(el,n){return n<1?'1 미만 → 1 로 계산':null;}},
+{sel:'#p-ER',empty:'60',neg:'음수 → 30 % 로 계산',extra:function(el,n){return n<30?'30 % 미만 → 30 으로 계산':(n>100?'100 % 초과 → 100 으로 계산':null);}},
+{sel:'#p-SF',empty:'3',neg:'음수 → 1 로 계산',extra:function(el,n){return n<1?'1 미만 → 1 로 계산':null;}},
 {sel:'#p-Se',empty:'25',neg:true},
+{sel:'#p-DwH',check:function(el){var tb=(document.getElementById('p-table')||{}).value||'',bad=[];el.value.split(/[,;\n]+/).forEach(function(s){s=s.trim();if(!s)return;var m=/^\s*(\S+?)\s*[:=\s]\s*([\d.]+)\s*$/.exec(s);if(!m||!isFinite(parseFloat(m[2]))||tb.indexOf(m[1])<0)bad.push(s);});return bad.length?'「'+bad.join(' · ')+'」 읽지 못함 → 전역 지하수위 적용':null;}},
 {sel:'#p-qd',neg:true},{sel:'#p-plY',neg:true},{sel:'#p-plU',neg:true},{sel:'#p-cu',neg:true}]};
 </script>
 <script id="mm-warn-js">
@@ -2778,6 +2779,7 @@ window.MM_WARN_CFG={all:true,report:'#a4iso-content',rules:[
   function judge(r,el){
     if(r.cond&&!r.cond(el))return null;
     var v=String(el.value==null?'':el.value).trim();
+    if(r.check)return v===''?null:r.check(el,v); /* 52 v6.1.4 추가: 숫자 칸이 아닌 글자 칸(공별 지하수위) 전용 판정 — 다른 규칙 동작은 51 원래 코드와 같음 */
     if(v==='')return r.empty!=null?'빈 값 → 기본값 '+r.empty+' 적용':null;
     if(r.text&&!/^-?\d+(\.\d+)?$/.test(v)){var p=parseFloat(v);return '숫자 외 글자 — '+(isNaN(p)?0:p)+'(으)로 계산';}
     var n=parseFloat(v);if(isNaN(n))return r.empty!=null?'빈 값 → 기본값 '+r.empty+' 적용':null;
